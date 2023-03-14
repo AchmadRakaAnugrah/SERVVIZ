@@ -1,0 +1,22 @@
+{
+  "name": "servviz",
+  "version": "1.0.0",
+  "description": "GA TAU",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AchmadRakaAnugrah/SERVVIZ.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AchmadRakaAnugrah/SERVVIZ/issues"
+  },
+  "homepage": "https://github.com/AchmadRakaAnugrah/SERVVIZ#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
