@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id
+  username String?
+  password String?
+  phone    String?
+  email    String?
+
+  @@map(name: "user")
+}
+
+model Admin {
+  id Int @id
+  username String?
+  password String?
+
+  @@map(name: "admin")
+}
+
+model Orders {
+  id Int @id
+  user_id Int
+  unique_code    String?
+  service_type   String?
+  pickup_address String?
+  dropoff_address_id Int
+  device         String?
+  device_brand   String?
+  problem_type   String?
+  problem_desc   String?
+  images_id Int
+  date           String?
+  order_status   String?
+  admin_id Int
+
+  @@map(name: "orders")
+}
+
+model OrdersHistory {
+  id Int @id
+  order_id Int
+  technician_id Int
+  order_completed String?
+  status          String?
+  total_price     Int?
+
+  @@map(name: "orders_history")
+}
+
+model Technician {
+  id Int @id
+  name  String?
+  phone String?
+
+  @@map(name: "technician")
+}
+
+model Store {
+  id Int @id
+  address String?
+  phone   String?
+
+  @@map(name: "store")
+}
+
+model Images {
+  id Int @id
+  order_id Int
+
+  @@map(name: "images")
+}
