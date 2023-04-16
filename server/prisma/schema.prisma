@@ -25,7 +25,7 @@ model Admin {
 }
 
 model Orders {
-  id                 Int              @id
+  id                 Int              @id @default(autoincrement())
   user               User             @relation(fields: [user_username], references: [username])
   user_username      String
   unique_code        String
@@ -46,7 +46,7 @@ model Orders {
 }
 
 model Orders_History {
-  id              Int         @id
+  id              Int         @id @default(autoincrement())
   orders          Orders      @relation(fields: [order_id], references: [id])
   order_id        Int
   technician      Technician? @relation(fields: [technician_id], references: [id])
@@ -57,14 +57,14 @@ model Orders_History {
 }
 
 model Technician {
-  id             Int              @id
+  id             Int              @id @default(autoincrement())
   name           String?
   phone          String?
   orders_history Orders_History[]
 }
 
 model Store {
-  id      Int      @id
+  id      Int      @id @default(autoincrement())
   address String?
   phone   String?
   orders  Orders[]
