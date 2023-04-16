@@ -11,72 +11,67 @@ datasource db {
 }
 
 model User {
-  id Int @id
-  username String?
-  password String?
-  phone    String?
-  email    String?
-
-  @@map(name: "user")
+  username String   @id
+  password String
+  phone    String
+  email    String   @unique
+  orders   Orders[]
 }
 
 model Admin {
-  id Int @id
-  username String?
-  password String?
-
-  @@map(name: "admin")
+  username String   @id
+  password String
+  orders   Orders[]
 }
 
 model Orders {
-  id Int @id
-  user_id Int
-  unique_code    String?
-  service_type   String?
-  pickup_address String?
-  dropoff_address_id Int
-  device         String?
-  device_brand   String?
-  problem_type   String?
-  problem_desc   String?
-  images_id Int
-  date           String?
-  order_status   String?
-  admin_id Int
-
-  @@map(name: "orders")
+  id                 Int              @id
+  user               User             @relation(fields: [user_username], references: [username])
+  user_username      String
+  unique_code        String
+  service_type       String
+  pickup_address     String?
+  store              Store?           @relation(fields: [dropoff_address_id], references: [id])
+  dropoff_address_id Int?
+  device             String?
+  device_brand       String?
+  problem_type       String?
+  problem_desc       String?
+  timestamp          DateTime
+  order_status       String
+  admin              Admin            @relation(fields: [admin_username], references: [username])
+  admin_username     String
+  blobs              Blobs[]
+  order_history      Orders_History[]
 }
 
-model OrdersHistory {
-  id Int @id
-  order_id Int
-  technician_id Int
-  order_completed String?
+model Orders_History {
+  id              Int         @id
+  orders          Orders      @relation(fields: [order_id], references: [id])
+  order_id        Int
+  technician      Technician? @relation(fields: [technician_id], references: [id])
+  technician_id   Int?
+  order_completed DateTime?
   status          String?
   total_price     Int?
-
-  @@map(name: "orders_history")
 }
 
 model Technician {
-  id Int @id
-  name  String?
-  phone String?
-
-  @@map(name: "technician")
+  id             Int              @id
+  name           String?
+  phone          String?
+  orders_history Orders_History[]
 }
 
 model Store {
-  id Int @id
+  id      Int      @id
   address String?
   phone   String?
-
-  @@map(name: "store")
+  orders  Orders[]
 }
 
-model Images {
-  id Int @id
-  order_id Int
-
-  @@map(name: "images")
+model Blobs {
+  orders   Orders @relation(fields: [id], references: [id])
+  id       Int
+  filename String @id
 }
