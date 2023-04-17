@@ -1,5 +1,10 @@
-import express from 'express';
+import express from "express";
 import authenticateToken from "./auth";
+import cors from "cors";
+import helmet from "helmet";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -15,54 +20,91 @@ try {
 }
 
 app.use(express.json());
+app.use(cors());
+app.use(helmet());
 
-app.get("/users", authenticateToken, async (req, res) => {
-    const users = await prisma.user.findMany();
-    res.json(users);
+//Register New User
+app.post('/api/register', authenticateToken, async (req: Request, res: Response) => {
+
 });
 
-app.get("/users/:id", async (req, res) => {
-    const user = await prisma.user.findUnique({
-        where: {
-            id: parseInt(req.params.id),
-        },
-    });
-    res.json(user);
+// Login with JWT auth
+app.post('/api/login', async (req: Request, res: Response) => {
+    const { username, password } = req.body;
+
+    try {
+        // check if user with given email exists
+        const user = await prisma.user.findUnique({ where: { username } });
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // verify password
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // generate jwt token
+        const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+        const token = jwt.sign({ id: user.username }, jwtSecret, { expiresIn: '1h' });
+
+        // return token as response
+        res.status(200).json({ token });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
-app.post("/users", async (req, res) => {
-    const { name, email } = req.body;
-    const user = await prisma.user.create({
-        data: {
-            name,
-            email,
-        },
-    });
-    res.json(user);
-});
+// app.get("/users", authenticateToken, async (req, res) => {
+//     const users = await prisma.user.findMany();
+//     res.json(users);
+// });
 
-app.put("/users/:id", async (req, res) => {
-    const { name, email } = req.body;
-    const user = await prisma.user.update({
-        where: {
-            id: parseInt(req.params.id),
-        },
-        data: {
-            name,
-            email,
-        },
-    });
-    res.json(user);
-});
 
-app.delete("/users/:id", async (req, res) => {
-    const user = await prisma.user.delete({
-        where: {
-            id: parseInt(req.params.id),
-        },
-    });
-    res.json(user);
-});
+// app.get("/users/:id", async (req, res) => {
+//     const user = await prisma.user.findUnique({
+//         where: {
+//             id: parseInt(req.params.id),
+//         },
+//     });
+//     res.json(user);
+// });
+
+// app.post("/users", async (req, res) => {
+//     const { name, email } = req.body;
+//     const user = await prisma.user.create({
+//         data: {
+//             name,
+//             email,
+//         },
+//     });
+//     res.json(user);
+// });
+
+// app.put("/users/:id", async (req, res) => {
+//     const { name, email } = req.body;
+//     const user = await prisma.user.update({
+//         where: {
+//             id: parseInt(req.params.id),
+//         },
+//         data: {
+//             name,
+//             email,
+//         },
+//     });
+//     res.json(user);
+// });
+
+// app.delete("/users/:id", async (req, res) => {
+//     const user = await prisma.user.delete({
+//         where: {
+//             id: parseInt(req.params.id),
+//         },
+//     });
+//     res.json(user);
+// });
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
