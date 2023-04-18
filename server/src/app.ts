@@ -24,8 +24,35 @@ app.use(cors());
 app.use(helmet());
 
 //Register New User
-app.post('/api/register', authenticateToken, async (req: Request, res: Response) => {
+app.post('/api/register', async (req: Request, res: Response) => {
+    try {
+        const { email, username, phone, password } = req.body;
 
+        // check if the username or email already exist in the database
+        const existingUser = await prisma.user.findFirst({
+            where: { OR: [{ email }, { username }] },
+        });
+
+        if (existingUser) {
+            return res.status(409).json({ error: 'User already exists' });
+        }
+
+        // hash the password and create a new user in the database
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const newUser = await prisma.user.create({
+            data: { email, username, phone, password: hashedPassword },
+        });
+
+        // generate a new JWT token with a custom payload
+        const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+        const token = jwt.sign({ id: username }, jwtSecret, { expiresIn: '1h' });
+
+        res.status(200).json({ token });
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500).json({ message: 'Internal server error' });
+    }
 });
 
 // Login with JWT auth
