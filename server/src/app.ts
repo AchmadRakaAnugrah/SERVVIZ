@@ -48,7 +48,7 @@ app.post('/api/register', async (req: Request, res: Response) => {
         const jwtSecret = process.env.JWT_SECRET || 'default_secret';
         const token = jwt.sign({ id: username }, jwtSecret, { expiresIn: '1h' });
 
-        res.status(200).json({ token });
+        res.status(201).json({ token });
     } catch (error) {
         console.error(error);
         res.sendStatus(500).json({ message: 'Internal server error' });
