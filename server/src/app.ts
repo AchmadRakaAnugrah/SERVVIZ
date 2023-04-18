@@ -1,11 +1,13 @@
 import express from "express";
-import authenticateToken from "./auth";
 import cors from "cors";
 import helmet from "helmet";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
+import authenticateToken from "./auth";
+import validateJSON from "./validateJSON";
+import handleParsingError from "./handleParsingError";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -22,6 +24,7 @@ try {
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
+app.use(handleParsingError)
 
 //Register New User
 app.post('/api/register', async (req: Request, res: Response) => {
