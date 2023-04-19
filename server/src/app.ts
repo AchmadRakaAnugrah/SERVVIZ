@@ -3,11 +3,13 @@ import cors from "cors";
 import helmet from "helmet";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import * as _ from 'lodash';
 import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import authenticateToken from "./auth";
 import validateJSON from "./validateJSON";
 import handleParsingError from "./handleParsingError";
+import rejectEmptyString from "./rejectEmptyString";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -27,10 +29,10 @@ app.use(helmet());
 app.use(handleParsingError)
 
 //Register New User
-app.post('/api/register', async (req: Request, res: Response) => {
+app.post('/api/register', rejectEmptyString, async (req: Request, res: Response) => {
+    const { email, username, phone, password } = req.body;
+    
     try {
-        const { email, username, phone, password } = req.body;
-
         // check if the username or email already exist in the database
         const existingUser = await prisma.user.findFirst({
             where: { OR: [{ email }, { username }] },
@@ -51,7 +53,7 @@ app.post('/api/register', async (req: Request, res: Response) => {
         const jwtSecret = process.env.JWT_SECRET || 'default_secret';
         const token = jwt.sign({ id: username }, jwtSecret, { expiresIn: '1h' });
 
-        res.status(201).json({ token });
+        res.status(201).json({ token, message: 'New user created succesfully' });
     } catch (error) {
         console.error(error);
         res.sendStatus(500).json({ message: 'Internal server error' });
@@ -59,7 +61,7 @@ app.post('/api/register', async (req: Request, res: Response) => {
 });
 
 // Login with JWT auth
-app.post('/api/login', async (req: Request, res: Response) => {
+app.post('/api/login', rejectEmptyString, async (req: Request, res: Response) => {
     const { username, password } = req.body;
 
     try {
@@ -88,10 +90,10 @@ app.post('/api/login', async (req: Request, res: Response) => {
 });
 
 //Register New Admin
-app.post('/api/admin/register', async (req: Request, res: Response) => {
-    try {
-        const { username, password } = req.body;
+app.post('/api/admin/register', rejectEmptyString, async (req: Request, res: Response) => {
+    const { username, password } = req.body;
 
+    try {
         // check if the username or email already exist in the database
         const existingAdmin = await prisma.admin.findFirst({
             where: { username },
@@ -112,7 +114,7 @@ app.post('/api/admin/register', async (req: Request, res: Response) => {
         const jwtSecret = process.env.JWT_SECRET || 'default_secret';
         const token = jwt.sign({ id: username }, jwtSecret, { expiresIn: '1h' });
 
-        res.status(201).json({ token });
+        res.status(201).json({ token, message: 'New admin created succesfully' });
     } catch (error) {
         console.error(error);
         res.sendStatus(500).json({ message: 'Internal server error' });
@@ -120,7 +122,7 @@ app.post('/api/admin/register', async (req: Request, res: Response) => {
 });
 
 // Login Admin with JWT auth
-app.post('/api/login', async (req: Request, res: Response) => {
+app.post('/api/admin/login', rejectEmptyString, async (req: Request, res: Response) => {
     const { username, password } = req.body;
 
     try {
@@ -148,11 +150,48 @@ app.post('/api/login', async (req: Request, res: Response) => {
     }
 });
 
-// app.post("/api/orders", authenticateToken, async (req: Request, res: Response) => {
-//     const {user_username,uniqueCode} = req.body;
+// Create new order
+app.post("/api/orders", authenticateToken, async (req: Request, res: Response) => {
+    const {
+        user_username,
+        service_type,
+        pickup_address,
+        dropoff_address_id,
+        device,
+        device_brand,
+        problem_type,
+        problem_desc,
+    } = _.mapValues(req.body, (value) => (value === '' ? null : value));
+    const order_status = "Submitted";
+    // Get the total number of records in the table
+    const count = await prisma.admin.count()
+    // Generate a random index within the total number of records
+    const randomIndex = Math.floor(Math.random() * count)
+    // Select a single record at the random index
+    const randomAdmin = await prisma.admin.findMany({ take: 1, skip: randomIndex })
+    const choosedAdmin = randomAdmin[0].username;
 
-
-// });
+    try {
+        const newOrders = await prisma.orders.create({
+            data: {
+                user_username,
+                service_type,
+                pickup_address,
+                dropoff_address_id,
+                device,
+                device_brand,
+                problem_type,
+                problem_desc,
+                order_status,
+                admin_username: choosedAdmin,
+            },
+        });
+        res.status(201).json({ message: 'New order created succesfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' })
+    };
+});
 
 // app.get("/users", authenticateToken, async (req, res) => {
 //     const users = await prisma.user.findMany();
