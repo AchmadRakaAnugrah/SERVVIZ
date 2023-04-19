@@ -37,7 +37,7 @@ app.post('/api/register', async (req: Request, res: Response) => {
         });
 
         if (existingUser) {
-            return res.status(409).json({ error: 'User already exists' });
+            return res.status(409).json({ message: 'User already exists' });
         }
 
         // hash the password and create a new user in the database
@@ -86,6 +86,73 @@ app.post('/api/login', async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+//Register New Admin
+app.post('/api/admin/register', async (req: Request, res: Response) => {
+    try {
+        const { username, password } = req.body;
+
+        // check if the username or email already exist in the database
+        const existingAdmin = await prisma.admin.findFirst({
+            where: { username },
+        });
+
+        if (existingAdmin) {
+            return res.status(409).json({ message: 'User already exists' });
+        }
+
+        // hash the password and create a new user in the database
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const newAdmin = await prisma.admin.create({
+            data: { username, password: hashedPassword },
+        });
+
+        // generate a new JWT token with a custom payload
+        const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+        const token = jwt.sign({ id: username }, jwtSecret, { expiresIn: '1h' });
+
+        res.status(201).json({ token });
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500).json({ message: 'Internal server error' });
+    }
+});
+
+// Login Admin with JWT auth
+app.post('/api/login', async (req: Request, res: Response) => {
+    const { username, password } = req.body;
+
+    try {
+        // check if user with given email exists
+        const admin = await prisma.admin.findUnique({ where: { username } });
+        if (!admin) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // verify password
+        const passwordMatch = await bcrypt.compare(password, admin.password);
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // generate jwt token
+        const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+        const token = jwt.sign({ id: admin.username }, jwtSecret, { expiresIn: '1h' });
+
+        // return token as response
+        res.status(200).json({ token });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+// app.post("/api/orders", authenticateToken, async (req: Request, res: Response) => {
+//     const {user_username,uniqueCode} = req.body;
+
+
+// });
 
 // app.get("/users", authenticateToken, async (req, res) => {
 //     const users = await prisma.user.findMany();
