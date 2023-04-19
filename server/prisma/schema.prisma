@@ -31,9 +31,9 @@ model Admin {
 
 model Orders {
   id                 Int              @id @default(autoincrement())
-  user               User             @relation(fields: [user_username], references: [username])
-  user_username      String
-  unique_code        String
+  user               User?             @relation(fields: [user_username], references: [username])
+  user_username      String?
+  unique_code        String?
   service_type       String
   pickup_address     String?
   store              Store?           @relation(fields: [dropoff_address_id], references: [id])
