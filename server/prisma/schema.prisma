@@ -31,7 +31,7 @@ model Admin {
 
 model Orders {
   id                 Int              @id @default(autoincrement())
-  user               User?             @relation(fields: [user_username], references: [username])
+  user               User?            @relation(fields: [user_username], references: [username])
   user_username      String?
   unique_code        String?
   service_type       String
@@ -42,7 +42,7 @@ model Orders {
   device_brand       String?
   problem_type       String?
   problem_desc       String?
-  timestamp          DateTime
+  timestamp          DateTime         @default(now())
   order_status       String
   admin              Admin            @relation(fields: [admin_username], references: [username])
   admin_username     String
