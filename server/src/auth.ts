@@ -15,15 +15,17 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
 
   jwt.verify(token, jwtSecret, (err: jwt.VerifyErrors | null, user: any) => {
     if (err) {
-      return res.sendStatus(403);
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).json({ message: "Token expired" });
+      } else {
+        return res.sendStatus(403).json({ message: "Forbidden" });
+      }
     }
 
-    // extend the Request interface with a user property
     interface UserRequest extends Request {
       user: any;
     }
 
-    // cast req as UserRequest to allow assignment of user property
     (req as UserRequest).user = user;
     next();
   });
