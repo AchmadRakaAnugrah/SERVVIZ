@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import authenticateToken from "./auth";
+import authenticateAdminToken from "./authAdmin";
 import validateJSON from "./validateJSON";
 import handleParsingError from "./handleParsingError";
 import rejectEmptyString from "./rejectEmptyString";
@@ -31,7 +32,7 @@ app.use(handleParsingError)
 //Register New User
 app.post('/api/register', rejectEmptyString, async (req: Request, res: Response) => {
     const { email, username, phone, password } = req.body;
-    
+
     try {
         // check if the username or email already exist in the database
         const existingUser = await prisma.user.findFirst({
@@ -54,9 +55,9 @@ app.post('/api/register', rejectEmptyString, async (req: Request, res: Response)
         const token = jwt.sign({ id: username }, jwtSecret, { expiresIn: '1h' });
 
         res.status(201).json({ token, message: 'New user created succesfully' });
-    } catch (error) {
-        console.error(error);
-        res.sendStatus(500).json({ message: 'Internal server error' });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 
@@ -83,8 +84,8 @@ app.post('/api/login', rejectEmptyString, async (req: Request, res: Response) =>
 
         // return token as response
         res.status(200).json({ token });
-    } catch (err) {
-        console.error(err);
+    } catch (e) {
+        console.error(e);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -115,9 +116,9 @@ app.post('/api/admin/register', rejectEmptyString, async (req: Request, res: Res
         const token = jwt.sign({ id: username }, jwtSecret, { expiresIn: '1h' });
 
         res.status(201).json({ token, message: 'New admin created succesfully' });
-    } catch (error) {
-        console.error(error);
-        res.sendStatus(500).json({ message: 'Internal server error' });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 
@@ -144,14 +145,14 @@ app.post('/api/admin/login', rejectEmptyString, async (req: Request, res: Respon
 
         // return token as response
         res.status(200).json({ token });
-    } catch (err) {
-        console.error(err);
+    } catch (e) {
+        console.error(e);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
 
 // Create new order
-app.post("/api/orders", authenticateToken, async (req: Request, res: Response) => {
+app.post("/api/orders", authenticateAdminToken, async (req: Request, res: Response) => {
     const {
         user_username,
         service_type,
@@ -187,16 +188,29 @@ app.post("/api/orders", authenticateToken, async (req: Request, res: Response) =
             },
         });
         res.status(201).json({ message: 'New order created succesfully' });
-    } catch (err) {
-        console.error(err);
+    } catch (e) {
+        console.error(e);
         res.status(500).json({ message: 'Internal server error' })
     };
 });
 
-// app.get("/users", authenticateToken, async (req, res) => {
-//     const users = await prisma.user.findMany();
-//     res.json(users);
-// });
+// GET all order list for admin
+app.get("/api/admin/orders", authenticateAdminToken, async (req: Request, res: Response) => {
+    try {
+        const ordersList = await prisma.orders.findMany({
+            select: {
+                user_username: true,
+                service_type: true,
+                order_status: true,
+                admin_username: true
+            }
+        });
+        res.status(200).json(ordersList);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: 'Internal server error' })
+    }
+});
 
 
 // app.get("/users/:id", async (req, res) => {
