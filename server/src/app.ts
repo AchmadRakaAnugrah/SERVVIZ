@@ -31,7 +31,7 @@ app.use(handleParsingError)
 
 //Register New User
 app.post('/api/register', rejectEmptyString, async (req: Request, res: Response) => {
-    const { email, username, phone, password } = req.body;
+    const { email, username, phone, password, name } = req.body;
 
     try {
         // check if the username or email already exist in the database
@@ -47,7 +47,7 @@ app.post('/api/register', rejectEmptyString, async (req: Request, res: Response)
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = await prisma.user.create({
-            data: { email, username, phone, password: hashedPassword },
+            data: { email, username, phone, password: hashedPassword, name },
         });
 
         // generate a new JWT token with a custom payload
@@ -213,14 +213,38 @@ app.get("/api/admin/orders", authenticateAdminToken, async (req: Request, res: R
 });
 
 
-// app.get("/users/:id", async (req, res) => {
-//     const user = await prisma.user.findUnique({
-//         where: {
-//             id: parseInt(req.params.id),
-//         },
-//     });
-//     res.json(user);
-// });
+// GET username list pagination or list all username
+app.get("/api/admin/search/username/:username", authenticateAdminToken, async (req: Request, res: Response) => {
+    try {
+        const { limit, page } = req.query;
+        const { username = '' } = req.params;
+        const take = limit ? Math.min(Number(limit), 100) : 10;
+        const skip = page ? (Number(page) - 1) * take : 0;
+        const where = username ? {
+            username: {
+                contains: username,
+            },
+        } : {};
+        const [users, totalCount] = await Promise.all([
+            prisma.user.findMany({
+                where,
+                select: {
+                    username: true,
+                    name: true,
+                },
+                take,
+                skip,
+            }),
+            prisma.user.count({
+                where,
+            }),
+        ]);
+        res.status(200).json({ users, totalCount });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: 'Internal server error' })
+    }
+});
 
 // app.post("/users", async (req, res) => {
 //     const { name, email } = req.body;
