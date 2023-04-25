@@ -30,10 +30,10 @@ export const registerAdminHandler = async (req: Request, res: Response) => {
         const jwtSecret = process.env.JWT_SECRET || 'default_secret';
         const token = jwt.sign({ id: username }, jwtSecret, { expiresIn: '1h' });
 
-        res.status(201).json({ token, message: 'New admin created succesfully' });
+        return res.status(201).json({ token, message: 'New admin created succesfully' });
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -59,10 +59,10 @@ export const loginAdminHandler = async (req: Request, res: Response) => {
         const token = jwt.sign({ id: admin.username }, jwtSecret, { expiresIn: '1h' });
 
         // return token as response
-        res.status(200).json({ token });
+        return res.status(200).json({ token });
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -77,10 +77,10 @@ export const getAllOrdersAdminHandler = async (req: Request, res: Response) => {
                 admin_username: true
             }
         });
-        res.status(200).json(ordersList);
+        return res.status(200).json(ordersList);
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'Internal server error' })
     }
 };
 
@@ -110,9 +110,9 @@ export const searchListUsernameHandler = async (req: Request, res: Response) => 
                 where,
             }),
         ]);
-        res.status(200).json({ users, totalCount });
+        return res.status(200).json({ users, totalCount });
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'Internal server error' })
     }
 };
