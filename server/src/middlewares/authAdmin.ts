@@ -8,7 +8,7 @@ const authenticateAdminToken = (req: Request, res: Response, next: NextFunction)
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    return res.sendStatus(401);
+    return res.sendStatus(401).json({ message: "Bad request" });;
   }
 
   const jwtSecret = process.env.JWT_SECRET || "default_secret";

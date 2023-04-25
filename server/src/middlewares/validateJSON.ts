@@ -8,7 +8,7 @@ function validateJSON(req: Request, res: Response, next: NextFunction) {
         next();
     } catch (err) {
         // Return error response if JSON is invalid
-        res.status(400).json({ message: 'Invalid JSON format' });
+        return res.status(400).json({ message: 'Invalid JSON format' });
     }
 }
 
