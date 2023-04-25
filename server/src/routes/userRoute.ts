@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import _ from "lodash";
@@ -31,10 +31,10 @@ export const registerUserHandler = async (req: Request, res: Response) => {
         const jwtSecret = process.env.JWT_SECRET || 'default_secret';
         const token = jwt.sign({ id: username }, jwtSecret, { expiresIn: '1h' });
 
-        res.status(201).json({ token, message: 'New user created succesfully' });
+        return res.status(201).json({ token, message: 'New user created succesfully' });
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -60,10 +60,10 @@ export const loginUserHandler = async (req: Request, res: Response) => {
         const token = jwt.sign({ id: user.username }, jwtSecret, { expiresIn: '1h' });
 
         // return token as response
-        res.status(200).json({ token });
+        return res.status(200).json({ token });
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -103,9 +103,74 @@ export const newOrderUserHandler = async (req: Request, res: Response) => {
                 admin_username: choosedAdmin,
             },
         });
-        res.status(201).json({ message: 'New order created succesfully' });
+        return res.status(201).json({ message: 'New order created succesfully' });
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'Internal server error' });
     };
 };
+
+export const getAllOrdersUserHandler = async (req: Request, res: Response) => {
+    try {
+        const { username } = req.body
+        const ordersList = await prisma.orders.findMany({
+            where: {
+                user: {
+                    username: username,
+                },
+            },
+            select: {
+                id: true,
+                timestamp: true,
+                order_status: true,
+            },
+        });
+        return res.status(200).json(ordersList);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
+}
+
+export const getOrderDetailUserHandler = async (req: Request, res: Response) => {
+    try {
+        const { username, orders_id } = req.params;
+
+        // Check that orders_id is a valid integer
+        const parsedId = parseInt(orders_id);
+        if (isNaN(parsedId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const orderDetails = await prisma.orders.findUnique({
+            where: { id: parsedId },
+            select: {
+                id: true,
+                user_username: true,
+                unique_code: true,
+                service_type: true,
+                pickup_address: true,
+                dropoff_address_id: true,
+                device: true,
+                device_brand: true,
+                problem_type: true,
+                problem_desc: true,
+                timestamp: true,
+                order_status: true,
+                admin_username: true
+            }
+        });
+
+        if (!orderDetails?.id) {
+            return res.status(404).json({ message: 'Not found' });
+        }
+        if (orderDetails?.user_username != username) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        return res.status(200).json(orderDetails);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
+}
