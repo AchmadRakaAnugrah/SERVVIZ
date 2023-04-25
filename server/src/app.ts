@@ -6,11 +6,11 @@ import authenticateToken from "./middlewares/auth";
 import authenticateAdminToken from "./middlewares/authAdmin";
 import validateJSON from "./middlewares/validateJSON";
 import handleParsingError from "./middlewares/handleParsingError";
-import rejectEmptyString from "./middlewares/rejectEmptyString";
 
 // Import user route
-import { registerUserHandler, loginUserHandler, newOrderUserHandler } from "./routes/userRoute";
+import { registerUserHandler, loginUserHandler, newOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler } from "./routes/userRoute";
 import { getAllOrdersAdminHandler, loginAdminHandler, registerAdminHandler, searchListUsernameHandler } from "./routes/adminRoute";
+import { rejectEmptyStringBody } from "./middlewares/rejectEmptyString";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -30,14 +30,15 @@ app.use(helmet());
 app.use(handleParsingError);
 
 // Normal user router
-app.post('/api/register', rejectEmptyString, registerUserHandler);
-app.post('/api/login', rejectEmptyString, loginUserHandler);
+app.post('/api/register', rejectEmptyStringBody, registerUserHandler);
+app.post('/api/login', rejectEmptyStringBody, loginUserHandler);
 app.post('/api/orders', authenticateToken, newOrderUserHandler);
-app.get('/api/orders')
+app.get('/api/orders', authenticateToken, getAllOrdersUserHandler);
+app.get('/api/orders/:username/:orders_id', authenticateToken, getOrderDetailUserHandler);
 
 // Admin user router
-app.post('/api/admin/register', rejectEmptyString, registerAdminHandler);
-app.post('/api/admin/login', rejectEmptyString, loginAdminHandler);
+app.post('/api/admin/register', rejectEmptyStringBody, registerAdminHandler);
+app.post('/api/admin/login', rejectEmptyStringBody, loginAdminHandler);
 app.get('/api/admin/orders', authenticateAdminToken, getAllOrdersAdminHandler);
 app.get('/api/admin/search/username/:username', authenticateAdminToken, searchListUsernameHandler);
 
