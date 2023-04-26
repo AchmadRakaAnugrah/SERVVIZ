@@ -8,9 +8,9 @@ import validateJSON from "./middlewares/validateJSON";
 import handleParsingError from "./middlewares/handleParsingError";
 
 // Import user route
-import { registerUserHandler, loginUserHandler, newOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler } from "./routes/userRoute";
+import { registerUserHandler, loginUserHandler, newOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler } from "./routes/userRoute";
 import { getAllOrdersAdminHandler, loginAdminHandler, registerAdminHandler, searchListUsernameHandler } from "./routes/adminRoute";
-import { rejectEmptyStringBody } from "./middlewares/rejectEmptyString";
+import { rejectEmptyStringBody, rejectEmptyStringParams } from "./middlewares/rejectEmptyString";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -33,14 +33,22 @@ app.use(handleParsingError);
 app.post('/api/register', rejectEmptyStringBody, registerUserHandler);
 app.post('/api/login', rejectEmptyStringBody, loginUserHandler);
 app.post('/api/orders', authenticateToken, newOrderUserHandler);
-app.get('/api/orders', authenticateToken, getAllOrdersUserHandler);
-app.get('/api/orders/:username/:orders_id', authenticateToken, getOrderDetailUserHandler);
+app.get('/api/orders/:username', authenticateToken, rejectEmptyStringParams, getAllOrdersUserHandler);
+app.get('/api/orders/:username/:orders_id', authenticateToken, rejectEmptyStringParams, getOrderDetailUserHandler);
+app.put('/api/orders/:username/:orders_id', authenticateToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailUserHandler);
+app.delete('/api/orders/:username/:orders_id', authenticateAdminToken, rejectEmptyStringParams, deleteOrderDetailUserHandler);
 
 // Admin user router
 app.post('/api/admin/register', rejectEmptyStringBody, registerAdminHandler);
 app.post('/api/admin/login', rejectEmptyStringBody, loginAdminHandler);
 app.get('/api/admin/orders', authenticateAdminToken, getAllOrdersAdminHandler);
 app.get('/api/admin/search/username/:username', authenticateAdminToken, searchListUsernameHandler);
+app.post('/api/admin/technician', authenticateAdminToken, rejectEmptyStringBody, registerAdminHandler);
+// OTW
+// app.put('/api/admin/technician/:id')
+// app.put('/api/admin/orders/:username/:orders_id')
+// app.delete('/api/admin/technician/:id')
+// app.delete('/api/admin/orders/:username/:orders_id')
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
