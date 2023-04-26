@@ -80,7 +80,7 @@ export const getAllOrdersAdminHandler = async (req: Request, res: Response) => {
         return res.status(200).json(ordersList);
     } catch (e) {
         console.error(e);
-        return res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -113,6 +113,44 @@ export const searchListUsernameHandler = async (req: Request, res: Response) => 
         return res.status(200).json({ users, totalCount });
     } catch (e) {
         console.error(e);
-        return res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+export const registerTechnicianAdminHandler = async (req: Request, res: Response) => {
+    try {
+        const { name, phone } = req.body;
+        const newTechnician = await prisma.technician.create({
+            data: { name, phone }
+        })
+
+        return res.status(201).json({ message: 'New technician created succesfully' });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const getAllTechnicianDetails = async (req: Request, res: Response) => {
+    try {
+        const allTechnicianDetails = await prisma.technician.findMany({
+            select: {
+                id: true,
+                name: true,
+                phone: true
+            }
+        });
+
+        // Rename id field to technician_id in each object
+        const allTechnicianDetailsWithRenamedId = allTechnicianDetails.map((technician) => ({
+            ...technician,
+            technician_id: technician.id,
+            id: undefined,
+        }));
+
+        return res.status(200).json(allTechnicianDetailsWithRenamedId);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
