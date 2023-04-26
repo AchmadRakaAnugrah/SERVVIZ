@@ -112,7 +112,7 @@ export const newOrderUserHandler = async (req: Request, res: Response) => {
 
 export const getAllOrdersUserHandler = async (req: Request, res: Response) => {
     try {
-        const { username } = req.body
+        const { username } = req.params
         const ordersList = await prisma.orders.findMany({
             where: {
                 user: {
@@ -169,6 +169,105 @@ export const getOrderDetailUserHandler = async (req: Request, res: Response) => 
         }
 
         return res.status(200).json(orderDetails);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
+}
+
+export const updateOrderDetailUserHandler = async (req: Request, res: Response) => {
+    try {
+        const { username, order_id } = req.params;
+        const {
+            service_type,
+            pickup_address,
+            dropoff_address_id,
+            device,
+            device_brand,
+            problem_type,
+            problem_desc,
+            order_status,
+        } = req.body;
+
+        // Check that orders_id is a valid integer
+        const parsedId = parseInt(order_id);
+        if (isNaN(parsedId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const orderDetails = await prisma.orders.findUnique({
+            where: { id: parsedId },
+            select: {
+                id: true,
+                user_username: true,
+            }
+        });
+
+        if (!orderDetails?.id) {
+            return res.status(404).json({ message: 'Not found' });
+        }
+        if (orderDetails?.user_username !== username) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const updatedOrderDetail = await prisma.orders.update({
+            where: { id: parsedId },
+            data: {
+                service_type,
+                pickup_address,
+                dropoff_address_id,
+                device,
+                device_brand,
+                problem_type,
+                problem_desc,
+                order_status,
+            },
+        });
+
+        return res.status(201).json({ message: 'Success', order_id: parsedId });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
+}
+
+// DELETE order
+export const deleteOrderDetailUserHandler = async (req: Request, res: Response) => {
+    try {
+        const { username, orders_id } = req.params;
+
+        // Check that orders_id is a valid integer
+        const parsedId = parseInt(orders_id);
+        if (isNaN(parsedId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const orderDetails = await prisma.orders.findUnique({
+            where: { id: parsedId },
+            select: {
+                id: true,
+                user_username: true,
+            }
+        });
+
+        if (!orderDetails?.id) {
+            return res.status(404).json({ message: 'Not found' });
+        }
+        if (orderDetails?.user_username !== username) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // Delete the order_history records
+        await prisma.orders_History.deleteMany({
+            where: { order_id: parsedId }
+        })
+
+        // Delete the order
+        await prisma.orders.delete({
+            where: { id: parsedId }
+        })
+
+        return res.status(204).json({ message: 'Success', order_id: parsedId });
     } catch (e) {
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
