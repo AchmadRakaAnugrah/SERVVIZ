@@ -68,7 +68,7 @@ export const loginUserHandler = async (req: Request, res: Response) => {
 };
 
 // Create new order
-export const newOrderUserHandler = async (req: Request, res: Response) => {
+export const createOrderUserHandler = async (req: Request, res: Response) => {
     const {
         user_username,
         service_type,
@@ -199,7 +199,7 @@ export const updateOrderDetailUserHandler = async (req: Request, res: Response) 
             where: { id: parsedId },
             select: {
                 id: true,
-                user_username: true,
+                user_username: true
             }
         });
 
@@ -224,7 +224,7 @@ export const updateOrderDetailUserHandler = async (req: Request, res: Response) 
             },
         });
 
-        return res.status(201).json({ message: 'Success', order_id: parsedId });
+        return res.status(200).json({ message: 'Success', order_id: parsedId });
     } catch (e) {
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
@@ -234,10 +234,10 @@ export const updateOrderDetailUserHandler = async (req: Request, res: Response) 
 // DELETE order
 export const deleteOrderDetailUserHandler = async (req: Request, res: Response) => {
     try {
-        const { username, orders_id } = req.params;
+        const { username, order_id } = req.params;
 
         // Check that orders_id is a valid integer
-        const parsedId = parseInt(orders_id);
+        const parsedId = parseInt(order_id);
         if (isNaN(parsedId)) {
             return res.status(400).json({ message: 'Bad request' });
         }

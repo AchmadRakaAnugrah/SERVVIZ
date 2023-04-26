@@ -11,7 +11,7 @@ export const registerAdminHandler = async (req: Request, res: Response) => {
 
     try {
         // check if the username or email already exist in the database
-        const existingAdmin = await prisma.admin.findFirst({
+        const existingAdmin = await prisma.admin.findUnique({
             where: { username },
         });
 
@@ -153,4 +153,41 @@ export const getAllTechnicianDetails = async (req: Request, res: Response) => {
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
     }
+}
+
+export const updateTechnicianAdminHandler = async (req: Request, res: Response) => {
+    try {
+        const { technician_id } = req.params;
+        const { name, phone } = req.body;
+
+        // Check that technician_id is a valid integer
+        const parsedId = parseInt(technician_id);
+        if (isNaN(parsedId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const checkTechnician = await prisma.technician.findUnique({
+            where: { id: parsedId },
+            select: {
+                id: true,
+            }
+        });
+
+        if (!checkTechnician) {
+            return res.status(404).json({ message: 'Not found' });
+        }
+
+        const updatedOrderDetail = await prisma.technician.update({
+            where: { id: parsedId },
+            data: {
+                name,
+                phone
+            },
+        });
+
+        return res.status(200).json({ message: 'Success', technician_id: parsedId });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
 }
