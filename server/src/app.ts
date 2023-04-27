@@ -9,8 +9,9 @@ import handleParsingError from "./middlewares/handleParsingError";
 
 // Import user route
 import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler } from "./routes/userRoute";
-import { getAllOrdersAdminHandler, loginAdminHandler, registerAdminHandler, searchListUsernameHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
+import { createOrderHistoryAdminHandler, getAllOrdersAdminHandler, loginAdminHandler, registerAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
 import { rejectEmptyStringBody, rejectEmptyStringParams } from "./middlewares/rejectEmptyString";
+import { usernameValidator } from "./middlewares/usernameValidator";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -30,7 +31,7 @@ app.use(helmet());
 app.use(handleParsingError);
 
 // Normal user router
-app.post('/api/register', rejectEmptyStringBody, registerUserHandler);
+app.post('/api/register', rejectEmptyStringBody, usernameValidator, registerUserHandler);
 app.post('/api/login', rejectEmptyStringBody, loginUserHandler);
 app.post('/api/orders', authenticateToken, createOrderUserHandler);
 app.get('/api/orders/:username', authenticateToken, rejectEmptyStringParams, getAllOrdersUserHandler);
@@ -39,7 +40,7 @@ app.put('/api/orders/:username/:orders_id', authenticateToken, rejectEmptyString
 app.delete('/api/orders/:username/:orders_id', authenticateAdminToken, rejectEmptyStringParams, deleteOrderDetailUserHandler);
 
 // Admin user router
-app.post('/api/admin/register', rejectEmptyStringBody, registerAdminHandler);
+app.post('/api/admin/register', rejectEmptyStringBody, usernameValidator, registerAdminHandler);
 app.post('/api/admin/login', rejectEmptyStringBody, loginAdminHandler);
 app.get('/api/admin/orders', authenticateAdminToken, getAllOrdersAdminHandler);
 app.get('/api/admin/search/username/:username', authenticateAdminToken, searchListUsernameHandler);
@@ -47,8 +48,10 @@ app.get('/api/admin/technician', authenticateAdminToken);
 app.post('/api/admin/technician', authenticateAdminToken, rejectEmptyStringBody, registerAdminHandler);
 app.get('/api/admin/technician', authenticateAdminToken, getAllOrdersAdminHandler)
 app.put('/api/admin/technician/:id', authenticateAdminToken, rejectEmptyStringParams, rejectEmptyStringBody, updateTechnicianAdminHandler);
+app.put('/api/admin/orders/:username/:orders_id', authenticateAdminToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailsAdminHandler);
+app.post('/api/admin/orders/history', authenticateAdminToken, createOrderHistoryAdminHandler)
+app.post('api/admin/store')
 // OTW
-// app.put('/api/admin/orders/:username/:orders_id')
 // app.delete('/api/admin/technician/:id')
 // app.delete('/api/admin/orders/:username/:orders_id')
 
