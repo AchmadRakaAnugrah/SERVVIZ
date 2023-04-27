@@ -43,23 +43,24 @@ model Orders {
   device_brand       String?
   problem_type       String?
   problem_desc       String?
-  timestamp          DateTime         @default(now())
+  datetime           DateTime         @default(now())
   order_status       String
   admin              Admin            @relation(fields: [admin_username], references: [username])
   admin_username     String
+  total_price        Int?
   blobs              Blobs[]
   order_history      Orders_History[]
 }
 
 model Orders_History {
-  id              Int         @id @default(autoincrement())
-  orders          Orders      @relation(fields: [order_id], references: [id])
-  order_id        Int
-  technician      Technician? @relation(fields: [technician_id], references: [id])
-  technician_id   Int?
-  order_completed DateTime?
-  status          String?
-  total_price     Int?
+  id            Int         @id @default(autoincrement())
+  orders        Orders      @relation(fields: [order_id], references: [id])
+  order_id      Int
+  technician    Technician? @relation(fields: [technician_id], references: [id])
+  technician_id Int?
+  datetime      DateTime    @default(now())
+  status        String
+  description   String?
 }
 
 model Technician {
@@ -71,6 +72,7 @@ model Technician {
 
 model Store {
   id      Int      @id @default(autoincrement())
+  name    String
   address String?
   phone   String?
   orders  Orders[]
