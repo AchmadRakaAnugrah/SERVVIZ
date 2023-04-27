@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 //Register New User
 export const registerUserHandler = async (req: Request, res: Response) => {
-    const { email, username, phone, password, name } = req.body;
+    const { email, name, username, phone, password } = req.body;
 
     try {
         // check if the username or email already exist in the database
@@ -24,7 +24,7 @@ export const registerUserHandler = async (req: Request, res: Response) => {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = await prisma.user.create({
-            data: { email, username, phone, password: hashedPassword, name },
+            data: { email, name, username, phone, password: hashedPassword },
         });
 
         // generate a new JWT token with a custom payload
@@ -77,7 +77,7 @@ export const createOrderUserHandler = async (req: Request, res: Response) => {
         device,
         device_brand,
         problem_type,
-        problem_desc,
+        problem_desc
     } = _.mapValues(req.body, (value) => (value === '' ? null : value));
     const order_status = "Submitted";
     // Get the total number of records in the table
@@ -100,7 +100,7 @@ export const createOrderUserHandler = async (req: Request, res: Response) => {
                 problem_type,
                 problem_desc,
                 order_status,
-                admin_username: choosedAdmin,
+                admin_username: choosedAdmin
             },
         });
         return res.status(201).json({ message: 'New order created succesfully' });
@@ -121,7 +121,7 @@ export const getAllOrdersUserHandler = async (req: Request, res: Response) => {
             },
             select: {
                 id: true,
-                timestamp: true,
+                datetime: true,
                 order_status: true,
             },
         });
@@ -155,7 +155,7 @@ export const getOrderDetailUserHandler = async (req: Request, res: Response) => 
                 device_brand: true,
                 problem_type: true,
                 problem_desc: true,
-                timestamp: true,
+                datetime: true,
                 order_status: true,
                 admin_username: true
             }
