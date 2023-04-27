@@ -86,9 +86,9 @@ export const getAllOrdersAdminHandler = async (req: Request, res: Response) => {
 
 // GET username list pagination or list all username
 export const searchListUsernameHandler = async (req: Request, res: Response) => {
+    const { limit, page } = req.query;
+    const { username = '' } = req.params;
     try {
-        const { limit, page } = req.query;
-        const { username = '' } = req.params;
         const take = limit ? Math.min(Number(limit), 100) : 10;
         const skip = page ? (Number(page) - 1) * take : 0;
         const where = username ? {
@@ -118,8 +118,8 @@ export const searchListUsernameHandler = async (req: Request, res: Response) => 
 };
 
 export const registerTechnicianAdminHandler = async (req: Request, res: Response) => {
+    const { name, phone } = req.body;
     try {
-        const { name, phone } = req.body;
         const newTechnician = await prisma.technician.create({
             data: { name, phone }
         })
@@ -156,10 +156,10 @@ export const getAllTechnicianDetails = async (req: Request, res: Response) => {
 }
 
 export const updateTechnicianAdminHandler = async (req: Request, res: Response) => {
-    try {
-        const { technician_id } = req.params;
-        const { name, phone } = req.body;
+    const { technician_id } = req.params;
+    const { name, phone } = req.body;
 
+    try {
         // Check that technician_id is a valid integer
         const parsedId = parseInt(technician_id);
         if (isNaN(parsedId)) {
@@ -186,6 +186,154 @@ export const updateTechnicianAdminHandler = async (req: Request, res: Response) 
         });
 
         return res.status(200).json({ message: 'Success', technician_id: parsedId });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
+}
+
+export const updateOrderDetailsAdminHandler = async (req: Request, res: Response) => {
+    const { username, order_id } = req.params;
+    const {
+        service_type,
+        pickup_address,
+        dropoff_address_id,
+        device,
+        device_brand,
+        problem_type,
+        problem_desc,
+        order_status,
+    } = req.body;
+
+    try {
+        // Check that orders_id is a valid integer
+        const parsedId = parseInt(order_id);
+        if (isNaN(parsedId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const orderDetails = await prisma.orders.findUnique({
+            where: { id: parsedId },
+            select: {
+                id: true,
+                user_username: true
+            }
+        });
+
+        if (!orderDetails?.id) {
+            return res.status(404).json({ message: 'Not found' });
+        }
+        if (orderDetails?.user_username !== username) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const updatedOrderDetail = await prisma.orders.update({
+            where: { id: parsedId },
+            data: {
+                service_type,
+                pickup_address,
+                dropoff_address_id,
+                device,
+                device_brand,
+                problem_type,
+                problem_desc,
+                order_status,
+            },
+        });
+
+        return res.status(200).json({ message: 'Success', order_id: parsedId });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
+}
+
+export const createOrderHistoryAdminHandler = async (req: Request, res: Response) => {
+    const { order_id, technician_id, status, description } = req.body
+    try {
+        // Check that orders_id and technician_id is a valid integer
+        const parsedOrderId = parseInt(order_id);
+        if (isNaN(parsedOrderId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+        const parsedTechnicianId = parseInt(technician_id);
+        if (isNaN(parsedTechnicianId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const checkOrderId = await prisma.orders.findUnique({
+            where: { id: parsedOrderId },
+            select: {
+                id: true,
+            }
+        });
+        if (!checkOrderId) { return res.status(404).json({ message: 'Order id ot found' }); }
+        const checkTechnicianId = await prisma.technician.findUnique({
+            where: { id: parsedTechnicianId },
+            select: {
+                id: true,
+            }
+        });
+        if (!checkTechnicianId) { return res.status(404).json({ message: 'Technician not found' }); }
+
+        const newOrderHistory = await prisma.orders_History.create({
+            data: {
+                order_id: parsedOrderId,
+                technician_id: parsedTechnicianId,
+                status,
+                description
+            }
+        })
+
+        return res.status(201).json({ message: 'New order history created succesfully' })
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
+}
+
+export const createStoreAdminHandler = async (req: Request, res: Response) => {
+    const { name, address, phone } = req.body;
+    try {
+        const newStore = await prisma.store.create({
+            data: {
+                name,
+                address,
+                phone
+            }
+        })
+
+        return res.status(201).json({ message: 'New store created succesfully' });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
+}
+
+export const updateStoreAdminHandler = async (req: Request, res: Response) => {
+    const { store_id, name, address, phone } = req.body;
+    try {
+        const parsedStoreId = parseInt(store_id);
+        if (isNaN(parsedStoreId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+        const checkOrderId = await prisma.store.findUnique({
+            where: { id: parsedStoreId },
+            select: {
+                id: true,
+            }
+        });
+        if (!checkOrderId) { return res.status(404).json({ message: 'Order id ot found' }); }
+
+        const updatedStore = await prisma.store.update({
+            where: { id: parsedStoreId },
+            data: {
+                name,
+                address,
+                phone,
+            }
+        })
+        return res.status(200).json({ message: 'Store updated succesfully' });
     } catch (e) {
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
