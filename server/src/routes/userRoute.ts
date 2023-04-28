@@ -20,6 +20,11 @@ export const registerUserHandler = async (req: Request, res: Response) => {
             return res.status(409).json({ message: 'User already exists' });
         }
 
+        const pattern = /^(0|\+62)[0-9]{1,20}$/;
+        if (!pattern.test(phone)) {
+            return res.status(400).json({ message: 'Invalid phone number' });
+        }
+
         // hash the password and create a new user in the database
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -69,8 +74,8 @@ export const loginUserHandler = async (req: Request, res: Response) => {
 
 // Create new order
 export const createOrderUserHandler = async (req: Request, res: Response) => {
+    const { username } = req.params;
     const {
-        user_username,
         service_type,
         pickup_address,
         dropoff_address_id,
@@ -91,7 +96,7 @@ export const createOrderUserHandler = async (req: Request, res: Response) => {
     try {
         const newOrders = await prisma.orders.create({
             data: {
-                user_username,
+                user_username: username,
                 service_type,
                 pickup_address,
                 dropoff_address_id,
