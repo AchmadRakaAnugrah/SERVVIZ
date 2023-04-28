@@ -6,10 +6,16 @@ export const usernameValidator = (req: Request, res: Response, next: NextFunctio
     .isAlphanumeric()
     .run(req);
 
+  body('name')
+    .trim()
+    .notEmpty()
+    .isLength({ max: 100 })
+    .run(req);
+
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ message: errors.array() });
   }
 
   return next();
