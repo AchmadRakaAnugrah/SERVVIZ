@@ -120,6 +120,11 @@ export const searchListUsernameHandler = async (req: Request, res: Response) => 
 export const registerTechnicianAdminHandler = async (req: Request, res: Response) => {
     const { name, phone } = req.body;
     try {
+        const pattern = /^(0|\+62)[0-9]{1,20}$/;
+        if (!pattern.test(phone)) {
+            return res.status(400).json({ message: 'Invalid phone number' });
+        }
+
         const newTechnician = await prisma.technician.create({
             data: { name, phone }
         })
@@ -221,7 +226,7 @@ export const updateOrderDetailsAdminHandler = async (req: Request, res: Response
         });
 
         if (!orderDetails?.id) {
-            return res.status(404).json({ message: 'Not found' });
+            return res.status(404).json({ message: 'Order not found' });
         }
         if (orderDetails?.user_username !== username) {
             return res.status(401).json({ message: 'Invalid credentials' });
@@ -249,7 +254,8 @@ export const updateOrderDetailsAdminHandler = async (req: Request, res: Response
 }
 
 export const createOrderHistoryAdminHandler = async (req: Request, res: Response) => {
-    const { order_id, technician_id, status, description } = req.body
+    const { username, order_id } = req.params;
+    const { technician_id, status, description } = req.body
     try {
         // Check that orders_id and technician_id is a valid integer
         const parsedOrderId = parseInt(order_id);
@@ -265,9 +271,13 @@ export const createOrderHistoryAdminHandler = async (req: Request, res: Response
             where: { id: parsedOrderId },
             select: {
                 id: true,
+                user_username: true,
             }
         });
-        if (!checkOrderId) { return res.status(404).json({ message: 'Order id ot found' }); }
+        if (!checkOrderId) { return res.status(404).json({ message: 'Order not found' }); }
+        if (checkOrderId.user_username !== username) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
         const checkTechnicianId = await prisma.technician.findUnique({
             where: { id: parsedTechnicianId },
             select: {
@@ -295,6 +305,11 @@ export const createOrderHistoryAdminHandler = async (req: Request, res: Response
 export const createStoreAdminHandler = async (req: Request, res: Response) => {
     const { name, address, phone } = req.body;
     try {
+        const pattern = /^(0|\+62)[0-9]{1,20}$/;
+        if (!pattern.test(phone)) {
+            return res.status(400).json({ message: 'Invalid phone number' });
+        }
+
         const newStore = await prisma.store.create({
             data: {
                 name,
@@ -311,7 +326,8 @@ export const createStoreAdminHandler = async (req: Request, res: Response) => {
 }
 
 export const updateStoreAdminHandler = async (req: Request, res: Response) => {
-    const { store_id, name, address, phone } = req.body;
+    const { store_id } = req.params;
+    const { name, address, phone } = req.body;
     try {
         const parsedStoreId = parseInt(store_id);
         if (isNaN(parsedStoreId)) {
@@ -323,7 +339,7 @@ export const updateStoreAdminHandler = async (req: Request, res: Response) => {
                 id: true,
             }
         });
-        if (!checkOrderId) { return res.status(404).json({ message: 'Order id ot found' }); }
+        if (!checkOrderId) { return res.status(404).json({ message: 'Store not found' }); }
 
         const updatedStore = await prisma.store.update({
             where: { id: parsedStoreId },
