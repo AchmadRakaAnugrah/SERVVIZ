@@ -3,6 +3,9 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import _ from "lodash";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 
 const prisma = new PrismaClient();
 
@@ -139,10 +142,10 @@ export const getAllOrdersUserHandler = async (req: Request, res: Response) => {
 
 export const getOrderDetailUserHandler = async (req: Request, res: Response) => {
     try {
-        const { username, orders_id } = req.params;
+        const { username, order_id } = req.params;
 
-        // Check that orders_id is a valid integer
-        const parsedId = parseInt(orders_id);
+        // Check that order_id is a valid integer
+        const parsedId = parseInt(order_id);
         if (isNaN(parsedId)) {
             return res.status(400).json({ message: 'Bad request' });
         }
@@ -194,7 +197,7 @@ export const updateOrderDetailUserHandler = async (req: Request, res: Response) 
             order_status,
         } = req.body;
 
-        // Check that orders_id is a valid integer
+        // Check that order_id is a valid integer
         const parsedId = parseInt(order_id);
         if (isNaN(parsedId)) {
             return res.status(400).json({ message: 'Bad request' });
@@ -241,7 +244,7 @@ export const deleteOrderDetailUserHandler = async (req: Request, res: Response) 
     try {
         const { username, order_id } = req.params;
 
-        // Check that orders_id is a valid integer
+        // Check that order_id is a valid integer
         const parsedId = parseInt(order_id);
         if (isNaN(parsedId)) {
             return res.status(400).json({ message: 'Bad request' });
@@ -277,4 +280,44 @@ export const deleteOrderDetailUserHandler = async (req: Request, res: Response) 
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
     };
+}
+
+export const createBlobsUserHandler = async (req: Request, res: Response) => {
+    try {
+        const { username, order_id } = req.params;
+        if (!req.file) { return res.status(400).json({ message: 'No file uploaded' }); }
+        const filename = req.file.filename;
+
+        // Check that order_id is a valid integer
+        const parsedId = parseInt(order_id);
+        if (isNaN(parsedId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const orderDetails = await prisma.orders.findUnique({
+            where: { id: parsedId },
+            select: {
+                id: true,
+                user_username: true,
+            }
+        });
+
+        if (!orderDetails?.id) {
+            return res.status(404).json({ message: 'Not found' });
+        }
+        if (orderDetails?.user_username !== username) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const newBlob = await prisma.blobs.create({
+            data: {
+                id: parsedId,
+                filename
+            }
+        });
+        return res.status(201).json({ message: 'New blob created succefully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error uploading file' });
+    }
 }

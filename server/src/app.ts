@@ -8,10 +8,11 @@ import validateJSON from "./middlewares/validateJSON";
 import handleParsingError from "./middlewares/handleParsingError";
 
 // Import user route
-import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler } from "./routes/userRoute";
+import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler, createBlobsUserHandler } from "./routes/userRoute";
 import { createOrderHistoryAdminHandler, createStoreAdminHandler, getAllOrdersAdminHandler, getAllTechnicianDetails, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateStoreAdminHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
 import { rejectEmptyStringBody, rejectEmptyStringParams } from "./middlewares/rejectEmptyString";
 import { usernameValidator } from "./middlewares/usernameValidator";
+import { uploadBlobs } from "./middlewares/uploadBlobs";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -39,11 +40,18 @@ app.post('/api/orders/:username', authenticateToken, createOrderUserHandler);
 // Get all order of specific username
 app.get('/api/orders/:username', authenticateToken, rejectEmptyStringParams, getAllOrdersUserHandler);
 // Get order detail
-app.get('/api/orders/:username/:orders_id', authenticateToken, rejectEmptyStringParams, getOrderDetailUserHandler);
+app.get('/api/orders/:username/:order_id', authenticateToken, rejectEmptyStringParams, getOrderDetailUserHandler);
 // Update user order
-app.put('/api/orders/:username/:orders_id', authenticateToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailUserHandler);
+app.put('/api/orders/:username/:order_id', authenticateToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailUserHandler);
 // Delete order
-app.delete('/api/orders/:username/:orders_id', authenticateAdminToken, rejectEmptyStringParams, deleteOrderDetailUserHandler);
+app.delete('/api/orders/:username/:order_id', authenticateAdminToken, rejectEmptyStringParams, deleteOrderDetailUserHandler);
+// BLOB ROUTE
+// Get blob image
+// app.get('/api/blobs/:filename')
+// Create blobs image
+app.post('/api/orders/:username/:order_id/', authenticateToken, uploadBlobs.single('file'), createBlobsUserHandler);
+// Delete blobs image
+// app.delete('/api/blobs/:filename')
 
 // ADMIN USER
 // Register new admin
