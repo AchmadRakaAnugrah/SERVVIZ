@@ -3,9 +3,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import _ from "lodash";
-import multer from "multer";
-import path from "path";
-import fs from "fs";
+import * as fs from 'fs';
 
 const prisma = new PrismaClient();
 
@@ -121,6 +119,12 @@ export const createOrderUserHandler = async (req: Request, res: Response) => {
 export const getAllOrdersUserHandler = async (req: Request, res: Response) => {
     try {
         const { username } = req.params
+        const checkUsername = await prisma.user.findUnique({
+            where: { username }
+        })
+        if (!checkUsername) {
+            return res.status(404).json({ message: 'User not found' })
+        }
         const ordersList = await prisma.orders.findMany({
             where: {
                 user: {
@@ -256,7 +260,7 @@ export const deleteOrderDetailUserHandler = async (req: Request, res: Response) 
                 id: true,
                 user_username: true,
             }
-        });
+        })
 
         if (!orderDetails?.id) {
             return res.status(404).json({ message: 'Not found' });
@@ -279,7 +283,7 @@ export const deleteOrderDetailUserHandler = async (req: Request, res: Response) 
     } catch (e) {
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
-    };
+    }
 }
 
 export const createBlobsUserHandler = async (req: Request, res: Response) => {
@@ -300,7 +304,7 @@ export const createBlobsUserHandler = async (req: Request, res: Response) => {
                 id: true,
                 user_username: true,
             }
-        });
+        })
 
         if (!orderDetails?.id) {
             return res.status(404).json({ message: 'Not found' });
@@ -312,12 +316,70 @@ export const createBlobsUserHandler = async (req: Request, res: Response) => {
         const newBlob = await prisma.blobs.create({
             data: {
                 id: parsedId,
-                filename
+                filename,
             }
         });
         return res.status(201).json({ message: 'New blob created succefully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error uploading file' });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const getBlobsListUserHandler = async (req: Request, res: Response) => {
+    try {
+        const parsedId = parseInt(req.params.order_id);
+        const blobsList = await prisma.blobs.findMany({
+            where: { id: parsedId },
+            select: { filename: true }
+        })
+
+        if (!blobsList) { return res.status(404).json({ message: "Not found" }) };
+        return res.status(200).json(blobsList);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const deleteBlobsUserHandler = async (req: Request, res: Response) => {
+    try {
+        const filename = req.params.filename;
+        const targetBlobs = await prisma.blobs.findUnique({ where: { filename } })
+
+        if (!targetBlobs) { return res.status(404).json({ message: 'Blobs not found' }) }
+
+        const imagePath = `../blobs/${filename}`;
+        fs.unlink(imagePath, (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+            return res.status(200).json({ message: 'Blobs deleted successfully' });
+        })
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const getBlobsUserHandeler = async (req: Request, res: Response) => {
+    try {
+        const filename = req.params.filename;
+        const checkExistInDb = await prisma.blobs.findUnique({
+            where: { filename },
+            select: { filename: true }
+        })
+
+        if (!checkExistInDb) {
+            return res.status(404).json({ message: 'Blobs not found' });
+        }
+
+        const filePath = `../blobs/${checkExistInDb.filename}`;
+
+        res.status(200).sendFile(filePath);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 }

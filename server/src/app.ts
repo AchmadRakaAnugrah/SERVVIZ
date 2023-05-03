@@ -8,11 +8,12 @@ import validateJSON from "./middlewares/validateJSON";
 import handleParsingError from "./middlewares/handleParsingError";
 
 // Import user route
-import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler, createBlobsUserHandler } from "./routes/userRoute";
+import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler, createBlobsUserHandler, getBlobsListUserHandler, deleteBlobsUserHandler, getBlobsUserHandeler } from "./routes/userRoute";
 import { createOrderHistoryAdminHandler, createStoreAdminHandler, getAllOrdersAdminHandler, getAllTechnicianDetails, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateStoreAdminHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
 import { rejectEmptyStringBody, rejectEmptyStringParams } from "./middlewares/rejectEmptyString";
 import { usernameValidator } from "./middlewares/usernameValidator";
 import { uploadBlobs } from "./middlewares/uploadBlobs";
+import { verifyOrderAndUsername } from "./middlewares/verifyOrderAndUsername";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -20,11 +21,12 @@ const PORT = process.env.PORT || 5000;
 
 try {
     prisma.$connect();
-    console.log("Database connected!");
 } catch (e) {
     console.error("Failed to connect to database:", e);
     process.exit(1);
 }
+
+console.log("Database connected!");
 
 app.use(express.json());
 app.use(cors());
@@ -44,14 +46,16 @@ app.get('/api/orders/:username/:order_id', authenticateToken, rejectEmptyStringP
 // Update user order
 app.put('/api/orders/:username/:order_id', authenticateToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailUserHandler);
 // Delete order
-app.delete('/api/orders/:username/:order_id', authenticateAdminToken, rejectEmptyStringParams, deleteOrderDetailUserHandler);
+app.delete('/api/orders/:username/:order_id', authenticateToken, rejectEmptyStringParams, deleteOrderDetailUserHandler);
 // BLOB ROUTE
-// Get blob image
-// app.get('/api/blobs/:filename')
+// Get blob list image
+app.get('/api/orders/:username/:order_id/blobs', authenticateToken, rejectEmptyStringParams, getBlobsListUserHandler);
+//Get blob image
+app.get('/api/orders/:username/:order_id/blobs/:filename', authenticateToken, rejectEmptyStringParams, getBlobsUserHandeler)
 // Create blobs image
-app.post('/api/orders/:username/:order_id/', authenticateToken, uploadBlobs.single('file'), createBlobsUserHandler);
+app.post('/api/orders/:username/:order_id/blobs', authenticateToken, rejectEmptyStringParams, verifyOrderAndUsername, uploadBlobs.single('file'), createBlobsUserHandler);
 // Delete blobs image
-// app.delete('/api/blobs/:filename')
+app.delete('/api/orders/:username/:order_id/blobs/:filename', authenticateToken, rejectEmptyStringParams, deleteBlobsUserHandler)
 
 // ADMIN USER
 // Register new admin
