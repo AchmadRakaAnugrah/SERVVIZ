@@ -21,8 +21,13 @@ export const registerUserHandler = async (req: Request, res: Response) => {
             return res.status(409).json({ message: 'User already exists' });
         }
 
-        const pattern = /^(0|\+62)[0-9]{1,20}$/;
-        if (!pattern.test(phone)) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: 'Invalid email' });
+        }
+
+        const phoneRegex = /^(0|\+62)[0-9]{1,20}$/;
+        if (!phoneRegex.test(phone)) {
             return res.status(400).json({ message: 'Invalid phone number' });
         }
 
@@ -64,6 +69,48 @@ export const loginUserHandler = async (req: Request, res: Response) => {
         // generate jwt token
         const jwtSecret = process.env.JWT_SECRET || 'default_secret';
         const token = jwt.sign({ id: user.username }, jwtSecret, { expiresIn: '1h' });
+
+        // return token as response
+        return res.status(200).json({ token });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+export const changePasswordUserHandler = async (req: Request, res: Response) => {
+    const { oldPassword, newPassword } = req.body;
+    const { username } = req.params;
+    // assuming that the authenticated user's ID is available in the request object
+
+    try {
+        // check if user with given ID exists
+        const user = await prisma.user.findUnique({ where: { username } });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // verify old password
+        const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // update password in the database
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await prisma.user.update({
+            where: { username },
+            data: { password: hashedPassword },
+        });
+
+        // generate new jwt token with updated credentials
+        const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+        const token = jwt.sign({
+            id: user.username,
+            password: hashedPassword
+        },
+            jwtSecret, { expiresIn: '1h' }
+        );
 
         // return token as response
         return res.status(200).json({ token });
@@ -211,7 +258,8 @@ export const updateOrderDetailUserHandler = async (req: Request, res: Response) 
             where: { id: parsedId },
             select: {
                 id: true,
-                user_username: true
+                user_username: true,
+                datetime: true,
             }
         });
 
@@ -220,6 +268,11 @@ export const updateOrderDetailUserHandler = async (req: Request, res: Response) 
         }
         if (orderDetails?.user_username !== username) {
             return res.status(401).json({ message: 'Invalid credentials' });
+        }
+        // Check if the order is more than 30 minutes old
+        const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+        if (orderDetails.datetime < thirtyMinutesAgo) {
+            return res.status(403).json({ message: 'Cannot edit orders that are more than 30 minutes old' });
         }
 
         const updatedOrderDetail = await prisma.orders.update({
@@ -259,6 +312,8 @@ export const deleteOrderDetailUserHandler = async (req: Request, res: Response) 
             select: {
                 id: true,
                 user_username: true,
+                datetime: true,
+                order_status: true,
             }
         })
 
@@ -269,16 +324,26 @@ export const deleteOrderDetailUserHandler = async (req: Request, res: Response) 
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        // Delete the order_history records
-        await prisma.orders_History.deleteMany({
-            where: { order_id: parsedId }
-        })
+        if (orderDetails.order_status === 'Selesai') {
+            // Delete the order_history records
+            await prisma.orders_History.deleteMany({
+                where: { order_id: parsedId }
+            })
 
-        // Delete the order
-        await prisma.orders.delete({
-            where: { id: parsedId }
-        })
+            // Delete the order
+            await prisma.orders.delete({ where: { id: parsedId } })
 
+            return res.status(204).json({ message: 'Success', order_id: parsedId });
+        }
+
+        // Check if the order is more than 30 minutes old and not finished
+        const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+        if (orderDetails.datetime < thirtyMinutesAgo) {
+            return res.status(403).json({
+                message: 'Cannot delete orders that are more than 30 minutes old'
+            });
+        }
+        
         return res.status(204).json({ message: 'Success', order_id: parsedId });
     } catch (e) {
         console.error(e);
