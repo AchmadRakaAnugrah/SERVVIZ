@@ -335,6 +335,9 @@ export const createOrderHistoryAdminHandler = async (req: Request, res: Response
                 description
             }
         })
+        const updateLastOrderStatus = await prisma.orders.update({
+            where: { id: parsedOrderId }, data: { order_status: status }
+        })
 
         return res.status(201).json({ message: 'New order history created succesfully' })
     } catch (e) {
