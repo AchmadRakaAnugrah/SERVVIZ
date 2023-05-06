@@ -8,8 +8,8 @@ import validateJSON from "./middlewares/validateJSON";
 import handleParsingError from "./middlewares/handleParsingError";
 
 // Import user route
-import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler, createBlobsUserHandler, getBlobsListUserHandler, deleteBlobsUserHandler, getBlobsUserHandeler } from "./routes/userRoute";
-import { createOrderHistoryAdminHandler, createStoreAdminHandler, getAllOrdersAdminHandler, getAllTechnicianDetails, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateStoreAdminHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
+import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler, createBlobsUserHandler, getBlobsListUserHandler, deleteBlobsUserHandler, getBlobsUserHandeler, changePasswordUserHandler } from "./routes/userRoute";
+import { changePasswordAdminHandler, createOrderHistoryAdminHandler, createStoreAdminHandler, getAllOrdersAdminHandler, getAllTechnicianDetails, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateStoreAdminHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
 import { rejectEmptyStringBody, rejectEmptyStringParams } from "./middlewares/rejectEmptyString";
 import { usernameValidator } from "./middlewares/usernameValidator";
 import { uploadBlobs } from "./middlewares/uploadBlobs";
@@ -35,7 +35,8 @@ app.use(handleParsingError);
 
 // NORMAL USER
 app.post('/api/register', rejectEmptyStringBody, usernameValidator, registerUserHandler);
-app.post('/api/login', rejectEmptyStringBody, loginUserHandler);
+app.post('/api/login', rejectEmptyStringParams, rejectEmptyStringBody, loginUserHandler);
+app.put('/api/change', rejectEmptyStringBody, rejectEmptyStringBody, changePasswordUserHandler);
 // ORDER ROUTE
 // Create order
 app.post('/api/orders/:username', authenticateToken, createOrderUserHandler);
@@ -62,6 +63,7 @@ app.delete('/api/orders/:username/:order_id/blobs/:filename', authenticateToken,
 app.post('/api/admin/register', rejectEmptyStringBody, usernameValidator, registerAdminHandler);
 // Login admin
 app.post('/api/admin/login', rejectEmptyStringBody, loginAdminHandler);
+app.put('/api/admin/change', rejectEmptyStringBody, rejectEmptyStringBody, changePasswordAdminHandler);
 // ORDER ROUTE
 // Get all order list
 app.get('/api/admin/orders', authenticateAdminToken, getAllOrdersAdminHandler);
