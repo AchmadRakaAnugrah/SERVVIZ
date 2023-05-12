@@ -66,6 +66,45 @@ export const loginAdminHandler = async (req: Request, res: Response) => {
     }
 };
 
+export const changePasswordAdminHandler = async (req: Request, res: Response) => {
+    const { oldPassword, newPassword } = req.body;
+    const { username } = req.body; // assuming that the authenticated user's ID is available in the request object
+
+    try {
+        // check if user with given ID exists
+        const admin = await prisma.admin.findUnique({ where: { username } });
+        if (!admin) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // verify old password
+        const passwordMatch = await bcrypt.compare(oldPassword, admin.password);
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // update password in the database
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await prisma.admin.update({
+            where: { username },
+            data: { password: hashedPassword },
+        });
+
+        // generate new jwt token with updated credentials
+        const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+        const token = jwt.sign({
+            id: admin.username,
+            password: hashedPassword
+        }, jwtSecret, { expiresIn: '1h' });
+
+        // return token as response
+        return res.status(200).json({ token });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 // GET all order list for admin
 export const getAllOrdersAdminHandler = async (req: Request, res: Response) => {
     try {
@@ -147,11 +186,13 @@ export const getAllTechnicianDetails = async (req: Request, res: Response) => {
         });
 
         // Rename id field to technician_id in each object
-        const allTechnicianDetailsWithRenamedId = allTechnicianDetails.map((technician) => ({
-            ...technician,
-            technician_id: technician.id,
-            id: undefined,
-        }));
+        const allTechnicianDetailsWithRenamedId = allTechnicianDetails.map(
+            (technician) => ({
+                ...technician,
+                technician_id: technician.id,
+                id: undefined,
+            })
+        );
 
         return res.status(200).json(allTechnicianDetailsWithRenamedId);
     } catch (e) {
@@ -293,6 +334,9 @@ export const createOrderHistoryAdminHandler = async (req: Request, res: Response
                 status,
                 description
             }
+        })
+        const updateLastOrderStatus = await prisma.orders.update({
+            where: { id: parsedOrderId }, data: { order_status: status }
         })
 
         return res.status(201).json({ message: 'New order history created succesfully' })
