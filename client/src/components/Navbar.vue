@@ -20,11 +20,16 @@ import { RouterLink } from 'vue-router';
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Navbar brand -->
       <a class="navbar-brand mt-2 mt-lg-0" href="#">
-        <img src="../../public/bat.png" height="40"
+        <img src="../../public/deviantart.png" height="30"
           alt="MDB Logo" loading="lazy" />
       </a>
       <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+    </div>
+    <!-- Collapsible wrapper -->
+
+    <!-- Right elements -->
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <router-link to="/">
             <a class="nav-link">Home</a>
@@ -47,10 +52,6 @@ import { RouterLink } from 'vue-router';
         </li>
       </ul>
       <!-- Left links -->
-    </div>
-    <!-- Collapsible wrapper -->
-
-    <!-- Right elements -->
     <div class="d-flex align-items-center">
       <router-link to="/SignInView.vue">
         <button type="button" class="btn btn-primary me-3">

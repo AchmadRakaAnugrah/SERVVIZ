@@ -57,7 +57,9 @@ import DefaultFooter from '../components/Footer.vue';
 
       <div class="container mt-5 bg-secondary">
         <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut mauris eget ex aliquam laoreet. Sed auctor tortor sit amet neque hendrerit, eget egestas neque ullamcorper.</p>
-        <button class="btn btn-primary btn-lg d-block mx-auto mt-4">Order Now</button>
+        <router-link to="/OrderView.vue">
+          <button class="btn btn-primary btn-lg d-block mx-auto mt-4">Order Now</button>
+        </router-link>  
       </div>
     </div>
 
@@ -121,8 +123,8 @@ p {
 }
 
 .container {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .bg-secondary {
@@ -131,7 +133,9 @@ p {
 }
 
 .card {
-  margin-bottom: 20px;
+    width: 100%;
+  max-width: 500px;
+  padding: 20px;
 }
 
 .btn-lg {
