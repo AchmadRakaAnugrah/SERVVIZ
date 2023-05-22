@@ -12,8 +12,8 @@ import 'bootstrap';
             <h5 class="card-title">Sign In</h5>
             <form @submit.prevent="signIn">
               <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" v-model="email" required>
+                <label for="username">Username</label>
+                <input type="username" class="form-control" id="username" v-model="username" required>
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
@@ -30,23 +30,40 @@ import 'bootstrap';
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import axios, { AxiosError } from 'axios';
+import { useAuthStore } from '@/store';
 
 export default defineComponent({
   data() {
     return {
-      email: '',
-      password: ''
+      username: '',
+      password: '',
+      authenticated: false,
     };
   },
   methods: {
-    signIn() {
-      // Perform sign-in logic
-      console.log('Email:', this.email);
-      console.log('Password:', this.password);
+    async signIn() {
+      try {
+        const response = await axios.post('/api/login', {
+          username: this.username,
+          password: this.password,
+        });
 
-      // Reset form fields
-      this.email = '';
-      this.password = '';
+        const token = response.data.token;
+        const authStore = useAuthStore();
+        authStore.setToken(token);
+
+        
+        this.$router.push('/');
+      }
+      catch (error) {
+        if ((error as any).response && (error as any).response.status === 401) {
+          console.log(error)
+        } else {
+          // Handle other types of errors
+          // ...
+        }
+      }
     }
   }
 });
@@ -59,9 +76,11 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 }
+
 .form-group {
   margin-bottom: 20px;
 }
+
 .card {
   width: 100%;
   max-width: 400px;
