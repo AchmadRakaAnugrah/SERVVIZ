@@ -19,7 +19,7 @@ defineProps({
     label: String,
     default: () => ({
       color: "bg-gradient-success",
-      label: "Find Out More",
+      label: "Order",
     }),
   },
 });
@@ -38,9 +38,13 @@ defineProps({
       <p class="mb-0">
         {{ description }}
       </p>
-      <button type="button" class="btn btn-sm mb-0 mt-3" :class="action.color">
-        {{ action.label }}
-      </button>
+      <a
+              class="btn btn-sm mb-0 mt-3"
+              :class="action.color"
+              onclick="smoothToPricing('pricing-soft-ui')"
+              @click="$router.push({ name: 'contactus' })"
+              >{{ action.label }}</a
+            >
     </div>
   </div>
 </template>

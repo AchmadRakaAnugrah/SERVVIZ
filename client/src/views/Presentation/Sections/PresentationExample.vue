@@ -65,6 +65,7 @@ export default {
         </div>
       </div>
     </div>
+    
     <div class="container mt-sm-5 mt-3">
       <div
         v-for="({ heading, description, items }, index) in data"

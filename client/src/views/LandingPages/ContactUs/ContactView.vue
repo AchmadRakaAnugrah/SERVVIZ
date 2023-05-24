@@ -3,7 +3,7 @@ import { onMounted } from "vue";
 
 //example components
 import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
-import DefaultFooter from "@/examples/footers/FooterDefault.vue";
+import DefaultFooter from "@/examples/footers/DefaultFooter.vue";
 
 //image
 import image from "@/assets/img/illustrations/illustration-signin.jpg";
@@ -20,104 +20,258 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="container position-sticky z-index-sticky top-0">
-    <div class="row">
-      <div class="col-12">
-        <DefaultNavbar
-          :sticky="true"
-          :action="{
-            route: 'https://www.creative-tim.com/product/vue-material-kit-pro',
-            color: 'bg-gradient-success',
-            label: 'Buy Now',
-          }"
-        />
-      </div>
+  <DefaultNavbar
+    transparent 
+  />
+  <Header>
+    <div
+      class="page-header min-height-150"
+      :style="{ backgroundImage: `url(${image})` }"
+      loading="lazy"
+    >
+      <span class="mask bg-gradient-dark opacity-8"></span>
     </div>
-  </div>
+  </Header>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
   <section>
     <div class="page-header min-vh-100">
       <div class="container">
         <div class="row">
-          <div
-            class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column"
-          >
-            <div
-              class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
-              :style="{
-                backgroundImage: `url(${image})`,
-                backgroundSize: 'cover',
-              }"
-              loading="lazy"
-            ></div>
-          </div>
-          <div
-            class="mt-8 col-xl-5 col-lg-6 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5"
-          >
             <div
               class="card d-flex blur justify-content-center shadow-lg my-sm-0 my-sm-6 mt-8 mb-5"
             >
               <div
                 class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent"
-              >
+              > 
                 <div
                   class="bg-gradient-success shadow-success border-radius-lg p-3"
                 >
-                  <h3 class="text-white text-success mb-0">Contact us</h3>
+                  <h3 class="text-white text-success mb-0">Order </h3>
                 </div>
               </div>
-              <div class="card-body">
-                <p class="pb-3">
-                  For further questions, including partnership opportunities,
-                  please email hello@creative-tim.com or contact using our
-                  contact form.
-                </p>
-                <form id="contact-form" method="post" autocomplete="off">
-                  <div class="card-body p-0 my-3">
-                    <div class="row">
-                      <div class="col-md-6">
+
+            <div class="card-body">
+            <p class="pb-3">
+              Silahkan isi form berikut untuk membuat order.
+            </p>
+            <form id="contact-form" method="post" autocomplete="off" @submit.prevent="submitForm">
+              <div class="card-body p-0 my-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <MaterialInput
+                      class="input-group-static mb-4"
+                      type="text"
+                      label="Full Name"
+                      placeholder="Full Name"
+                      v-model="fullName"
+                    />
+                  </div>
+                  <div class="col-md-6 ps-md-2">
+                    <MaterialInput
+                      class="input-group-static mb-4"
+                      type="email"
+                      label="Email"
+                      placeholder="example@example.com"
+                      v-model="email"
+                    />
+                  </div>
+                </div>
+                
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="mb-1">Service Type</label>
+                      <select class="form-select mb-4" v-model="serviceType">
+                        <option value="">Select Service Type</option>
+                        <option value="Drop off di SERVVIZ">Drop off di SERVVIZ</option>
+                        <option value="Di jemput teknisi">Di jemput teknisi</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 ps-md-2">
+                      <template v-if="serviceType === 'Drop off di SERVVIZ'">
                         <MaterialInput
                           class="input-group-static mb-4"
                           type="text"
-                          label="Full Name"
-                          placeholder="Full Name"
+                          label="Pilih Toko"
+                          placeholder="Pilih Toko"
+                          v-model="store"
                         />
-                      </div>
-                      <div class="col-md-6 ps-md-2">
+                      </template>
+                      <template v-else-if="serviceType === 'Di jemput teknisi'">
                         <MaterialInput
                           class="input-group-static mb-4"
-                          type="email"
-                          label="Email"
-                          placeholder="hello@creative-tim.com"
+                          type="text"
+                          label="Alamat Anda"
+                          placeholder="Alamat Anda"
+                          v-model="pickupAddress"
                         />
-                      </div>
+                      </template>
                     </div>
-                    <div class="form-group mb-0 mt-md-0 mt-4">
-                      <MaterialTextArea
-                        id="message"
-                        class="input-group-static mb-4"
-                        :rows="6"
-                        placeholder="Describe your problem in at least 250 characters"
-                        >How can we help you?</MaterialTextArea
-                      >
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12 text-center">
-                        <MaterialButton
-                          variant="gradient"
-                          color="success"
-                          class="mt-3 mb-0"
-                          >Send Message</MaterialButton
-                        >
-                      </div>
-                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="mb-1">Device</label>
+                    <select class="form-select mb-4" v-model="device">
+                      <option value="">Select Device</option>
+                      <option value="Mobile">Mobile</option>
+                      <option value="Tablet">Tablet</option>
+                      <option value="Laptop">Laptop</option>
+                    </select>
                   </div>
-                </form>
+                  <div class="col-md-6 ps-md-2">
+                    <label class="mb-1">Device Brand</label>
+                    <select class="form-select mb-4" v-model="deviceBrand">
+                      <option value="">Select Device Brand</option>
+                      <option value="Apple">Apple</option>
+                      <option value="Samsung">Samsung</option>
+                      <option value="HP">HP</option>
+                      <option value="Dell">Dell</option>
+                      <option value="Lenovo">Lenovo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="mb-1">Problem Type</label>
+                    <select class="form-select mb-4" v-model="problemType">
+                      <option value="">Select Problem Type</option>
+                      <option value="Software">Software</option>
+                      <option value="Hardware">Hardware</option>
+                      <option value="Battery">Battery</option>
+                      <option value="Screen">Screen</option>
+                      <option value="Network">Network</option>
+                    </select>
+                  </div>
+                  
+                  <div class="row">
+                 
+                    <MaterialTextArea
+                      id="problemDescription"
+                      class="input-group-static mb-4"
+                      :rows="6"
+                      placeholder="Describe the problem in detail"
+                      v-model="problemDescription"
+                    >
+                      </MaterialTextArea>
+                    </div>
+                  <div class="col-md-6 ps-md-2">
+                    <div class="col-md-6">
+                      <label class="mb-1">Upload Foto Masalah</label>
+                      <input type="file" ref="fileInput" @change="handleFileUpload" />
+                  </div>
+                </div>
+
+                </div>
+                
+                <div class="row mt-6">
+                  <div class="col-md-12 text-center">
+                    <MaterialButton
+                      variant="gradient"
+                      color="success"
+                      class="mt-3 mb-3"
+                      @click="submitForm"
+                    >
+                      Order
+                    </MaterialButton>
+                  </div>
+                </div>
+
               </div>
+            </form>
+          </div>
+
+
             </div>
           </div>
-        </div>
+          </div>
+          </div>
+        <!-- </div>
       </div>
-    </div>
+    </div> -->
   </section>
+</div>
   <DefaultFooter />
 </template>
+
+<script>
+import { ref } from 'vue';
+
+export default {
+  data() {
+    return {
+      fullName: '',
+      email: '',
+      serviceType: '',
+      store: '',
+      pickupAddress: '',
+      device: '',
+      deviceBrand: '',
+      problemType: '',
+      problemDescription: '',
+      file: null,
+    };
+  },
+  methods: {
+    handleFileUpload(event) {
+      this.file = event.target.files[0];
+    },
+    submitForm() {
+      // Prepare form data to be sent to the server
+      const formData = new FormData();
+      formData.append('fullName', this.fullName);
+      formData.append('email', this.email);
+      formData.append('serviceType', this.serviceType);
+      formData.append('store', this.store);
+      formData.append('pickupAddress', this.pickupAddress);
+      formData.append('device', this.device);
+      formData.append('deviceBrand', this.deviceBrand);
+      formData.append('problemType', this.problemType);
+      formData.append('problemDescription', this.problemDescription);
+      formData.append('file', this.file);
+
+      // Make an API request to submit the form data to the server
+      // Replace the URL with your actual API endpoint
+      fetch('https://api.example.com/submit-form', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response from the server
+          console.log(data);
+          // Reset the form fields
+          this.resetForm();
+          // Display success message or perform any other actions
+        })
+        .catch(error => {
+          // Handle any errors that occur during the API request
+          console.error(error);
+          // Display error message or perform any other error handling
+        });
+    },
+    resetForm() {
+      // Reset form fields to their initial values
+      this.fullName = '';
+      this.email = '';
+      this.serviceType = '';
+      this.store = '';
+      this.pickupAddress = '';
+      this.device = '';
+      this.deviceBrand = '';
+      this.problemType = '';
+      this.problemDescription = '';
+      this.file = null;
+      // Reset the file input element
+      if (this.$refs.fileInput) {
+        this.$refs.fileInput.value = '';
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+  .container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+</style>

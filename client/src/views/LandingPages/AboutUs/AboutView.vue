@@ -1,9 +1,10 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
+import { RouterLink } from "vue-router";
 
 //example components
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
-import DefaultFooter from "../../../examples/footers/FooterDefault.vue";
+import DefaultFooter from "../../../examples/footers/DefaultFooter.vue";
 
 //image
 import bg0 from "@/assets/img/bg9.jpg";
@@ -14,8 +15,8 @@ import Typed from "typed.js";
 //sections
 import Information from "./Sections/AboutInformation.vue";
 import AboutTeam from "./Sections/AboutTeam.vue";
-import Featuring from "./Sections/AboutFeaturing.vue";
-import Newsletter from "./Sections/AboutNewsletter.vue";
+import BuiltByDevelopers from "../../Presentation/Components/BuiltByDevelopers.vue";
+
 
 const body = document.getElementsByTagName("body")[0];
 //hooks
@@ -43,16 +44,11 @@ onUnmounted(() => {
 </script>
 <template>
   <DefaultNavbar
-    :action="{
-      route: 'javascript:;',
-      label: 'Buy Now',
-      color: 'btn-white',
-    }"
     transparent
   />
   <header class="bg-gradient-dark">
     <div
-      class="page-header min-vh-75"
+      class="page-header min-height-600 min-vh-75"
       :style="{ backgroundImage: `url(${bg0})` }"
     >
       <span class="mask bg-gradient-dark opacity-6"></span>
@@ -60,20 +56,26 @@ onUnmounted(() => {
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center mx-auto my-auto">
             <h1 class="text-white">
-              Work with an amazing <span class="text-white" id="typed"></span>
+              We Can Fix Your <span class="text-white" id="typed"></span>
             </h1>
             <div id="typed-strings">
-              <h1>team</h1>
-              <h1>design</h1>
-              <h1>tool</h1>
+              <h1>Laptop</h1>
+              <h1>Computers</h1>
+              <h1>Phone</h1>
             </div>
             <p class="lead mb-4 text-white opacity-8">
-              We’re constantly trying to express ourselves and actualize our
-              dreams. If you have the opportunity to play this game
+              Our team is here to help you with all your repair and service needs, ensuring that your devices are in optimal condition to support your endeavors.
             </p>
-            <button type="submit" class="btn bg-white text-dark">
-              Create Account
-            </button>
+
+            <a
+            role="button"
+              class="btn bg-white text-dark"
+              id="dropdownMenuPages"
+              @click="$router.push({ name: 'contactus' })"
+            >
+              Order
+            </a>
+
             <h6 class="text-white mb-2 mt-5">Find us on</h6>
             <div class="d-flex justify-content-center">
               <a href="javascript:;"
@@ -95,10 +97,27 @@ onUnmounted(() => {
     </div>
   </header>
   <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
-    <Information />
+    <BuiltByDevelopers />
+    <div class="container">
+      <div class="row">
+        <div class="row justify-content-center text-center my-sm-5">
+          <div class="col-lg-6">
+            <MaterialBadge color="success" class="mb-3"
+            >Infinite combinations</MaterialBadge
+            >
+            
+            <h2 class="text-dark mb-0">Huge collection of sections</h2>
+            <p class="lead">
+              We have created multiple options for you to put together and
+              customise into pixel perfect pages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
     <AboutTeam />
-    <Featuring />
-    <Newsletter />
+    <Information />
   </div>
   <DefaultFooter />
 </template>
+

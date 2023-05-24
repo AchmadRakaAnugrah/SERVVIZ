@@ -2,8 +2,7 @@
 import { onMounted } from "vue";
 //Vue Material Kit 2 components
 import MaterialButton from "@/components/MaterialButton.vue";
-import MaterialInput from "@/components/MaterialInput.vue";
-import MaterialTextArea from "@/components/MaterialTextArea.vue";
+import MaterialProgress from "@/components/MaterialProgress.vue";
 
 // image
 import bgContact from "@/assets/img/examples/blog2.jpg";
@@ -38,10 +37,9 @@ onMounted(() => {
                   <div
                     class="p-5 ps-sm-8 position-relative text-start my-auto z-index-2"
                   >
-                    <h3 class="text-white">Contact Information</h3>
+                    <h3 class="text-white">Kontak</h3>
                     <p class="text-white opacity-8 mb-4">
-                      Fill up the form and our Team will get back to you within
-                      24 hours.
+                      Hubungi kami jika anda menghadapi kendala.
                     </p>
                     <div class="d-flex p-2 text-white">
                       <div>
@@ -116,53 +114,74 @@ onMounted(() => {
                   </div>
                 </div>
               </div>
+
               <div class="col-lg-7">
                 <form class="p-3" id="contact-form" method="post">
-                  <div class="card-header px-4 py-sm-5 py-3">
-                    <h2>Say Hi!</h2>
-                    <p class="lead">We'd like to talk with you.</p>
-                  </div>
-                  <div class="card-body pt-1">
-                    <div class="row">
-                      <div class="col-md-12 pe-2 mb-3">
-                        <MaterialInput
-                          class="input-group-static mb-4"
-                          label="My name is"
-                          type="text"
-                          placeholder="Full Name"
-                        />
-                      </div>
-                      <div class="col-md-12 pe-2 mb-3">
-                        <MaterialInput
-                          class="input-group-static mb-4"
-                          label="I'm looking for"
-                          type="text"
-                          placeholder="What you love"
-                        />
-                      </div>
-                      <div class="col-md-12 pe-2 mb-3">
-                        <MaterialTextArea
-                          class="input-group-static mb-4"
-                          placeholder="I want to say that..."
-                          :rows="6"
-                          >Your message</MaterialTextArea
-                        >
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 text-end ms-auto">
-                        <MaterialButton
-                          variant="gradient"
-                          color="success"
-                          type="submit"
-                          class="mb-0"
-                          >Send Message</MaterialButton
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </form>
+
+    <div class="container">
+      <div class="row justify-space-between py-2">
+        <div class="col-lg-6 mx-auto">
+          <MaterialProgress class="mb-3" color="dark" :value="50" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card-header px-4 py-sm-5 py-3">
+      <h2>{{ kodeUnik }}</h2>
+    </div>
+    <div class="card-body pt-1">
+      <div class="row">
+        <div class="col-md-12 pe-2 mb-3">
+          <div class="form-group mb-4">
+            <label for="namaPemesan" class="form-label">My name is</label>
+            <input
+              id="namaPemesan"
+              class="form-control"
+              type="text"
+              :value="namaPemesan"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="col-md-12 pe-2 mb-3">
+          <div class="form-group mb-4">
+            <label for="jenisMasalah" class="form-label">I'm looking for</label>
+            <input
+              id="jenisMasalah"
+              class="form-control"
+              type="text"
+              :value="jenisMasalah"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="col-md-12 pe-2 mb-3">
+          <div class="form-group mb-4">
+            <label for="status" class="form-label">Status</label>
+            <input
+              id="status"
+              class="form-control"
+              type="text"
+              :value="status"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 text-end ms-auto">
+          <button
+            class="btn btn-success mb-0"
+            type="submit"
+          >
+            Send Message
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
               </div>
+
             </div>
           </div>
         </div>
@@ -170,3 +189,24 @@ onMounted(() => {
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      kodeUnik: '',
+      namaPemesan: '',
+      jenisMasalah: '',
+      status: '',
+    };
+  },
+  mounted() {
+    // Fetch the data from the database using JavaScript
+    // Replace the following lines with your actual data-fetching logic
+    this.kodeUnik = 'Kode Unik';
+    this.namaPemesan = 'Nama Pemesan';
+    this.jenisMasalah = 'Jenis Masalah';
+    this.status = 'Status';
+  },
+};
+</script>

@@ -44,8 +44,8 @@ import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogC
         <div class="col-lg-4 ms-auto mt-lg-0 mt-6">
           <CenteredBlogCard
             image="https://images.unsplash.com/photo-1544717302-de2939b7ef71?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-            title="Get insights on Search"
-            description="Website visitors today demand a frictionless user expericence — especially when using search. Because of the hight standards."
+            title="Pelayanan Terbaik"
+            description="Dengan pengalaman dan keahlian kami yang luas, kami siap membantu memperbaiki masalah apa pun yang Anda hadapi dengan perangkat Anda."
           />
         </div>
       </div>
