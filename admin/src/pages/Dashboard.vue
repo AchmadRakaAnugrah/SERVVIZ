@@ -1,7 +1,34 @@
 <template>
   <div class="content">
+
+    <div
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-auto"
+      >
+
+        <nav-tabs-card>
+          <template slot="content">
+            <span class="md-nav-tabs-title">Admin</span>
+            <md-tabs class="md-success" md-alignment="left">
+              <md-tab id="tab-home" md-label="Orders" md-icon="bug_report">
+                <nav-tabs-table></nav-tabs-table>
+              </md-tab>
+
+              <md-tab id="tab-pages" md-label="Technician" md-icon="code">
+                <nav-tabs-table></nav-tabs-table>
+              </md-tab>
+
+              <md-tab id="tab-posts" md-label="Stores" md-icon="cloud">
+                <nav-tabs-table></nav-tabs-table>
+              </md-tab>
+            </md-tabs>
+          </template>
+        </nav-tabs-card>
+
+      </div>
+
     <div class="md-layout">
-      <div
+
+      <!-- <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
         <chart-card
@@ -27,8 +54,9 @@
             </div>
           </template>
         </chart-card>
-      </div>
-      <div
+      </div> -->
+  
+      <!-- <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
         <chart-card
@@ -50,8 +78,9 @@
             </div>
           </template>
         </chart-card>
-      </div>
-      <div
+      </div> -->
+
+      <!-- <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
         <chart-card
@@ -72,8 +101,9 @@
             </div>
           </template>
         </chart-card>
-      </div>
-      <div
+      </div> -->
+      
+      <!-- <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
         <stats-card data-background-color="green">
@@ -93,8 +123,9 @@
             </div>
           </template>
         </stats-card>
-      </div>
-      <div
+      </div> -->
+
+      <!-- <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
         <stats-card data-background-color="orange">
@@ -117,8 +148,9 @@
             </div>
           </template>
         </stats-card>
-      </div>
-      <div
+      </div> -->
+
+      <!-- <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
         <stats-card data-background-color="red">
@@ -138,8 +170,9 @@
             </div>
           </template>
         </stats-card>
-      </div>
-      <div
+      </div> -->
+
+      <!-- <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
         <stats-card data-background-color="blue">
@@ -159,8 +192,9 @@
             </div>
           </template>
         </stats-card>
-      </div>
-      <div
+      </div> -->
+
+      <!-- <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
       >
         <md-card>
@@ -172,10 +206,12 @@
             <ordered-table table-header-color="orange"></ordered-table>
           </md-card-content>
         </md-card>
-      </div>
-      <div
+      </div> -->
+
+      <!-- <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
       >
+
         <nav-tabs-card>
           <template slot="content">
             <span class="md-nav-tabs-title">Tasks:</span>
@@ -194,27 +230,30 @@
             </md-tabs>
           </template>
         </nav-tabs-card>
-      </div>
+
+      </div> -->
+
     </div>
+    
   </div>
 </template>
 
 <script>
 import {
-  StatsCard,
-  ChartCard,
+  // StatsCard,
+  // ChartCard,
   NavTabsCard,
   NavTabsTable,
-  OrderedTable,
+  // OrderedTable,
 } from "@/components";
 
 export default {
   components: {
-    StatsCard,
-    ChartCard,
+    // StatsCard,
+    // ChartCard,
     NavTabsCard,
     NavTabsTable,
-    OrderedTable,
+    // OrderedTable,
   },
   data() {
     return {

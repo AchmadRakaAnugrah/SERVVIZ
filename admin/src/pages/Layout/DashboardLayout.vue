@@ -2,12 +2,12 @@
   <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
     <notifications></notifications>
 
-    <side-bar
+    <!-- <side-bar
       :sidebar-item-color="sidebarBackground"
       :sidebar-background-image="sidebarBackgroundImage"
-    >
+    > -->
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/dashboard">
+      <!-- <sidebar-link to="/dashboard">
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
@@ -39,9 +39,9 @@
         <md-icon>unarchive</md-icon>
         <p>Upgrade to PRO</p>
       </sidebar-link>
-    </side-bar>
+    </side-bar> -->
 
-    <div class="main-panel">
+    <div>
       <top-navbar></top-navbar>
 
       <fixed-plugin

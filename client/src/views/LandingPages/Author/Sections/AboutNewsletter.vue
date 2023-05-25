@@ -15,16 +15,16 @@ onMounted(() => {
     <div class="container">
       <div class="row">
         <div class="col-md-6 m-auto my-5">
-          <h4>Lacak pesanan anda</h4>
+          <h4>Track your order</h4>
           <p class="mb-4">
-            Lacak progress pesanan yang telah anda buat.
+            Track how much progress your order were made.
           </p>
           <div class="row">
             <div class="col-8">
               <MaterialInput
                 class="input-group-outline"
                 id="kodeunik"
-                :label="{ text: 'Nomor Pesanan...', class: 'form-label' }"
+                :label="{ text: 'Order Code...', class: 'form-label' }"
                 type="kodeunik"
               />
             </div>

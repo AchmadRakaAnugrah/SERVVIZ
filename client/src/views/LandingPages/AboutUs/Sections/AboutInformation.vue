@@ -4,10 +4,10 @@ import DefaultInfoCard from "../../../../examples/cards/infoCards/DefaultInfoCar
 import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogCard.vue";
 </script>
 <template>
-  <section class="py-7">
+  <section id="abc" class="py-5">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-lg-6">
+        <div class="col-lg-8">
           <div class="row justify-content-start">
             <DefaultInfoCard
               color="info"
@@ -52,3 +52,4 @@ import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogC
     </div>
   </section>
 </template>
+

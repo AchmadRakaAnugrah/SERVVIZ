@@ -37,9 +37,9 @@ onMounted(() => {
                   <div
                     class="p-5 ps-sm-8 position-relative text-start my-auto z-index-2"
                   >
-                    <h3 class="text-white">Kontak</h3>
+                    <h3 class="text-white">Contact Us</h3>
                     <p class="text-white opacity-8 mb-4">
-                      Hubungi kami jika anda menghadapi kendala.
+                      Feel free to contact us if you're having any difficulties.
                     </p>
                     <div class="d-flex p-2 text-white">
                       <div>
@@ -133,7 +133,7 @@ onMounted(() => {
       <div class="row">
         <div class="col-md-12 pe-2 mb-3">
           <div class="form-group mb-4">
-            <label for="namaPemesan" class="form-label">My name is</label>
+            <label for="namaPemesan" class="form-label">Name</label>
             <input
               id="namaPemesan"
               class="form-control"
@@ -145,7 +145,7 @@ onMounted(() => {
         </div>
         <div class="col-md-12 pe-2 mb-3">
           <div class="form-group mb-4">
-            <label for="jenisMasalah" class="form-label">I'm looking for</label>
+            <label for="jenisMasalah" class="form-label">Service Type</label>
             <input
               id="jenisMasalah"
               class="form-control"

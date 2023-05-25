@@ -52,7 +52,7 @@ onMounted(() => {
 
             <div class="card-body">
             <p class="pb-3">
-              Silahkan isi form berikut untuk membuat order.
+              Fill out this form to make an order.
             </p>
             <form id="contact-form" method="post" autocomplete="off" @submit.prevent="submitForm">
               <div class="card-body p-0 my-3">
@@ -82,30 +82,27 @@ onMounted(() => {
                       <label class="mb-1">Service Type</label>
                       <select class="form-select mb-4" v-model="serviceType">
                         <option value="">Select Service Type</option>
-                        <option value="Drop off di SERVVIZ">Drop off di SERVVIZ</option>
-                        <option value="Di jemput teknisi">Di jemput teknisi</option>
+                        <option value="Drop off">Drop off</option>
+                        <option value="Pick Up">Pick Up</option>
                       </select>
                     </div>
-                    <div class="col-md-6 ps-md-2">
-                      <template v-if="serviceType === 'Drop off di SERVVIZ'">
-                        <MaterialInput
-                          class="input-group-static mb-4"
-                          type="text"
-                          label="Pilih Toko"
-                          placeholder="Pilih Toko"
-                          v-model="store"
-                        />
-                      </template>
-                      <template v-else-if="serviceType === 'Di jemput teknisi'">
-                        <MaterialInput
-                          class="input-group-static mb-4"
-                          type="text"
-                          label="Alamat Anda"
-                          placeholder="Alamat Anda"
-                          v-model="pickupAddress"
-                        />
-                      </template>
-                    </div>
+
+<div class="col-md-6 ps-md-2">
+  <div class="form-group mb-4">
+    <template v-if="serviceType === 'Drop off'">
+      <label for="store" class="form-label">Pick Drop Off Store</label>
+      <select id="store" class="form-select" v-model="store">
+        <option value="">SERVVIZ Gunung Pati</option>
+        <!-- Add your options for Pilih Toko here -->
+      </select>
+    </template>
+    <template v-else-if="serviceType === 'Pick Up'">
+      <label for="pickupAddress" class="form-label">Your Address</label>
+      <input id="pickupAddress" class="form-control" type="text" placeholder="Your Address" v-model="pickupAddress">
+    </template>
+  </div>
+</div>
+
                 </div>
                 <div class="row">
                   <div class="col-md-6">
@@ -155,7 +152,7 @@ onMounted(() => {
                     </div>
                   <div class="col-md-6 ps-md-2">
                     <div class="col-md-6">
-                      <label class="mb-1">Upload Foto Masalah</label>
+                      <label class="mb-1">Problem Image</label>
                       <input type="file" ref="fileInput" @change="handleFileUpload" />
                   </div>
                 </div>

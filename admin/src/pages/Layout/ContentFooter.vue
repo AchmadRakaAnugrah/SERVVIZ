@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <div class="container">
+    <!-- <div class="container">
       <nav>
         <ul>
           <li>
@@ -23,7 +23,7 @@
           >Creative Tim</a
         >, made with <i class="fa fa-heart heart"></i> for a better web
       </div>
-    </div>
+    </div> -->
   </footer>
 </template>
 <script>

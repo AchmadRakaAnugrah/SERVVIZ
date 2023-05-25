@@ -71,9 +71,9 @@ onUnmounted(() => {
             role="button"
               class="btn bg-white text-dark"
               id="dropdownMenuPages"
-              @click="$router.push({ name: 'contactus' })"
+              @click="$router.push({ name: 'author' })"
             >
-              Order
+              Track Your Order
             </a>
 
             <h6 class="text-white mb-2 mt-5">Find us on</h6>
@@ -101,7 +101,7 @@ onUnmounted(() => {
     <div class="container">
       <div class="row">
         <div class="row justify-content-center text-center my-sm-5">
-          <div class="col-lg-6">
+          <div class="col-lg-6 ">
             <MaterialBadge color="success" class="mb-3"
             >Infinite combinations</MaterialBadge
             >
@@ -115,9 +115,10 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-    <AboutTeam />
     <Information />
+    <AboutTeam />
   </div>
   <DefaultFooter />
 </template>
+
 
