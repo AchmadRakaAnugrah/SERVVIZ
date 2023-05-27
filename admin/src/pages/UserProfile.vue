@@ -1,12 +1,14 @@
 <template>
   <div class="content">
-    <div class="md-layout">
-      <!-- <div class="md-layout-item md-medium-size-100 md-size-66">
-        <edit-profile-form data-background-color="green"> </edit-profile-form>
-      </div> -->
-    </div>
-    <div class="md-layout-item md-medium-size-100 md-size-33">
-      <user-card> </user-card>
+    <div class="container">
+      <div class="md-layout">
+        <!-- <div class="md-layout-item md-medium-size-100 md-size-66">
+          <edit-profile-form data-background-color="green"></edit-profile-form>
+        </div> -->
+      </div>
+      <div class="md-layout-item md-medium-size-100 md-size-33">
+        <user-card></user-card>
+      </div>
     </div>
   </div>
 </template>
@@ -22,3 +24,12 @@ export default {
   },
 };
 </script>
+
+<style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+</style>
