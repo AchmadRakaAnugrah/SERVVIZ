@@ -7,7 +7,7 @@ import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 import DefaultFooter from "../../../examples/footers/DefaultFooter.vue";
 
 //image
-import bg0 from "@/assets/img/bg9.jpg";
+import bg0 from "@/assets/img/k1.jpg";
 
 //dep
 import Typed from "typed.js";
@@ -106,10 +106,10 @@ onUnmounted(() => {
             >Infinite combinations</MaterialBadge
             >
             
-            <h2 class="text-dark mb-0">Huge collection of sections</h2>
+            <h2 class="text-dark mb-0">SERVVIZ</h2>
             <p class="lead">
-              We have created multiple options for you to put together and
-              customise into pixel perfect pages.
+              We have created multiple options for you to put 
+              together and customize into pixel-perfect pages.
             </p>
           </div>
         </div>

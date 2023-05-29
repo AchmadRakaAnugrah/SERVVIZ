@@ -13,12 +13,11 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-6 ms-lg-5">
-            <h4 class="text-white">Built by developers</h4>
-            <h1 class="text-white">Complex Documentation</h1>
+            <h4 class="text-white">SERVVIZ</h4>
             <p class="lead text-white opacity-8">
-              From colors, cards, typography to complex elements, you will find
-              the full documentation. Play with the utility classes and you will
-              create unlimited combinations for our components.
+              SERVVIZ is an online platform in the city of Semarang or in Gunung Pati that provides 
+              repair and sales services for various gadgets such as smartphones, laptops, and PCs. 
+              SERVVIZ offers warranty coverage for repair or replacement of parts for up to one year period.
             </p>
             <a
               href="https://www.creative-tim.com/learning-lab/vue/overview/material-kit/"

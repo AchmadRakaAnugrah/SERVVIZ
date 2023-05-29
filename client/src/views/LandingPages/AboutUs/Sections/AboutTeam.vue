@@ -3,9 +3,9 @@
 import HorizontalTeamCard from "@/examples/cards/teamCards/HorizontalTeamCard.vue";
 
 // images
-import emma from "@/assets/img/team-5.jpg";
-import william from "@/assets/img/bruce-mars.jpg";
-import ivana from "@/assets/img/ivana-squares.jpg";
+import Raka from "@/assets/img/Raka.png";
+import Rafi from "@/assets/img/Rafi.jpeg";
+import Dylan from "@/assets/img/Dylan.jpg";
 import marquez from "@/assets/img/ivana-square.jpg";
 </script>
 
@@ -27,19 +27,19 @@ import marquez from "@/assets/img/ivana-square.jpg";
         <div class="col-lg-6 col-12">
           <HorizontalTeamCard
             class="mt-4"
-            :image="emma"
+            :image="Raka"
             :profile="{ name: 'Achmad Raka Anugrah', link: 'javascript:;' }"
             :position="{ label: 'Front-End', color: 'success' }"
-            description="Bertanggung jawab atas komposisi tampilan sebuah website dan aplikasi."
+            description="Responsible for the appearance composition of a website and application."
           />
         </div>
         <div class="col-lg-6 col-12">
           <HorizontalTeamCard
             class="mt-lg-4 mt-5"
-            :image="william"
+            :image="Rafi"
             :profile="{ name: 'Raffi Auliya Agfika', link: 'javascript:;' }"
             :position="{ label: 'Database', color: 'success' }"
-            description="Bertanggung jawab terhadap penanganan, pelaksanaan, pemeliharaan dan perbaikan database"
+            description="Responsible for handling, implementing, maintaining and repairing databases."
           />
         </div>
       </div>
@@ -47,10 +47,11 @@ import marquez from "@/assets/img/ivana-square.jpg";
         <div class="col-lg-6 col-12">
           <HorizontalTeamCard
             class="mt-4 z-index-2"
-            :image="ivana"
+            :image="Dylan"
             :profile="{ name: 'Dylan Hikma', link: 'javascript:;' }"
             :position="{ label: 'Front-End dan Database', color: 'success' }"
-            description="Bertanggung jawab atas komposisi tampilan sebuah website dan aplikasi, dan juga merancang dan membangun tampilan website"
+            description="Responsible for the composition of the appearance of a website and application, 
+            as well as designing and building the appearance of the website"
           />
         </div>
         <div class="col-lg-6 col-12">
@@ -59,7 +60,7 @@ import marquez from "@/assets/img/ivana-square.jpg";
             :image="marquez"
             :profile="{ name: 'Muhammad Raihan Widagdo', link: 'javascript:;' }"
             :position="{ label: 'Back-End', color: 'success' }"
-            description="Bertanggung jawab dalam menyimpan dan mengatur data, serta memastikan hal yang ada pada sisi klien berfungsi dan tidak bermasalah."
+            description="Responsible for storing and managing data, as well as making sure things on the client side work and don't have problems."
           />
         </div>
       </div>
