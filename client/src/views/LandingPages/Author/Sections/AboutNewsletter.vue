@@ -43,7 +43,7 @@ onMounted(() => {
           <div class="position-relative">
             <img
               class="max-width-50 w-100 position-relative z-index-2"
-              src="@/assets/img/macbook.png"
+              src="@/assets/img/k3.jpg"
               alt="image"
             />
           </div>
