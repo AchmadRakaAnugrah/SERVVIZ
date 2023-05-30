@@ -29,8 +29,8 @@ onMounted(() => {
     var typed = new Typed("#typed", {
       stringsElement: "#typed-strings",
       typeSpeed: 90,
-      backSpeed: 90,
-      backDelay: 200,
+      backSpeed: 0,
+      backDelay: 1000,
       startDelay: 500,
       loop: true,
     });
@@ -56,12 +56,15 @@ onUnmounted(() => {
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center mx-auto my-auto">
             <h1 class="text-white">
-              We Can Fix Your <span class="text-white" id="typed"></span>
+              We Can <span class="text-white" id="typed"></span>
             </h1>
             <div id="typed-strings">
-              <h1>Laptop</h1>
-              <h1>Computers</h1>
-              <h1>Phone</h1>
+              <h1>Repair Your Devices</h1>
+              <h1>Upgrade Softwares</h1>
+              <h1>Maintain Your Devices</h1>
+              <h1>Upgrade Hardwares</h1>
+              <h1>Replace Parts</h1>
+              
             </div>
             <p class="lead mb-4 text-white opacity-8">
               Our team is here to help you with all your repair and service needs, ensuring that your devices are in optimal condition to support your endeavors.
