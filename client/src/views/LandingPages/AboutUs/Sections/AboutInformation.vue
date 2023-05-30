@@ -11,33 +11,24 @@ import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogC
           <div class="row justify-content-start">
             <DefaultInfoCard
               color="info"
-              icon="public"
-              title="Fully integrated"
-              description="We get insulted by others, lose trust for those We get back
-                  freezes"
+              icon="laptop"
+              title="LAPTOP"
+              description="We provide several services ranging from BIOS damage, Motherboard Damage, Processor Damage and others"
             />
             <DefaultInfoCard
               color="info"
-              icon="payments"
-              title="Payments functionality"
-              description="We get insulted by others, lose trust for those We get back
-                  freezes"
+              icon="tablet"
+              title="SMART PHONE"
+              description="We provide several services ranging from broken screen replacement, battery repair, internal component repair,
+               software repair, and others"
             />
           </div>
           <div class="row justify-content-start mt-4">
             <DefaultInfoCard
               color="info"
               icon="apps"
-              title="Prebuilt components"
-              description="We get insulted by others, lose trust for those We get back
-                  freezes"
-            />
-            <DefaultInfoCard
-              color="info"
-              icon="3p"
-              title="Improved platform"
-              description="We get insulted by others, lose trust for those We get back
-                  freezes"
+              title="KOMPUTER"
+              description="We provide several services ranging from BIOS damage, Motherboard Damage, Processor Damage and others"
             />
           </div>
         </div>

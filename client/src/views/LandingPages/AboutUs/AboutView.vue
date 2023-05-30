@@ -108,8 +108,7 @@ onUnmounted(() => {
             
             <h2 class="text-dark mb-0">SERVVIZ</h2>
             <p class="lead">
-              We have created multiple options for you to put 
-              together and customize into pixel-perfect pages.
+              SERVVIZ is an online platform providing repair services and offering warranty coverage for repair or replacement of parts.
             </p>
           </div>
         </div>
