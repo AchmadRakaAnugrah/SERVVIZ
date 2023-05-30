@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted } from "vue";
-import { RouterLink } from "vue-router";
 
 // example components
 import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
@@ -32,71 +31,61 @@ onMounted(() => {
       }"
       loading="lazy"
     >
-      <span class="mask bg-gradient-dark opacity-6"></span>
+      <span class="mask bg-gradient-dark opacity-6"></span>x
       <div class="container my-auto">
         <div class="row">
-          <div class="col-lg-4 col-md-8 col-12 mx-auto">
+            <div class="col-lg-4 col-md-8 col-12 mx-auto">
             <div class="card z-index-0 fadeIn3 fadeInBottom">
-              <div
-                class="card-header p-0 position-relative mt-n4 mx-3 z-index-2"
-              >
-                <div
-                  class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1"
-                >
-                  <h4
-                    class="text-white font-weight-bolder text-center mt-2 mb-0"
-                  >
-                    Sign in
-                  </h4>
-
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
+                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">
+                    Sign up
+                    </h4>
                 </div>
-              </div>
-              <div class="card-body">
+                </div>
+                <div class="card-body">
                 <form role="form" class="text-start">
-                  <MaterialInput
+                    <MaterialInput
                     id="email"
                     class="input-group-outline my-3"
                     :label="{ text: 'Email', class: 'form-label' }"
                     type="email"
-                  />
-                  <MaterialInput
+                    />
+                    <MaterialInput
                     id="password"
                     class="input-group-outline mb-3"
                     :label="{ text: 'Password', class: 'form-label' }"
                     type="password"
-                  />
-                  <MaterialSwitch
-                    class="d-flex align-items-center mb-3"
-                    id="rememberMe"
-                    labelClass="mb-0 ms-3"
-                    checked
-                    >Remember me</MaterialSwitch
-                  >
-
-                  <div class="text-center">
+                    />
+                    <MaterialInput
+                    id="confirmPassword"
+                    class="input-group-outline mb-3"
+                    :label="{ text: 'Confirm Password', class: 'form-label' }"
+                    type="password"
+                    />
+                    <div class="text-center">
                     <MaterialButton
-                      class="my-4 mb-2"
-                      variant="gradient"
-                      color="success"
-                      fullWidth
-                      >Sign in</MaterialButton
+                        class="my-4 mb-2"
+                        variant="gradient"
+                        color="success"
+                        fullWidth
+                        >Sign up</MaterialButton
                     >
-                  </div>
-
-                  <p class="mt-4 text-sm text-center">
-                    Don't have an account?
+                    </div>
+                    <p class="mt-4 text-sm text-center">
+                    Already have an account?
                     <a
-                      class="text-success text-gradient font-weight-bold"
-                      @click="$router.push({ name: 'signup-basic' })"
-                      >Sign up</a
+                        href="#"
+                        class="text-success text-gradient font-weight-bold"
+                        >Sign in</a
                     >
-                  </p>
+                    </p>
                 </form>
-              </div>
+                </div>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
+        </div>
       <footer class="footer position-absolute bottom-2 py-2 w-100">
         <div class="container">
           <div class="row align-items-center justify-content-lg-between">
