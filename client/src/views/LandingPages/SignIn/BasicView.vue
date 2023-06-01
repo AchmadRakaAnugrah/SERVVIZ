@@ -6,7 +6,6 @@ import { RouterLink } from "vue-router";
 import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
 import Header from "@/examples/Header.vue";
 
-
 //Vue Material Kit 2 components
 import MaterialInput from "@/components/MaterialInput.vue";
 import MaterialSwitch from "@/components/MaterialSwitch.vue";
@@ -85,7 +84,7 @@ onMounted(() => {
 
 <script>
 import axios from 'axios';
-import {useAuthStore} from '@/store.js';
+import { useAuthStore } from '@/store.js';
 
 export default {
   data() {
