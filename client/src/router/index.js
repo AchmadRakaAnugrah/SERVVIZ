@@ -3,6 +3,7 @@ import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
 import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
+import SignUpBasicView from "../views/LandingPages/SignUp/SignUpView.vue";
 
 import PresentationView from "../views/Presentation/PresentationView.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
@@ -52,7 +53,15 @@ const router = createRouter({
       name: "signin-basic",
       component: SignInBasicView,
     },
+    {
+      path: "/pages/landing-pages/basic",
+      name: "signup-basic",
+      component: SignUpBasicView,
+    },
     
+
+
+
     {
       path: "/sections/page-sections/page-headers",
       name: "page-headers",
