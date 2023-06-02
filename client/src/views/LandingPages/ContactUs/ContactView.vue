@@ -58,15 +58,19 @@ onMounted(() => {
               <div class="card-body p-0 my-3">
                 <div class="row">
                   <div class="col-md-6">
-                    <MaterialInput
+                    <div class="input-group-static mb-4">
+                    <label for="fullName">Full Name</label> 
+                    <input type="text" id="fullName" placeholder="Full Name" v-model="fullName">
+                    </div>
+                    <!-- <MaterialInput
                       class="input-group-static mb-4"
                       type="text"
                       label="Full Name"
                       placeholder="Full Name"
                       v-model="fullName"
-                    />
+                    /> -->
                   </div>
-                  <div class="col-md-6 ps-md-2">
+                  <!-- <div class="col-md-6 ps-md-2">
                     <MaterialInput
                       class="input-group-static mb-4"
                       type="email"
@@ -74,9 +78,8 @@ onMounted(() => {
                       placeholder="example@example.com"
                       v-model="email"
                     />
-                  </div>
+                  </div> -->
                 </div>
-                
                   <div class="row">
                     <div class="col-md-6">
                       <label class="mb-1">Service Type</label>
@@ -87,21 +90,21 @@ onMounted(() => {
                       </select>
                     </div>
 
-<div class="col-md-6 ps-md-2">
-  <div class="form-group mb-4">
-    <template v-if="serviceType === 'Drop off'">
-      <label for="store" class="form-label">Pick Drop Off Store</label>
-      <select id="store" class="form-select" v-model="store">
-        <option value="">SERVVIZ Gunung Pati</option>
-        <!-- Add your options for Pilih Toko here -->
-      </select>
-    </template>
-    <template v-else-if="serviceType === 'Pick Up'">
-      <label for="pickupAddress" class="form-label">Your Address</label>
-      <input id="pickupAddress" class="form-control" type="text" placeholder="Your Address" v-model="pickupAddress">
-    </template>
-  </div>
-</div>
+                <div class="col-md-6 ps-md-2">
+                  <div class="form-group mb-4">
+                    <template v-if="serviceType === 'Drop off'">
+                      <label for="store" class="form-label">Pick Drop Off Store</label>
+                      <select id="store" class="form-select" v-model="store">
+                        <option value="">SERVVIZ Gunung Pati</option>
+                        <!-- Add your options for Pilih Toko here -->
+                      </select>
+                    </template>
+                    <template v-else-if="serviceType === 'Pick Up'">
+                      <label for="pickupAddress" class="form-label">Your Address</label>
+                      <input id="pickupAddress" class="form-control" type="text" placeholder="Your Address" v-model="pickupAddress">
+                    </template>
+                  </div>
+                </div>
 
                 </div>
                 <div class="row">
@@ -140,7 +143,20 @@ onMounted(() => {
                   </div>
                   
                   <div class="row">
-                 
+                    <div class="input-group-static mb-4">
+                      <label for="problemDescription">Problem Description</label>
+                      <textarea id="problemDescription" class="form-control" rows="6" placeholder="Describe the problem in detail" v-model="problemDescription"></textarea>
+                    </div>
+                  </div>
+
+                  <!-- <div class="col-md-6 ps-md-2">
+                    <div class="col-md-6">
+                      <label class="mb-1">Problem Image</label>
+                      <input type="file" ref="fileInput" @change="handleFileUpload" />
+                    </div>
+                  </div> -->
+
+                  <!-- <div class="row">
                     <MaterialTextArea
                       id="problemDescription"
                       class="input-group-static mb-4"
@@ -149,13 +165,13 @@ onMounted(() => {
                       v-model="problemDescription"
                     >
                       </MaterialTextArea>
-                    </div>
+                  </div>
                   <div class="col-md-6 ps-md-2">
                     <div class="col-md-6">
                       <label class="mb-1">Problem Image</label>
                       <input type="file" ref="fileInput" @change="handleFileUpload" />
-                  </div>
-                </div>
+                   </div>
+                  </div> -->
 
                 </div>
                 

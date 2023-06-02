@@ -11,14 +11,14 @@ import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogC
           <div class="row justify-content-start">
             <DefaultInfoCard
               color="info"
-              icon="public"
+              icon="laptop"
               title="Fully integrated"
               description="We get insulted by others, lose trust for those We get back
                   freezes"
             />
             <DefaultInfoCard
               color="info"
-              icon="payments"
+              icon="phone"
               title="Payments functionality"
               description="We get insulted by others, lose trust for those We get back
                   freezes"
@@ -27,7 +27,7 @@ import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogC
           <div class="row justify-content-start mt-4">
             <DefaultInfoCard
               color="info"
-              icon="apps"
+              icon="menu"
               title="Prebuilt components"
               description="We get insulted by others, lose trust for those We get back
                   freezes"
