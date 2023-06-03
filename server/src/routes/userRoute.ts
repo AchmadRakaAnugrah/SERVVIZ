@@ -242,7 +242,17 @@ export const getOrderDetailUserHandler = async (req: Request, res: Response) => 
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        return res.status(200).json(orderDetails);
+        const name = await prisma.user.findUnique({
+            where: { username },
+            select: { name: true },
+        })
+
+        const orderDetailsWithName = {
+            ...orderDetails,
+            name: name?.name || null,
+        };        
+
+        return res.status(200).json(orderDetailsWithName);
     } catch (e) {
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
