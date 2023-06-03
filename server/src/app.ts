@@ -35,7 +35,7 @@ async function main() {
     // Get all order of specific username
     app.get('/api/orders/:username', authenticateToken, rejectEmptyStringParams, getAllOrdersUserHandler);
     // Get order detail
-    app.get('/api/orders/:username/:order_id', authenticateToken, rejectEmptyStringParams, getOrderDetailUserHandler);
+    app.get('/api/orders/:username/:order_id', rejectEmptyStringParams, getOrderDetailUserHandler);
     // Update user order
     app.put('/api/orders/:username/:order_id', authenticateToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailUserHandler);
     // Delete order

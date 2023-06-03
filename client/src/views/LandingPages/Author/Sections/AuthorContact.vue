@@ -117,71 +117,74 @@ onMounted(() => {
 
               <div class="col-lg-7">
                 <form class="p-3" id="contact-form" method="post">
+                  <div class="container">
+                    <div class="row justify-space-between py-2">
+                      <div class="col-lg-6 mx-auto">
+                        <MaterialProgress
+                          class="mb-3"
+                          color="dark"
+                          :value="50"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-    <div class="container">
-      <div class="row justify-space-between py-2">
-        <div class="col-lg-6 mx-auto">
-          <MaterialProgress class="mb-3" color="dark" :value="50" />
-        </div>
-      </div>
-    </div>
-
-    <div class="card-header px-4 py-sm-5 py-3">
-      <h2>{{ kodeUnik }}</h2>
-    </div>
-    <div class="card-body pt-1">
-      <div class="row">
-        <div class="col-md-12 pe-2 mb-3">
-          <div class="form-group mb-4">
-            <label for="namaPemesan" class="form-label">Name</label>
-            <input
-              id="namaPemesan"
-              class="form-control"
-              type="text"
-              :value="namaPemesan"
-              readonly
-            />
-          </div>
-        </div>
-        <div class="col-md-12 pe-2 mb-3">
-          <div class="form-group mb-4">
-            <label for="jenisMasalah" class="form-label">Service Type</label>
-            <input
-              id="jenisMasalah"
-              class="form-control"
-              type="text"
-              :value="jenisMasalah"
-              readonly
-            />
-          </div>
-        </div>
-        <div class="col-md-12 pe-2 mb-3">
-          <div class="form-group mb-4">
-            <label for="status" class="form-label">Status</label>
-            <input
-              id="status"
-              class="form-control"
-              type="text"
-              :value="status"
-              readonly
-            />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 text-end ms-auto">
-          <button
-            class="btn btn-success mb-0"
-            type="submit"
-          >
-            Send Message
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
+                  <div class="card-header px-4 py-sm-5 py-3">
+                    <h2>{{ kodeUnik }}</h2>
+                  </div>
+                  <div class="card-body pt-1">
+                    <div class="row">
+                      <div class="col-md-12 pe-2 mb-3">
+                        <div class="form-group mb-4">
+                          <label for="namaPemesan" class="form-label"
+                            >Name</label
+                          >
+                          <input
+                            id="namaPemesan"
+                            class="form-control"
+                            type="text"
+                            :value="namaPemesan"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-12 pe-2 mb-3">
+                        <div class="form-group mb-4">
+                          <label for="jenisMasalah" class="form-label"
+                            >Service Type</label
+                          >
+                          <input
+                            id="jenisMasalah"
+                            class="form-control"
+                            type="text"
+                            :value="jenisMasalah"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-12 pe-2 mb-3">
+                        <div class="form-group mb-4">
+                          <label for="status" class="form-label">Status</label>
+                          <input
+                            id="status"
+                            class="form-control"
+                            type="text"
+                            :value="status"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 text-end ms-auto">
+                        <button class="btn btn-success mb-0" type="submit">
+                          Send Message
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
-
             </div>
           </div>
         </div>
@@ -194,19 +197,19 @@ onMounted(() => {
 export default {
   data() {
     return {
-      kodeUnik: '',
-      namaPemesan: '',
-      jenisMasalah: '',
-      status: '',
+      kodeUnik: "",
+      namaPemesan: "",
+      jenisMasalah: "",
+      status: "",
     };
   },
   mounted() {
     // Fetch the data from the database using JavaScript
     // Replace the following lines with your actual data-fetching logic
-    this.kodeUnik = 'Kode Unik';
-    this.namaPemesan = 'Nama Pemesan';
-    this.jenisMasalah = 'Jenis Masalah';
-    this.status = 'Status';
+    this.kodeUnik = "Kode Unik";
+    this.namaPemesan = "Nama Pemesan";
+    this.jenisMasalah = "Jenis Masalah";
+    this.status = "Status";
   },
 };
 </script>

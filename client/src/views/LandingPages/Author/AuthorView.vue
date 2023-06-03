@@ -3,7 +3,6 @@
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 import Header from "../../../examples/Header.vue";
 
-
 // sections
 import DefaultFooter from "../../../examples/footers/DefaultFooter.vue";
 import Contact from "./Sections/AuthorContact.vue";
@@ -13,9 +12,7 @@ import Newsletter from "./Sections/AboutNewsletter.vue";
 import image from "@/assets/img/city-profile.jpg";
 </script>
 <template>
-    <DefaultNavbar
-    transparent
-  />
+  <DefaultNavbar transparent />
   <Header>
     <div
       class="page-header min-height-150"
@@ -27,13 +24,10 @@ import image from "@/assets/img/city-profile.jpg";
   </Header>
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
-    <Newsletter/>
+    <Newsletter />
   </div>
 
+  <Contact />
 
-      <Contact />
-      
   <DefaultFooter />
 </template>
-
-
