@@ -6,7 +6,7 @@ import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
 import DefaultFooter from "@/examples/footers/DefaultFooter.vue";
 
 //image
-import image from "@/assets/img/illustrations/illustration-signin.jpg";
+import image from "@/assets/img/k1.jpg";
 
 //material components
 // import MaterialInput from "@/components/MaterialInput.vue";
@@ -30,7 +30,7 @@ onMounted(() => {
       <span class="mask bg-gradient-dark opacity-8"></span>
     </div>
   </Header>
-  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+  <!-- <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4"> -->
     <section>
       <div class="page-header min-vh-100">
         <div class="container">
@@ -41,14 +41,16 @@ onMounted(() => {
               <div
                 class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent"
               >
-                <div
+                <!-- <div
                   class="bg-gradient-success shadow-success border-radius-lg p-3"
-                >
-                  <h3 class="text-white text-success mb-0">Order</h3>
-                </div>
+                > -->
+                  
+                <!-- </div> -->
               </div>
 
               <div class="card-body">
+                <h1 class="mt-5">Order</h1>
+                <br>
                 <p class="pb-3">Fill out this form to make an order.</p>
                 <form
                   id="contact-form"
@@ -205,8 +207,8 @@ onMounted(() => {
                       <div class="col-md-12 text-center">
                         <MaterialButton
                           variant="gradient"
-                          color="success"
-                          class="mt-3 mb-3"
+                          color="black"
+                          class="btn btn-dark"
                         >
                           <!-- @click="submitForm" -->
                           Order
@@ -224,7 +226,7 @@ onMounted(() => {
       </div>
     </div> -->
     </section>
-  </div>
+  <!-- </div> -->
   <DefaultFooter />
 </template>
 

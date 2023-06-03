@@ -11,13 +11,11 @@ import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogC
           <div class="row justify-content-start">
             <DefaultInfoCard
               color="info"
-              icon="laptop"
               title="LAPTOP"
               description="We provide several services ranging from BIOS damage, Motherboard Damage, Processor Damage and others"
             />
             <DefaultInfoCard
               color="info"
-              icon="tablet"
               title="SMART PHONE"
               description="We provide several services ranging from broken screen replacement, battery repair, internal component repair,
                software repair, and others"
@@ -26,7 +24,6 @@ import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogC
           <div class="row justify-content-start mt-4">
             <DefaultInfoCard
               color="info"
-              icon="apps"
               title="KOMPUTER"
               description="We provide several services ranging from BIOS damage, Motherboard Damage, Processor Damage and others"
             />

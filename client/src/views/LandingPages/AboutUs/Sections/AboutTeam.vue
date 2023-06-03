@@ -29,7 +29,7 @@ import marquez from "@/assets/img/ivana-square.jpg";
             class="mt-4"
             :image="Raka"
             :profile="{ name: 'Achmad Raka Anugrah', link: 'javascript:;' }"
-            :position="{ label: 'Front-End', color: 'success' }"
+            :position="{ label: 'Front-End', color: 'black' }"
             description="Responsible for the appearance composition of a website and application."
           />
         </div>
@@ -38,7 +38,7 @@ import marquez from "@/assets/img/ivana-square.jpg";
             class="mt-lg-4 mt-5"
             :image="Rafi"
             :profile="{ name: 'Raffi Auliya Agfika', link: 'javascript:;' }"
-            :position="{ label: 'Database', color: 'success' }"
+            :position="{ label: 'Database', color: 'black' }"
             description="Responsible for handling, implementing, maintaining and repairing databases."
           />
         </div>
@@ -49,7 +49,7 @@ import marquez from "@/assets/img/ivana-square.jpg";
             class="mt-4 z-index-2"
             :image="Dylan"
             :profile="{ name: 'Dylan Hikma', link: 'javascript:;' }"
-            :position="{ label: 'Front-End dan Database', color: 'success' }"
+            :position="{ label: 'Front-End dan Database', color: 'black' }"
             description="Responsible for the composition of the appearance of a website and application, 
             as well as designing and building the appearance of the website"
           />
@@ -59,7 +59,7 @@ import marquez from "@/assets/img/ivana-square.jpg";
             class="mt-lg-4 mt-5 z-index-2"
             :image="marquez"
             :profile="{ name: 'Muhammad Raihan Widagdo', link: 'javascript:;' }"
-            :position="{ label: 'Back-End', color: 'success' }"
+            :position="{ label: 'Back-End', color: 'black' }"
             description="Responsible for storing and managing data, as well as making sure things on the client side work and don't have problems."
           />
         </div>

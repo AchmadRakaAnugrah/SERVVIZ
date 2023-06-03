@@ -39,8 +39,8 @@ defineProps({
         {{ description }}
       </p>
       <a
-              class="btn btn-sm mb-0 mt-3"
-              :class="action.color"
+              class="btn btn-dark mb-0 mt-3"
+
               onclick="smoothToPricing('pricing-soft-ui')"
               @click="$router.push({ name: 'contactus' })"
               >{{ action.label }}</a
