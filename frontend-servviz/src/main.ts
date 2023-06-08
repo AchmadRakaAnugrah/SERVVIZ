@@ -1,16 +1,38 @@
+//theme
+import "primevue/resources/themes/lara-light-indigo/theme.css";     
+    
+//core
+import "primevue/resources/primevue.min.css";
+
+
 import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config';
 
-import App from './App.vue'
+
 import router from './router'
 
-const app = createApp(App)
+//User
+import UserApp from './UserApp.vue'
 
-app.use(createPinia())
-app.use(router)
-app.use(PrimeVue)
+const userapp = createApp(UserApp)
 
-app.mount('#app')
+userapp.use(createPinia())
+userapp.use(router)
+userapp.use(PrimeVue)
+
+userapp.mount('#app')
+
+//Admin
+import AdminApp from './AdminApp.vue'
+
+const adminapp = createApp(AdminApp)
+
+adminapp.use(createPinia())
+adminapp.use(router)
+adminapp.use(PrimeVue)
+
+adminapp.mount('#app')
+
