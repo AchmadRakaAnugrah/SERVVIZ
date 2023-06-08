@@ -9,14 +9,16 @@ import { RouterLink } from 'vue-router';
 import { ref } from "vue";
 
 const username = ref<string>("");
+const email = ref<string>("");
 const password = ref<string>("");
+
 
 </script>
 
 <template>
     <div class="card">
         <Card>
-            <template #title> Sign In </template>
+            <template #title> Sign Up </template>
                 <template #content>
                     <div class="card flex justify-content-center">
                         <span class="p-float-label">
@@ -26,17 +28,23 @@ const password = ref<string>("");
                     </div>
                     <div class="card flex justify-content-center">
                         <span class="p-float-label">
+                            <InputText id="email" v-model="email" />
+                            <label for="email">E-Mail</label>
+                        </span>
+                    </div>
+                    <div class="card flex justify-content-center">
+                        <span class="p-float-label">
                             <Password v-model="password" :feedback="false" />
                             <label for="password">password</label>
                         </span>
                     </div>
                     <div class="card flex justify-content-center mb-3">
-                        <router-link to="/admin/signup">
-                            <p>Create an account <Button label="Sign Up" link /></p>
+                        <router-link to="/admin">
+                            <p>Already have an account <Button label="Sign In" link /></p>
                         </router-link>
                     </div>
                     <div class="card flex justify-content-center">
-                        <Button type="submit" label="Sign In" />
+                        <Button type="submit" label="Sign Up" />
                     </div>
              </template>
         </Card>
