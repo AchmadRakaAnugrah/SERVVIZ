@@ -15,24 +15,13 @@ import PrimeVue from 'primevue/config';
 import router from './router'
 
 //User
-import UserApp from './UserApp.vue'
+import App from './App.vue'
 
-const userapp = createApp(UserApp)
+const app = createApp(App)
 
-userapp.use(createPinia())
-userapp.use(router)
-userapp.use(PrimeVue)
+app.use(createPinia())
+app.use(router)
+app.use(PrimeVue)
 
-userapp.mount('#app')
-
-//Admin
-import AdminApp from './AdminApp.vue'
-
-const adminapp = createApp(AdminApp)
-
-adminapp.use(createPinia())
-adminapp.use(router)
-adminapp.use(PrimeVue)
-
-adminapp.mount('#app')
+app.mount('#app')
 
