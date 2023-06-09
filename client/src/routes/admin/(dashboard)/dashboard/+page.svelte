@@ -1,6 +1,6 @@
 <script>
     // @ts-nocheck
-    
+    import "../../../../app.postcss";
     import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Checkbox, Card } from 'flowbite-svelte';
     import { Tabs, TabItem } from 'flowbite-svelte';
     //fetch dari database

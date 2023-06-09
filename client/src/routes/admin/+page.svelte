@@ -1,4 +1,5 @@
 <script>
+    import "../../../../app.postcss";
     import { Card, Button, Label, Input, Checkbox } from "flowbite-svelte";
 </script>
   
