@@ -1,6 +1,7 @@
 <script>
 
   import {Card, Button, Label, Select, Dropzone , Textarea, Input} from "flowbite-svelte";
+  import { Contact } from 'flowbite-svelte-blocks';
 
 //untukk dropdown box
     /**
@@ -44,13 +45,20 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
 
 <div class="flex justify-center items-center p-10">
     <Card size="xl" padding='xl'>
-        <form>
-            <h5 class="mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Order</h5>
+        <form class="space-y-100">
+            <Contact>
+                <svelte:fragment slot="h2">Order</svelte:fragment>
+                <svelte:fragment slot="paragraph">
+                  Got a hardware or Software issue on your computer? Sit back, relax. Let us do the hard part.
+                </svelte:fragment>
+            </Contact>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div class="mb-6">
                 <Label for='default-input' class='block mb-2'>Default input</Label>
                 <Input id='default-input' class="mt-2"  placeholder="Default input" />
             </div>
-            <div class="grid gap-6 mb-6 md:grid-cols-6">
+             </div>
+            <div class="grid gap-6 mb-6 md:grid-cols-4">
                 <div class='mb-6'>
                     <Label>Select an option
                         <Select class="mt-2" items={countries} bind:value={selected} />
@@ -75,6 +83,7 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
                 </Dropzone>
             </div>
         </form>
-        <Button type="submit" class="w-full">order</Button>
+        <Button type="submit" class="w-full" >order</Button>
     </Card>
 </div>
+
