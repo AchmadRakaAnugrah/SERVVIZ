@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
   import "../app.postcss";
   import {
     Navbar,
@@ -10,6 +10,13 @@
     Input,
   } from "flowbite-svelte";
   import { Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from "flowbite-svelte"
+  import { jwtToken } from "./store";
+
+  function handleLogout() {
+    jwtToken.set('');
+    alert('Berhasil logout');
+    console.log($jwtToken);
+  }
 </script>
 
 <Navbar let:hidden let:toggle>
@@ -21,7 +28,11 @@
     </span>
   </NavBrand>
   <div class="flex md:order-2">
-    <Button size="sm" href="/signin">Sign In</Button>
+    {#if $jwtToken === ''}
+      <Button size="sm" href="/signin">Sign In</Button>
+    {:else}
+      <Button size="sm" href="/" on:click={handleLogout}>Sign Out</Button>
+    {/if}
     <NavHamburger on:click={toggle} />
   </div>
   <NavUl {hidden} class="order-1">
