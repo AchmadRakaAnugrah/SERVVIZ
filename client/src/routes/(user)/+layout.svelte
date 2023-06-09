@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import "../app.postcss";
+  import "../../app.postcss";
   import {
     Navbar,
     NavBrand,
@@ -10,7 +10,7 @@
     Input,
   } from "flowbite-svelte";
   import { Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from "flowbite-svelte"
-  import { jwtToken } from "./store";
+  import { jwtToken } from "../store";
 
   function handleLogout() {
     jwtToken.set('');
