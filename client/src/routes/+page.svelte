@@ -81,15 +81,15 @@
           world use Flowbite to simplify their payment stack.
         </svelte:fragment>
         <a href="/order"
-          ><button class="inline-flex items-center justify-center mr-3">
-            Order<ArrowRight size="18" class="ml-2 -mr-1" />
-          </button>
-        </a>
-        <a href="/track"
-          ><button class="inline-flex items-center justify-center">
-            Track order
-          </button>
-        </a>
+        ><button color="red" class="inline-flex items-center justify-center mr-3">
+          Order<ArrowRight size="18" class="ml-2 -mr-1" />
+        </button>
+      </a>
+      <a href="/track"
+        ><button color="light" class="inline-flex items-center justify-center">
+          Track order
+        </button>
+      </a>
       </HeroHeader>
     </div>
     <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
@@ -288,7 +288,7 @@
   </div>
 </section>
 
-<section class="mx-10 my-20">
+<section class="mx-10 my-0">
   <div class="flex justify-center items-center p-10">
     <Card class="text-center" size="lg" padding="xl">
       <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
