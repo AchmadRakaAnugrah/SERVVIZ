@@ -9,6 +9,15 @@
           Sign up to our platform
         </h3>
         <Label class="space-y-2">
+          <span>Name</span>
+          <Input
+            type="text"
+            name="name"
+            placeholder="Your name"
+            required
+          />
+        </Label>
+        <Label class="space-y-2">
           <span>Username</span>
           <Input
             type="text"
@@ -23,6 +32,15 @@
             type="email"
             name="email"
             placeholder="name@company.com"
+            required
+          />
+        </Label>
+        <Label class="space-y-2">
+          <span>Phone</span>
+          <Input
+            type="text"
+            name="phone"
+            placeholder="+62xxx"
             required
           />
         </Label>
