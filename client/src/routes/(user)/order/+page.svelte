@@ -177,7 +177,7 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
     </Card>
 </div>
 
-<Modal title="Your order" bind:open={clickOutsideModal1} autoclose outsideclose>
+<Modal title="Your order" bind:open={clickOutsideModal1} autoclose outsideclose class="min-w-full">
 
   <div>
  <Card class="text-center" size="lg" padding='xl'>
