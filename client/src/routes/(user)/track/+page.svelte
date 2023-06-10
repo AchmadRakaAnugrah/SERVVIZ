@@ -1,5 +1,5 @@
 <script>
-import {Card, Button, Label, Input, Indicator, Modal} from 'flowbite-svelte';
+import {Card, Button, Label, Input, Modal} from 'flowbite-svelte';
 import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell} from 'flowbite-svelte';
 
 let clickOutsideModal = false;
@@ -14,8 +14,9 @@ export let orders = [
 ];
 </script>
 
+<section class="my-20">
 <div class="flex justify-center items-center p-10">
-    <Card>
+    <Card class="mb-10">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Track your order</h5>
             <div>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
@@ -35,7 +36,7 @@ export let orders = [
             </div>
     </Card>
 </div>
-
+</section>
 
 
 <Modal title="Your order progress" bind:open={clickOutsideModal} autoclose outsideclose>
