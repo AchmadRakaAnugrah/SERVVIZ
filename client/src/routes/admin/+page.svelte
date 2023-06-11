@@ -1,44 +1,32 @@
-<script>
-    import "../../app.postcss";
-    import { Card, Button, Label, Input, Checkbox } from "flowbite-svelte";
+<script lang='ts'>
+  import "../../app.postcss";
+  import { onMount } from 'svelte';
+  import { Spinner } from 'flowbite-svelte';
+
+  onMount(() => {
+    window.location.href = '/admin/signin';
+  });
 </script>
   
-  <div class="flex justify-center items-center p-10">
-    <Card class="w-full">
-      <form class="flex flex-col space-y-6" action="/">
-        <h3 class="text-xl font-medium text-gray-900 dark:text-white">
-          Sign in to our platform
-        </h3>
-        <Label class="space-y-2">
-            <span>Username</span>
-            <Input
-              type="text"
-              name="username"
-              placeholder="Your username"
-              required
-            />
-          </Label>
-        <Label class="space-y-2">
-          <span>Your password</span>
-          <Input type="password" name="password" placeholder="•••••" required />
-        </Label>
-        <div class="flex items-start">
-          <Checkbox>Remember me</Checkbox>
-          <a
-            href="/"
-            class="ml-auto text-sm text-primary-700 hover:underline dark:text-primary-500"
-            >Lost password?</a
-          >
-        </div>
-        <Button type="submit" class="w-full">Login to your account</Button>
-        <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-          Not registered? <a
-            href="/admin/signup"
-            class="text-primary-700 hover:underline dark:text-primary-500"
-            >Create account</a
-          >
-        </div>
-      </form>
-    </Card>
+<style>
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+    backdrop-filter: blur(2px); /* Adjust the blur intensity as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure the overlay is above other content */
+  }
+</style>
+
+<div class="overlay">
+  <div class="flex justify-center items-center">
+    <Spinner />
   </div>
+</div>
   

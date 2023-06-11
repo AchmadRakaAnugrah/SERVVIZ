@@ -104,7 +104,6 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
 ];
 </script>
 
-
 <div class="flex justify-center items-center p-10">
     <Card size="xl" padding='xl'>
         <form class="space-y-100">

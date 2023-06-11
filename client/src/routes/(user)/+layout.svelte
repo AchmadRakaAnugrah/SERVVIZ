@@ -7,7 +7,6 @@
     NavUl,
     NavHamburger,
     Button,
-    Input,
   } from "flowbite-svelte";
   import { Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from "flowbite-svelte"
   import { jwtToken } from "../store";
@@ -20,7 +19,7 @@
 </script>
 
 <Navbar let:hidden let:toggle>
-  <NavBrand href="/">
+  <NavBrand href="/home">
     <span
       class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
     >
@@ -31,14 +30,15 @@
     {#if $jwtToken === ''}
       <Button size="sm" href="/signin">Sign In</Button>
     {:else}
-      <Button size="sm" href="/" on:click={handleLogout}>Sign Out</Button>
+      <Button size="sm" href="/home" on:click={handleLogout}>Sign Out</Button>
     {/if}
     <NavHamburger on:click={toggle} />
   </div>
   <NavUl {hidden} class="order-1">
-    <NavLi href="/">Home</NavLi>
+    <NavLi href="/home">Home</NavLi>
     <NavLi href="/order">Order</NavLi>
     <NavLi href="/track">Track Order</NavLi>
+    <NavLi href="/team">Our Team</NavLi>
   </NavUl>
 </Navbar>
 
@@ -46,12 +46,8 @@
 
 <Footer>
 
-  <FooterCopyright href="/" by="Flowbite™" year={2022} />
+  <FooterCopyright href="/home" by="Flowbite™" year={2022} />
   <FooterLinkGroup ulClass="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
-    <!-- <FooterLink href="/">About</FooterLink>
-    <FooterLink href="/">Privacy Policy</FooterLink>
-    <FooterLink href="/">Licensing</FooterLink>
-    <FooterLink href="/">Contact</FooterLink> -->
     <span
     class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
   >
