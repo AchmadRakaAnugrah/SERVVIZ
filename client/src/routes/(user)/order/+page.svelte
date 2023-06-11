@@ -1,32 +1,17 @@
-<script>
+<script lang='ts'>
 
   import {Card, Button, Label, Select, Dropzone , Textarea, Modal, 
     Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell} from "flowbite-svelte";
   import { Contact } from 'flowbite-svelte-blocks';
-  
+      
+    let serviceTypeSelected: string = "";
+    let methodSelected: string = "";
+    let storeSelected: string = "";
+    let deviceTypeSelected: string = "";
+    let problemTypeSelected: string = "";
+    let deviceBrandSelected: string = "";
 
       //untuk dropwdown
-    /**
-   * @type {any}
-   */
-    let serviceTypeSelected;
-    /**
-   * @type {any}
-   */
-    let methodSelected;
-    /**
-   * @type {any}
-   */
-    let storeSelected;
-    /**
-   * @type {any}
-   */
-    let deviceTypeSelected;
-    /**
-   * @type {any}
-   */
-    let problemTypeSelected;
-
     let services = [
         {value:"Hardware", name: "Hardware"},
         {value:"Software", name: "Software"},
@@ -39,6 +24,8 @@
     let stores = [
         {value:"SERVVIZ A", name: "SERVVIZ A"},
         {value:"SERVVIZ B", name: "SERVVIZ B"},
+        {value:"SERVVIZ C", name: "SERVVIZ C"},
+        {value:"SERVVIZ D", name: "SERVVIZ D"},
     ]
     let device_types = [
         {value:"Laptop", name: "Laptop"},
@@ -46,12 +33,25 @@
         {value:"Smartphone", name: "Smartphone"},
     ]
     let problem_types = [
-        {value:"Problem A", name: "Problem A"},
-        {value:"Problem B", name: "Problem B"},
-        {value:"Problem C", name: "Problem C"},
+        {value:"Screen", name: "Screen"},
+        {value:"Battery", name: "Battery"},
+        {value:"Storage", name: "Storage"},
+        {value:"Update Operating System/Software", name: "Update Operating System/Software"},
+        {value:"Operating System Installment/Reinstall", name: "Operating System Installment/Reinstall"},
+        {value:"Software Installment", name: "Software Installment"},
+        {value:"Cleaning", name: "Cleaning"},
+        {value:"Optimization", name: "Optimization"},
+        {value:"Hardware Cleaning", name: "Hardware Cleaning"},
+        {value:"PC Build", name: "PC Build"},
     ]
-
-
+    let device_brands = [
+      {value: "Lenovo", name: "Lenovo"},
+      {value: "Asus", name: "Asus"},
+      {value: "Personal computer", name: "Personal computer"},
+      {value: "Samsung", name: "Samsung"},
+      {value: "Xiaomi", name: "Xiaomi"},
+      {value: "Other", name: "Other"},
+    ]
 
 //Untuk Dekripsi
 let addresstextareaprops = {
@@ -104,6 +104,7 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
 ];
 </script>
 
+
 <div class="flex justify-center items-center p-10">
     <Card size="xl" padding='xl'>
         <form class="space-y-100">
@@ -132,6 +133,14 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
               </div>
             </div>
             
+            <div class="grid gap-6 md:grid-cols-3">
+              <div class='mb-6'>
+                <Label>Select device brand
+                  <Select class="mt-2" items={device_brands} bind:value={deviceBrandSelected} />
+                </Label>
+              </div>
+            </div>
+
             <div class="grid gap-6 md:grid-cols-2">
               <div class="mb-6">
                 <Label>Select a service method
@@ -171,7 +180,8 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
             </div>
         </form>
         <div class="flex justify-center items-center">
-        <Button type="submit" class="w-fit" on:click={() => clickOutsideModal1 = true}>Order</Button>
+        <Button class="w-fit mr-80" href='https://wa.me/+6282329044553'>Consult</Button>
+        <Button type="submit" class="w-fit ml-80" on:click={() => clickOutsideModal1 = true}>Order</Button>
         </div>
     </Card>
 </div>
