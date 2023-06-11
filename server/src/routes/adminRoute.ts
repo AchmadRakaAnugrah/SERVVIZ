@@ -110,6 +110,7 @@ export const getAllOrdersAdminHandler = async (req: Request, res: Response) => {
     try {
         const ordersList = await prisma.orders.findMany({
             select: {
+                id: true,
                 user_username: true,
                 service_type: true,
                 order_status: true,
