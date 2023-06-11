@@ -12,26 +12,23 @@
     import { Portfolio, PortfolioItem } from 'flowbite-svelte-blocks';
     const portfolios = [
       {
-        customer: 'Alphabet Inc.',
         title: 'Hardware',
         description:
-          'Flowbite helps you connect with friends, family and communities of people who share your interests.',
+         ' Our services provide reliable and efficient hardware solutions to repair and enhance the performance of your hardware.',
         href: '/order',
         linkTitle: 'Order'
       },
       {
-        customer: 'Microsoft Corp.',
         title: 'Software',
         description:
-          'Flowbite helps you connect with friends, family and communities of people who share your interests.',
+          'We provide comprehensive software services, from installation, updating, to problem solving.',
         href: '/order',
         linkTitle: 'Order'
       },
-      {
-        customer: 'Adobe Inc.',
+      {      
         title: 'Maintenance',
         description:
-          'Flowbite helps you connect with friends, family and communities of people who share your interests.',
+          'we provide routine maintenance and periodical maintenance to keep your system performance and reliability.',
         href: '/order',
         linkTitle: 'Order'
       }
@@ -46,11 +43,10 @@
           pClass="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
         >
           <svelte:fragment slot="h1"
-            >Ideal solution for your computer needs</svelte:fragment
+            >The best computer service</svelte:fragment
           >
           <svelte:fragment slot="paragraph">
-            From checkout to global sales tax compliance, companies around the
-            world use Flowbite to simplify their payment stack.
+            Your computer, laptop or mobile phone is broken, we are ready to fix it SERVVIZ in.
           </svelte:fragment>
           <a href="/order"
           ><button color="red" class="inline-flex items-center justify-center mr-3">
@@ -66,7 +62,7 @@
       </div>
       <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
         <img
-          src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
+          src="https://img.freepik.com/free-photo/working-code_1098-19858.jpg?size=626&ext=jpg"
           alt="mockup"
           width="500"
           height="600"
@@ -80,26 +76,22 @@
       <ContentWithImage>
         <svelte:fragment slot="h2">Let us help you</svelte:fragment>
         <p class="mb-4">
-          We are strategists, designers and developers. Innovators and problem
-          solvers. Small enough to be simple and quick, but big enough to deliver
-          the scope you want at the pace you need. Small enough to be simple and
-          quick, but big enough to deliver the scope you want at the pace you
-          need.
+         Our computer service offerings are designed to cater to your specific needs. Whether it's troubleshooting, 
+         hardware repairs, software installations, or system optimization, we have a dedicated team of experts ready to assist you.
         </p>
         <p>
-          We are strategists, designers and developers. Innovators and problem
-          solvers. Small enough to be simple and quick.
+          We are ready to repair starting from computers, laptops and cellphones. contact SERVVIZ.
         </p>
   
         <svelte:fragment slot="image">
           <img
             class="w-full rounded-lg"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png"
+            src="https://img.freepik.com/free-photo/woman-working-call-center-holding-pair-headphones_23-2149256146.jpg?size=626&ext=jpg"
             alt="office content 1"
           />
           <img
             class="mt-4 w-full lg:mt-10 rounded-lg"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png"
+            src="https://img.freepik.com/free-photo/confident-call-center-operator-talking-with-client_74855-4059.jpg?size=626&ext=jpg"
             alt="office content 2"
           />
         </svelte:fragment>
@@ -198,8 +190,7 @@
           Try our sevices
         </h5>
         <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
-          Get in touch with our professional today, and get your gadgets back up
-          and running.
+          Try our service and feel the difference.
         </p>
         <div
           class="justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4"
