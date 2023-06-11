@@ -28,23 +28,21 @@
   async function handleSubmit(event: Event) {
     event.preventDefault();
 
-    if (!validateName) {
+    if (!validateName(name)) {
       alert("Format nama tidak sesuai");
-    } else if (!validateUsername) {
+    } else if (!validateUsername(username)) {
       alert("Format username tidak sesuai");
     } else if (!validatePhone(phone)) {
       alert("Format nomor telepon selular tidak sesuai");
-    } else if (!passwordMatch()) {
+    } else if (!passwordMatch) {
       alert("Password tidak sama");
-    } else if (!passwordLength()) {
+    } else if (!passwordLength) {
       alert("Password minimum dari 6 karakter");
     }
 
     const response = await fetch("http://localhost:5000/api/register", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email,
         name: name,
