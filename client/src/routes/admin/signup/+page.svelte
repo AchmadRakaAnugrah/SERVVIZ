@@ -9,23 +9,15 @@
 
   const passwordMatch = () => password === confirmPassword;
   const passwordLength = () => password.length >= 6;
-  function validateName(input: string): boolean {
-    const regex = /^[a-zA-Z\s\-]{1,50}$/;
-    return regex.test(input);
-  }
   function validateUsername(input: string): boolean {
     const regex = /^[a-zA-Z0-9]{1,10}$/;
-    return regex.test(input);
-  }
-  function validatePhone(input: string): boolean {
-    const regex = /^08.{0,13}$/;
     return regex.test(input);
   }
 
   async function handleSubmit(event: Event) {
     event.preventDefault();
 
-    if (!validateUsername) {
+    if (!validateUsername(username)) {
       alert("Format username tidak sesuai");
     } else if (!passwordMatch()) {
       alert("Password tidak sama");

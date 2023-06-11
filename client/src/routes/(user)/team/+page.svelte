@@ -13,32 +13,32 @@
       {
         href: '/',
         src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png',
-        alt: 'Bonnie Green',
-        name: 'Bonnie Green',
+        alt: 'Raka',
+        name: 'Raka',
         jobTitle: 'CEO & Web Developer',
         description: 'Bonnie drives the technical strategy of the flowbite platform and brand.'
       },
       {
         href: '/',
         src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png',
-        alt: 'Jese Leos',
-        name: 'Jese Leos',
+        alt: 'Raffi',
+        name: 'Raffi',
         jobTitle: 'CTO',
         description: 'Jese drives the technical strategy of the flowbite platform and brand.'
       },
       {
         href: '/',
         src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png',
-        alt: 'Michael Gouch',
-        name: 'Michael Gouch',
+        alt: 'Dylan',
+        name: 'Dylan',
         jobTitle: 'Senior Front-end Developer',
         description: 'Michael drives the technical strategy of the flowbite platform and brand'
       },
       {
         href: '/',
         src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/sofia-mcguire.png',
-        alt: 'Lana Byrd',
-        name: 'Lana Byrd',
+        alt: 'Raihan',
+        name: 'Raihan',
         jobTitle: 'Marketing & Sale',
         description: 'Lana drives the technical strategy of the flowbite platform and brand.'
       }

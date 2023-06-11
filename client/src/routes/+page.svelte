@@ -26,6 +26,6 @@
 
 <div class="overlay">
   <div class="flex justify-center items-center">
-    <Spinner />
+    <Spinner color="purple"/>
   </div>
 </div>

@@ -5,52 +5,35 @@
     import { ContentWithImage } from "flowbite-svelte-blocks";
     import {
       Card,
-      Navbar,
-      NavBrand,
-      NavLi,
-      NavUl,
-      NavHamburger,
       Button,
     } from "flowbite-svelte";
-    import {
-      Footer,
-      FooterCopyright,
-      FooterLinkGroup,
-    } from "flowbite-svelte";
-    import { jwtToken } from "../../store";
-  
-    function handleLogout() {
-      jwtToken.set("");
-      alert("Berhasil logout");
-      console.log($jwtToken);
-    }
   
     //untuk our services
     import { Portfolio, PortfolioItem } from 'flowbite-svelte-blocks';
     const portfolios = [
       {
         customer: 'Alphabet Inc.',
-        title: 'Official website',
+        title: 'Hardware',
         description:
           'Flowbite helps you connect with friends, family and communities of people who share your interests.',
         href: '/order',
-        linkTitle: 'View case study'
+        linkTitle: 'Order'
       },
       {
         customer: 'Microsoft Corp.',
-        title: 'Management system',
+        title: 'Software',
         description:
           'Flowbite helps you connect with friends, family and communities of people who share your interests.',
         href: '/order',
-        linkTitle: 'View case study'
+        linkTitle: 'Order'
       },
       {
         customer: 'Adobe Inc.',
-        title: 'Logo design',
+        title: 'Maintenance',
         description:
           'Flowbite helps you connect with friends, family and communities of people who share your interests.',
         href: '/order',
-        linkTitle: 'View case study'
+        linkTitle: 'Order'
       }
     ];
   </script>
@@ -63,7 +46,7 @@
           pClass="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
         >
           <svelte:fragment slot="h1"
-            >Payments tool for software companies</svelte:fragment
+            >Ideal solution to your computer needs</svelte:fragment
           >
           <svelte:fragment slot="paragraph">
             From checkout to global sales tax compliance, companies around the
@@ -95,7 +78,7 @@
   <section class="mx-10 my-20">
     <div class="flex justify-center items-center p-10">
       <ContentWithImage>
-        <svelte:fragment slot="h2">We didn't reinvent the wheel</svelte:fragment>
+        <svelte:fragment slot="h2">Let us help you</svelte:fragment>
         <p class="mb-4">
           We are strategists, designers and developers. Innovators and problem
           solvers. Small enough to be simple and quick, but big enough to deliver
