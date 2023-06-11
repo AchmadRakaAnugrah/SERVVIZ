@@ -46,7 +46,7 @@
           pClass="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
         >
           <svelte:fragment slot="h1"
-            >Ideal solution to your computer needs</svelte:fragment
+            >Ideal solution for your computer needs</svelte:fragment
           >
           <svelte:fragment slot="paragraph">
             From checkout to global sales tax compliance, companies around the
