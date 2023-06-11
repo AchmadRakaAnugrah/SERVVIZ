@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Card, Button, Label, Input, Checkbox } from "flowbite-svelte";
+  import { Card, Button, Label, Input} from "flowbite-svelte";
   import { jwtToken } from "../../store";
   import { goto } from "$app/navigation";
 

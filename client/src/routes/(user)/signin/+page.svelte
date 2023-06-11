@@ -31,7 +31,7 @@
       jwtToken.set(data.token);
       console.log($jwtToken);
       alert("Berhasil login");
-      goto("/");
+      goto("/home");
     } else {
       // The request failed
       // throw new Error(`The request failed with status code ${response.status}`);

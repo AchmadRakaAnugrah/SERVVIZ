@@ -3,13 +3,9 @@
   import {
     Navbar,
     NavBrand,
-    NavLi,
-    NavUl,
     NavHamburger,
     Button,
-    Input,
   } from "flowbite-svelte";
-  import { Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from "flowbite-svelte"
   import { jwtToken } from "../store";
 
   function handleLogout() {
@@ -29,9 +25,9 @@
   </NavBrand>
   <div class="flex md:order-2">
     {#if $jwtToken === ''}
-       <Button size="sm" href="/admin" on:click={handleLogout}>Sign Out</Button>
+      <!-- <Button size="sm" href="/signin">Sign In</Button> -->
     {:else}
-       <!-- <Button size="sm" href="/signin">Sign In</Button> -->
+      <Button size="sm" href="/admin" on:click={handleLogout}>Sign Out</Button>
     {/if}
     <NavHamburger on:click={toggle} />
   </div>

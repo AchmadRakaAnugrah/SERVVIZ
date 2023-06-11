@@ -8,7 +8,7 @@
     NavHamburger,
     Button,
   } from "flowbite-svelte";
-  import { Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from "flowbite-svelte"
+  import { Footer, FooterCopyright, FooterLinkGroup } from "flowbite-svelte"
   import { jwtToken } from "../store";
 
   function handleLogout() {
@@ -30,7 +30,7 @@
     {#if $jwtToken === ''}
       <Button size="sm" href="/signin">Sign In</Button>
     {:else}
-      <Button size="sm" href="/home" on:click={handleLogout}>Sign Out</Button>
+      <Button size="sm" href="/" on:click={handleLogout}>Sign Out</Button>
     {/if}
     <NavHamburger on:click={toggle} />
   </div>
