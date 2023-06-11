@@ -32,9 +32,9 @@
 
     if (!validateUsername(username)) {
       alert("Format username tidak sesuai");
-    } else if (!passwordMatch) {
+    } else if (!passwordMatch()) {
       alert("Password tidak sama");
-    } else if (!passwordLength) {
+    } else if (!passwordLength()) {
       alert("Password minimum dari 6 karakter");
     } else {
       try {
