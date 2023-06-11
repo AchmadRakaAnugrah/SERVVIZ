@@ -133,7 +133,7 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
               </div>
             </div>
             
-            <div class="grid gap-6 md:grid-cols-3">
+            <div class="grid gap-6 md:grid-cols-2">
               <div class='mb-6'>
                 <Label>Select device brand
                   <Select class="mt-2" items={device_brands} bind:value={deviceBrandSelected} />
