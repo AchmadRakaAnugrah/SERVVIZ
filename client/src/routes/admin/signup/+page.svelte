@@ -13,43 +13,44 @@
     const regex = /^[a-zA-Z0-9]{1,10}$/;
     return regex.test(input);
   }
-
-  async function handleSubmit(event: Event) {
-    event.preventDefault();
-
-    if (!validateUsername(username)) {
-      alert("Format username tidak sesuai");
-    } else if (!passwordMatch()) {
-      alert("Password tidak sama");
-    } else if (!passwordLength()) {
-      alert("Password minimum dari 6 karakter");
-    }
-
+  
+  async function registerAdmin() {
     const response = await fetch("http://localhost:5000/api/admin/register", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: username,
         password: password,
       }),
     });
 
-    // Check the response status code
-    if (response.status === 200) {
-      // The request was successful
-      // const data = await response.json();
-      // jwtToken.set(data.token);
-      // console.log($jwtToken);
-      alert("Berhasil register, silahkan login");
-      goto("/signin");
-    } else if (response.status === 409) {
-      // The request failed
-      // throw new Error(`The request failed with status code ${response.status}`);
-      alert("Username atau email sudah terdaftar, gunakan yang lain");
+    return response;
+  }
+
+  async function handleSubmit(event: Event) {
+    event.preventDefault();
+
+    if (!validateUsername(username)) {
+      alert("Format username tidak sesuai");
+    } else if (!passwordMatch) {
+      alert("Password tidak sama");
+    } else if (!passwordLength) {
+      alert("Password minimum dari 6 karakter");
     } else {
-      alert("Terjadi error, coba lagi di lain waktu");
+      try {
+        const response = await registerAdmin();
+
+        if (response.status === 201) {
+          alert("Berhasil register, silahkan login");
+          goto("/signin");
+        } else if (response.status === 409) {
+          alert("Username sudah terdaftar, gunakan yang lain");
+        } else {
+          alert("Terjadi error, coba lagi di lain waktu");
+        }
+      } catch (error) {
+        alert("Terjadi error, coba lagi di lain waktu");
+      }
     }
   }
 </script>

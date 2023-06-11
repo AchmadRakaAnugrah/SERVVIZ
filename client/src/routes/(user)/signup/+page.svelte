@@ -25,6 +25,22 @@
     return regex.test(input);
   }
 
+  async function registerUser() {
+    const response = await fetch("http://localhost:5000/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        name: name,
+        username: username,
+        phone: phone,
+        password: password,
+      }),
+    });
+
+    return response;
+  }
+
   async function handleSubmit(event: Event) {
     event.preventDefault();
 
@@ -38,34 +54,21 @@
       alert("Password tidak sama");
     } else if (!passwordLength) {
       alert("Password minimum dari 6 karakter");
-    }
-
-    const response = await fetch("http://localhost:5000/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        name: name,
-        username: username,
-        phone: phone,
-        password: password,
-      }),
-    });
-
-    // Check the response status code
-    if (response.status === 200) {
-      // The request was successful
-      // const data = await response.json();
-      // jwtToken.set(data.token);
-      // console.log($jwtToken);
-      alert("Berhasil register, silahkan login");
-      goto("/signin");
-    } else if (response.status === 409) {
-      // The request failed
-      // throw new Error(`The request failed with status code ${response.status}`);
-      alert("Username atau email sudah terdaftar, gunakan yang lain");
     } else {
-      alert("Terjadi error, coba lagi di lain waktu");
+      try {
+        const response = await registerUser();
+
+        if (response.status === 201) {
+          alert("Berhasil register, silahkan login");
+          goto("/signin");
+        } else if (response.status === 409) {
+          alert("Username atau email sudah terdaftar, gunakan yang lain");
+        } else {
+          alert("Terjadi error, coba lagi di lain waktu");
+        }
+      } catch (error) {
+        alert("Terjadi error, coba lagi di lain waktu");
+      }
     }
   }
 </script>
