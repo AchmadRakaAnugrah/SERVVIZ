@@ -402,6 +402,40 @@ export const getOrderHistoryAdminHandler = async (req: Request, res: Response) =
     }
 }
 
+export const filterOrderStatusAdminHandler = async (req: Request, res: Response) => {
+    const { order_status } = req.body;
+
+    try {
+        if (isNaN(order_status)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const listOrder = await prisma.orders.findMany({
+            where: { order_status: order_status },
+            select: {
+                id: true,
+                user_username: true,
+                service_type: true,
+                pickup_address: true,
+                dropoff_address_id: true,
+                device: true,
+                device_brand: true,
+                problem_type: true,
+                problem_desc: true,
+                datetime: true,
+                total_price: true,
+                order_status: true,
+                admin_username: true
+            }
+        })
+        
+        return res.status(200).json(listOrder);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
 export const createStoreAdminHandler = async (req: Request, res: Response) => {
     const { name, address, phone } = req.body;
     try {
@@ -426,13 +460,12 @@ export const createStoreAdminHandler = async (req: Request, res: Response) => {
 }
 
 export const getAllStoreAdminHandler = async (req: Request, res: Response) => {
-    const { name, address, phone } = req.body;
     try {
         const storeData = await prisma.store.findMany({
             select: {
-                name,
-                address,
-                phone
+                name: true,
+                address: true,
+                phone: true
             }
         })
 

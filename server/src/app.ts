@@ -9,7 +9,7 @@ import handleParsingError from "./middlewares/handleParsingError";
 
 // Import user route
 import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler, createBlobsUserHandler, getBlobsListUserHandler, deleteBlobsUserHandler, getBlobsUserHandeler, changePasswordUserHandler } from "./routes/userRoute";
-import { changePasswordAdminHandler, createOrderHistoryAdminHandler, createStoreAdminHandler, getAllOrdersAdminHandler, getAllStoreAdminHandler, getAllTechnicianDetails, getOrderHistoryAdminHandler, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateStoreAdminHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
+import { changePasswordAdminHandler, createOrderHistoryAdminHandler, createStoreAdminHandler, filterOrderStatusAdminHandler, getAllOrdersAdminHandler, getAllStoreAdminHandler, getAllTechnicianDetails, getOrderHistoryAdminHandler, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateStoreAdminHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
 import { rejectEmptyStringBody, rejectEmptyStringParams } from "./middlewares/rejectEmptyString";
 import { usernameValidator } from "./middlewares/usernameValidator";
 import { uploadBlobs } from "./middlewares/uploadBlobs";
@@ -26,7 +26,7 @@ async function main() {
     app.use(handleParsingError);
 
     // NORMAL USER
-    app.post('/api/register', rejectEmptyStringBody, usernameValidator, registerUserHandler);
+    app.post('/api/register',rejectEmptyStringBody, usernameValidator, registerUserHandler);
     app.post('/api/login', rejectEmptyStringParams, rejectEmptyStringBody, loginUserHandler);
     app.put('/api/change', rejectEmptyStringBody, rejectEmptyStringBody, changePasswordUserHandler);
     // ORDER ROUTE
@@ -56,11 +56,15 @@ async function main() {
     // Login admin
     app.post('/api/admin/login', rejectEmptyStringBody, loginAdminHandler);
     app.put('/api/admin/change', rejectEmptyStringBody, rejectEmptyStringBody, changePasswordAdminHandler);
+    
     // ORDER ROUTE
     // Get all order list
     app.get('/api/admin/orders', authenticateAdminToken, getAllOrdersAdminHandler);
     // Update order details
     app.put('/api/admin/orders/:username/:order_id', authenticateAdminToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailsAdminHandler);
+    // Filter based on order status
+    app.get('/api/admin/orders/filter', authenticateAdminToken, rejectEmptyStringBody, filterOrderStatusAdminHandler)
+
     // ORDER HISTORY ROUTE
     // Get order history
     app.get('/api/admin/orders/:username/:order_id/history', authenticateAdminToken, getOrderHistoryAdminHandler);
