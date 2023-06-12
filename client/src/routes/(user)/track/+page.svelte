@@ -1,35 +1,17 @@
 <script>
 import {Card, Button, Label, Input, Modal} from 'flowbite-svelte';
 import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell} from 'flowbite-svelte';
-import { onMount } from "svelte";
+
 let clickOutsideModal = false;
 
-export let Orders = [
-  { status: "Done" }
-];
-
-async function loadOrders() {
-    const response = await fetch("http://localhost:5000/api/orders/:username", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImR5bGFuaHNqIiwiaWF0IjoxNjg2NTEwNjEzLCJleHAiOjE2ODY1MTQyMTN9.JygXsLogXnK8sUW9Wq8ndOedePea3lcr5PtKs13JE74",
+export let orders = [
+      {
+        name: "John Die",
+        type: "Software Update",
+        status: "Done",
+        price: "Rp 150.000",
       },
-    });
-    const dataOrders = await response.json();
-    return { dataOrders };
-  }
-
-  /**
-   * @type {any[]}
-   */
-  let itemsOrders = [];
-  onMount(async () => {
-    const result = await loadOrders();
-    console.log(result);
-    itemsOrders = result.dataOrders;
-  });
+];
 </script>
 
 <section class="my-20">
@@ -65,18 +47,16 @@ async function loadOrders() {
         <TableHead
           class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400"
         >
-          <TableHeadCell>Order Code</TableHeadCell>
-          <TableHeadCell>Problem Type</TableHeadCell>
-          <TableHeadCell>Order date</TableHeadCell>
+          <TableHeadCell>Name</TableHeadCell>
+          <TableHeadCell>Service Type</TableHeadCell>
           <TableHeadCell>Status</TableHeadCell>
         </TableHead>
         <TableBody>
-            {#each itemsOrders as order}
+            {#each orders as order}
             <TableBodyRow>
-                <TableBodyCell>{order.unique_code}</TableBodyCell>
-                <TableBodyCell>{order.problem_type}</TableBodyCell>
-                <TableBodyCell>{order.datetime}</TableBodyCell>
-                <TableBodyCell>{order.order_status}</TableBodyCell>
+                <TableBodyCell>{order.name}</TableBodyCell>
+                <TableBodyCell>{order.type}</TableBodyCell>
+                <TableBodyCell>{order.status}</TableBodyCell>
             </TableBodyRow>
             {/each}
         </TableBody>
@@ -84,8 +64,8 @@ async function loadOrders() {
           <tr class="font-semibold text-gray-900 dark:text-white">
             <th scope="row" class="py-3 px-6 text-base">Total price</th>
             <td class="py-3 px-6"> </td>
-            {#each itemsOrders as order}
-            <td class="py-3 px-6">{order.total_price}</td>
+            {#each orders as order}
+            <td class="py-3 px-6">{order.price}</td>
             {/each}
           </tr>
         </tfoot>

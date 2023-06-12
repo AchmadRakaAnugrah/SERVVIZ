@@ -40,13 +40,13 @@
       <div class="mr-auto place-self-center lg:col-span-7">
         <HeroHeader
           h1Class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white"
-          pClass="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400 mr-10"
+          pClass="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
         >
           <svelte:fragment slot="h1"
-            >Ideal solution for your computer needs</svelte:fragment
+            >The best computer service</svelte:fragment
           >
           <svelte:fragment slot="paragraph">
-            SER<b>VVIZ</b> is a computer device repair services provider. We handle various issues, from hardware, software to maintenance.
+            Your computer, laptop or mobile phone is broken, we are ready to fix it SERVVIZ in.
           </svelte:fragment>
           <a href="/order"
           ><button color="red" class="inline-flex items-center justify-center mr-3">
@@ -66,7 +66,6 @@
           alt="mockup"
           width="500"
           height="600"
-          class="ml-10 rounded-lg"
         />
       </div>
     </div>
@@ -76,12 +75,12 @@
     <div class="flex justify-center items-center p-10">
       <ContentWithImage>
         <svelte:fragment slot="h2">Let us help you</svelte:fragment>
-        <p class="mb-4 mx-10">
+        <p class="mb-4">
          Our computer service offerings are designed to cater to your specific needs. Whether it's troubleshooting, 
          hardware repairs, software installations, or system optimization, we have a dedicated team of experts ready to assist you.
         </p>
-        <p class="mx-10">
-          We are ready to repair starting from computers, laptops and cellphones.
+        <p>
+          We are ready to repair starting from computers, laptops and cellphones. contact SERVVIZ.
         </p>
   
         <svelte:fragment slot="image">
@@ -191,7 +190,7 @@
           Try our sevices
         </h5>
         <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
-          Get in touch with our professionals and try out our services.
+          Try our service and feel the difference.
         </p>
         <div
           class="justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4"
