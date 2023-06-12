@@ -24,7 +24,7 @@
     <span
       class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
     >
-      SER<b>VVIZ</b> / admin
+      SER<b>VVIZ</b>/admin
     </span>
   </NavBrand>
   <div class="flex md:order-2">
@@ -46,7 +46,7 @@
     <span
     class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
   >
-    SER<b>VVIZ</b> / admin
+    SER<b>VVIZ</b>/admin
   </span>
   </FooterLinkGroup>
 </Footer>
