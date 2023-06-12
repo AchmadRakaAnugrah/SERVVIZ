@@ -37,8 +37,7 @@ model Orders {
   unique_code        String?
   service_type       String
   pickup_address     String?
-  store              Store?           @relation(fields: [dropoff_address_id], references: [id])
-  dropoff_address_id Int?
+  dropoff_address    String?
   device             String?
   device_brand       String?
   problem_type       String?
@@ -75,7 +74,6 @@ model Store {
   name    String
   address String?
   phone   String?
-  orders  Orders[]
 }
 
 model Blobs {

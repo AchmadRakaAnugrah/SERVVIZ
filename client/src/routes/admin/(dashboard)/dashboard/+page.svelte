@@ -35,8 +35,7 @@
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          `Bearer ${$jwtToken}`,
+        Authorization: `Bearer ${$jwtToken}`,
       },
     });
     const data = await response.json();
@@ -55,8 +54,7 @@
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          `Bearer ${$jwtToken}`,
+        Authorization: `Bearer ${$jwtToken}`,
       },
     });
     const data = await response.json();
@@ -75,8 +73,7 @@
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          `Bearer ${$jwtToken}`,
+        Authorization: `Bearer ${$jwtToken}`,
       },
     });
     const data = await response.json();
@@ -90,6 +87,15 @@
     itemStores = result.data;
   });
 
+  async function refresh() {
+    const result1 = await loadOrders();
+    itemOrders = result1.data;
+    const result2 = await loadTechnician();
+    itemTechnicians = result2.data;
+    const result3 = await loadStores();
+    itemStores = result3.data;
+  }
+
   const handleUpdate = () => {
     alert("Clicked update.");
   };
@@ -100,6 +106,9 @@
 
 <div class="flex justify-center items-center p-5 mx-auto w-full">
   <Card class="text-center mx-auto w-full" size="xl" padding="sm">
+    <Button
+      on:click={refresh}>Refresh</Button
+    >
     <Tabs>
       <TabItem open title="Orders">
         <Table>

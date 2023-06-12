@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Card, Button, Label, Input, Checkbox } from "flowbite-svelte";
-  import { jwtToken } from "../../store";
+  import { jwtToken, usernameStore } from "../../store";
   import { goto } from "$app/navigation";
   import { error } from "@sveltejs/kit";
 
@@ -29,6 +29,7 @@
       // The request was successful
       const data = await response.json();
       jwtToken.set(data.token);
+      usernameStore.set(usernameValue);
       console.log($jwtToken);
       alert("Berhasil login");
       goto("/home");

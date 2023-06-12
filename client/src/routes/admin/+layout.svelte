@@ -9,10 +9,11 @@
     Button,
   } from "flowbite-svelte";
   import { Footer, FooterCopyright, FooterLinkGroup } from "flowbite-svelte"
-  import { jwtToken } from "../store";
+  import { jwtToken, usernameStore } from "../store";
 
   function handleLogout() {
     jwtToken.set('');
+    usernameStore.set('');
     alert('Berhasil logout');
     console.log($jwtToken);
   }
@@ -30,7 +31,7 @@
     {#if $jwtToken === ''}
       <Button size="sm" href="/admin/signin">Sign In</Button>
     {:else}
-      <Button size="sm" href="/" on:click={handleLogout}>Sign Out</Button>
+      <Button size="sm" href="/admin/signin" on:click={handleLogout}>Sign Out</Button>
     {/if}
     <NavHamburger on:click={toggle} />
   </div>
