@@ -110,9 +110,12 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
         <form class="space-y-100">
             <Contact>
                 <svelte:fragment slot="h2">Order</svelte:fragment>
+                <svelte:fragment slot="paragraph">
+                  Got issues on your computer? Sit back, relax. Let us do the hard part.
+                </svelte:fragment>
             </Contact>
 
-            <div class="grid gap-6 md:grid-cols-3 mt-10">
+            <div class="grid gap-6 md:grid-cols-3">
               <div class='mb-6'>
                 <Label>Select a service type
                   <Select class="mt-2" items={services} bind:value={serviceTypeSelected} />
@@ -177,7 +180,7 @@ const dropHandle = (/** @type {{ preventDefault: () => void; dataTransfer: { fil
             </div>
         </form>
         <div class="flex justify-center items-center">
-        <Button class="w-fit mr-80" href='https://web.whatsapp.com/send/?phone=%2B6282329044553&text&type=phone_number&app_absent=0'>Consult</Button>
+        <Button class="w-fit mr-80" href='https://wa.me/+6282329044553'>Consult</Button>
         <Button type="submit" class="w-fit ml-80" on:click={() => clickOutsideModal1 = true}>Order</Button>
         </div>
     </Card>
