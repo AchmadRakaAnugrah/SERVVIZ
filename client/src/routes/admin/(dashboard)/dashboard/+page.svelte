@@ -1,12 +1,17 @@
 <script lang="ts">
   // @ts-nocheck
   import "../../../../app.postcss";
-  import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch,  Card } from 'flowbite-svelte';
+  import {
+    Table,
+    TableBody,
+    TableBodyCell,
+    TableBodyRow,
+    TableHead,
+    TableHeadCell,
+    Checkbox,
+    Card,
+  } from "flowbite-svelte";
   import { Tabs, TabItem } from "flowbite-svelte";
-  let searchTerm = '';
-
- 
-
   //fetch dari database
   export let Orders = [{ status: "Done" }];
   export let History = [{ status: "Done" }];
@@ -50,10 +55,6 @@
     itemsOrders = result.dataOrders;
   });
 
-  $: itemsOrders = itemsOrders.filter(
-    (item) => item.maker.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
-  );
-
   // Order History
   async function loadHistory() {
     const response = await fetch("http://localhost:5000/api/admin/orders/:username/:order_id/history", {
@@ -74,10 +75,6 @@
     console.log(result);
     itemsHistory = result.dataHistory;
   });
-
-  $: itemsHistory = itemsHistory.filter(
-    (item) => item.maker.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
-  );
 
   //Technician
   async function loadTechnicians() {
@@ -100,10 +97,6 @@
     itemsTechnicians = result.dataTechnicians;
   });
 
-  $: itemsTechnicians = itemsTechnicians.filter(
-    (item) => item.maker.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
-  );
-
   //Stores
   async function loadStores() {
     const response = await fetch("http://localhost:5000/api/admin/store", {
@@ -124,11 +117,6 @@
     console.log(result);
     itemsStores = result.dataStores;
   });
-
-  $: itemsStores = itemsStores.filter(
-    (item) => item.maker.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
-  );
-
 
   const handleUpdate = () => {
     alert("Clicked update.");
@@ -157,7 +145,7 @@
   <Card class="text-center mx-auto w-full" size="xl" padding="sm">
     <Tabs>
       <TabItem open title="Orders">
-        <TableSearch placeholder="Search by maker name" hoverable={true} bind:inputValue={searchTerm}>
+        <Table>
           <TableHead>
             <TableHeadCell class="!p-1" />
             <TableHeadCell>Actions</TableHeadCell>
@@ -175,7 +163,7 @@
             <TableHeadCell>Admin</TableHeadCell>
             <TableHeadCell>Order date</TableHeadCell>
           </TableHead>
-          <TableBody class="divide-y">
+          <TableBody>
             {#each itemsOrders as item}
               <TableBodyRow>
                 <TableBodyCell class="!p-1">
@@ -241,10 +229,10 @@
               </TableBodyRow>
             {/each}
           </TableBody>
-        </TableSearch>
+        </Table>
       </TabItem>
       <TabItem open title="Order History">
-        <TableSearch placeholder="Search by maker name" hoverable={true} bind:inputValue={searchTerm}>
+        <Table>
           <TableHead>
             <TableHeadCell class="!p-1" />
             <TableHeadCell>Actions</TableHeadCell>
@@ -256,7 +244,7 @@
             <TableHeadCell>Order Status</TableHeadCell>
             <TableHeadCell>Description</TableHeadCell>
           </TableHead>
-          <TableBody class="divide-y">
+          <TableBody>
             {#each itemsHistory as item}
               <TableBodyRow>
                 <TableBodyCell class="!p-1">
@@ -318,10 +306,10 @@
               </TableBodyRow>
             {/each}
           </TableBody>
-        </TableSearch>
+        </Table>
       </TabItem>
       <TabItem title="Technicians">
-        <TableSearch placeholder="Search by maker name" hoverable={true} bind:inputValue={searchTerm}>
+        <Table>
           <TableHead>
             <TableHeadCell class="!p-1" />
             <TableHeadCell>Actions</TableHeadCell>
@@ -329,7 +317,7 @@
             <TableHeadCell>Name</TableHeadCell>
             <TableHeadCell>Phone</TableHeadCell>
           </TableHead>
-          <TableBody class="divide-y">
+          <TableBody>
             {#each itemsTechnicians as item}
               <TableBodyRow>
                 <TableBodyCell class="!p-1">
@@ -385,10 +373,10 @@
               </TableBodyRow>
             {/each}
           </TableBody>
-        </TableSearch>
+        </Table>
       </TabItem>
       <TabItem title="Stores">
-        <TableSearch placeholder="Search by maker name" hoverable={true} bind:inputValue={searchTerm}>
+        <Table>
           <TableHead>
             <TableHeadCell class="!p-1" />
             <TableHeadCell>Actions</TableHeadCell>
@@ -396,7 +384,7 @@
             <TableHeadCell>Address</TableHeadCell>
             <TableHeadCell>Phone</TableHeadCell>
           </TableHead>
-          <TableBody class="divide-y">
+          <TableBody>
             {#each itemsStores as item}
               <TableBodyRow>
                 <TableBodyCell class="!p-1">
@@ -456,7 +444,7 @@
               </TableBodyRow>
             {/each}
           </TableBody>
-        </TableSearch>
+        </Table>
       </TabItem>
     </Tabs>
   </Card>
