@@ -1,5 +1,4 @@
 <script lang="ts">
-  // @ts-nocheck
   import "../../../../app.postcss";
   import {
     Table,
@@ -27,27 +26,68 @@
     Textarea,
   } from "flowbite-svelte";
   import { onMount } from "svelte";
+  import { jwtToken } from "../../../store";
 
   let defaultModal = false;
 
-  async function load() {
+  async function loadOrders() {
     const response = await fetch("http://localhost:5000/api/admin/orders", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG5kb2UiLCJpYXQiOjE2ODY0OTY0NzksImV4cCI6MTY4NjUwMDA3OX0.OG0iMI8xjeWjR_oHPm1cRBhOEWCWzqHDjjWCcjZm8Vk",
+          `Bearer ${$jwtToken}`,
       },
     });
     const data = await response.json();
     return { data };
   }
 
-  let items = [];
+  let itemOrders = [];
   onMount(async () => {
-    const result = await load();
+    const result = await loadOrders();
     console.log(result);
-    items = result.data;
+    itemOrders = result.data;
+  });
+
+  async function loadTechnician() {
+    const response = await fetch("http://localhost:5000/api/admin/technician", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          `Bearer ${$jwtToken}`,
+      },
+    });
+    const data = await response.json();
+    return { data };
+  }
+
+  let itemTechnicians = [];
+  onMount(async () => {
+    const result = await loadTechnician();
+    console.log(result);
+    itemTechnicians = result.data;
+  });
+
+  async function loadStores() {
+    const response = await fetch("http://localhost:5000/api/admin/store", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          `Bearer ${$jwtToken}`,
+      },
+    });
+    const data = await response.json();
+    return { data };
+  }
+
+  let itemStores = [];
+  onMount(async () => {
+    const result = await loadStores();
+    console.log(result);
+    itemStores = result.data;
   });
 
   const handleUpdate = () => {
@@ -73,7 +113,7 @@
             <TableHeadCell>Actions</TableHeadCell>
           </TableHead>
           <TableBody>
-            {#each items as item}
+            {#each itemOrders as item}
               <TableBodyRow>
                 <TableBodyCell class="!p-1">
                   <!-- <Checkbox /> -->
@@ -122,9 +162,115 @@
       </TabItem>
       <TabItem title="Technicians">
         <!-- Untuk Tabel Technician -->
+        <Table>
+          <TableHead>
+            <TableHeadCell class="!p-1" />
+            <TableHeadCell>ID</TableHeadCell>
+            <TableHeadCell>Name</TableHeadCell>
+            <TableHeadCell>Phone</TableHeadCell>
+          </TableHead>
+          <TableBody>
+            {#each itemTechnicians as item}
+              <TableBodyRow>
+                <TableBodyCell class="!p-1">
+                  <!-- <Checkbox /> -->
+                </TableBodyCell>
+                <TableBodyCell>{item.technician_id}</TableBodyCell>
+                <TableBodyCell>{item.name}</TableBodyCell>
+                <TableBodyCell>{item.phone}</TableBodyCell>
+                <TableBodyCell>
+                  <div class="flex justify-left">
+                    <Button on:click={() => (defaultModal = true)}
+                      >Update</Button
+                    >
+                  </div>
+                  <Modal
+                    title="Update"
+                    bind:open={defaultModal}
+                    autoclose
+                    class="min-w-full"
+                  >
+                    <div class="flex items-center space-x-4">
+                      <Button
+                        type="submit"
+                        class="w-fit"
+                        on:click={handleUpdate}
+                      >
+                        Update product
+                      </Button>
+                      <Button
+                        type="submit"
+                        class="w-fit"
+                        outline
+                        color="red"
+                        on:click={handleDelete}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </Modal>
+                </TableBodyCell>
+              </TableBodyRow>
+            {/each}
+          </TableBody>
+        </Table>
       </TabItem>
       <TabItem title="Stores">
         <!-- Untuk Tabel Stores-->
+        <Table>
+          <TableHead>
+            <TableHeadCell class="!p-1" />
+            <TableHeadCell>ID</TableHeadCell>
+            <TableHeadCell>Name</TableHeadCell>
+            <TableHeadCell>Address</TableHeadCell>
+            <TableHeadCell>Phone</TableHeadCell>
+          </TableHead>
+          <TableBody>
+            {#each itemStores as item}
+              <TableBodyRow>
+                <TableBodyCell class="!p-1">
+                  <!-- <Checkbox /> -->
+                </TableBodyCell>
+                <TableBodyCell>{item.id}</TableBodyCell>
+                <TableBodyCell>{item.name}</TableBodyCell>
+                <TableBodyCell>{item.address}</TableBodyCell>
+                <TableBodyCell>{item.phone}</TableBodyCell>
+                <TableBodyCell>
+                  <div class="flex justify-left">
+                    <Button on:click={() => (defaultModal = true)}
+                      >Update</Button
+                    >
+                  </div>
+                  <Modal
+                    title="Update"
+                    bind:open={defaultModal}
+                    autoclose
+                    class="min-w-full"
+                  >
+                    <div class="flex items-center space-x-4">
+                      <Button
+                        type="submit"
+                        class="w-fit"
+                        on:click={handleUpdate}
+                      >
+                        Update product
+                      </Button>
+                      <Button
+                        type="submit"
+                        class="w-fit"
+                        outline
+                        color="red"
+                        on:click={handleDelete}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </Modal>
+                </TableBodyCell>
+              </TableBodyRow>
+            {/each}
+          </TableBody>
+        </Table>
       </TabItem>
     </Tabs>
   </Card>
