@@ -4,31 +4,26 @@ import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell
 import { onMount } from "svelte";
 let clickOutsideModal = false;
 
-export let Orders = [
-  { status: "Done" }
-];
+export let Track = [{ status: "Done" }];
 
-async function loadOrders() {
-    const response = await fetch("http://localhost:5000/api/orders/:username", {
+async function loadTrack() {
+    const response = await fetch("http://localhost:5000/api/orders/:username/:order_id", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImR5bGFuaHNqIiwiaWF0IjoxNjg2NTEwNjEzLCJleHAiOjE2ODY1MTQyMTN9.JygXsLogXnK8sUW9Wq8ndOedePea3lcr5PtKs13JE74",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkbWluMSIsImlhdCI6MTY4NjUwNzMyOCwiZXhwIjoxNjg2NTEwOTI4fQ.8caIIxKNzULCYlJnbZojKQKbVvRIx11X03woBOcMX_4",
       },
     });
-    const dataOrders = await response.json();
-    return { dataOrders };
+    const dataTrack = await response.json();
+    return { dataTrack };
   }
 
-  /**
-   * @type {any[]}
-   */
-  let itemsOrders = [];
+  let itemsTrack = [];
   onMount(async () => {
-    const result = await loadOrders();
+    const result = await loadTrack();
     console.log(result);
-    itemsOrders = result.dataOrders;
+    itemsTrack = result.dataTrack;
   });
 </script>
 
@@ -71,7 +66,7 @@ async function loadOrders() {
           <TableHeadCell>Status</TableHeadCell>
         </TableHead>
         <TableBody>
-            {#each itemsOrders as order}
+            {#each itemsTrack as order}
             <TableBodyRow>
                 <TableBodyCell>{order.unique_code}</TableBodyCell>
                 <TableBodyCell>{order.problem_type}</TableBodyCell>
@@ -84,7 +79,7 @@ async function loadOrders() {
           <tr class="font-semibold text-gray-900 dark:text-white">
             <th scope="row" class="py-3 px-6 text-base">Total price</th>
             <td class="py-3 px-6"> </td>
-            {#each itemsOrders as order}
+            {#each itemsTrack as order}
             <td class="py-3 px-6">{order.total_price}</td>
             {/each}
           </tr>
