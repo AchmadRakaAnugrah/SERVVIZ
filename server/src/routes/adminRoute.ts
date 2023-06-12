@@ -455,6 +455,7 @@ export const getAllStoreAdminHandler = async (req: Request, res: Response) => {
     try {
         const storeData = await prisma.store.findMany({
             select: {
+                id: true,
                 name: true,
                 address: true,
                 phone: true
