@@ -84,18 +84,18 @@
           <Input
             type="text"
             name="username"
-            placeholder="Enter your order code"
+            placeholder="Enter your username"
             required
-            bind:value={idInput}
+            bind:value={username}
           />
         </Label>
         <Label class="space-y-2 mb-3">
           <Input
             type="text"
             name="username"
-            placeholder="Enter your username"
+            placeholder="Enter your order code"
             required
-            bind:value={username}
+            bind:value={idInput}
           />
         </Label>
         <Button
@@ -149,7 +149,7 @@
           <tr class="font-semibold text-gray-900 dark:text-white">
             <th scope="row" class="py-3 px-6 text-base">Total price</th>
             <td class="py-3 px-6" />
-            <td class="py-3 px-6">{totalPrice}</td>
+            <td class="py-3 px-6">{order && order.total_price}</td>
           </tr>
         </tfoot>
       </Table>
@@ -157,6 +157,6 @@
   </div>
 
   <svelte:fragment slot="footer">
-    <Button on:click={() => alert('Handle "success"')}>Contact us</Button>
+    <Button class="w-fit mr-80" href='https://web.whatsapp.com/send/?phone=%2B6282329044553&text&type=phone_number&app_absent=0'>Contact us</Button>
   </svelte:fragment>
 </Modal>

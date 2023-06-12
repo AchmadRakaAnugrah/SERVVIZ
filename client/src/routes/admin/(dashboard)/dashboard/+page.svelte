@@ -102,6 +102,21 @@
   const handleDelete = () => {
     alert("Clicked delete.");
   };
+
+  let status = [
+    {value:"Validating data", name: "Validating data"},
+    {value:"Verified", name: "Verified"},
+    {value:"Picking up", name: "Picking up"},
+    {value:"Waiting Drop off", name: "Waiting Drop off"},
+    {value:"Wait Listed", name: "Wait Listed"},
+    {value:"Processing", name: "Processing"},
+    {value:"Haulted", name: "Haulted"},
+    {value:"Waiting for payment", name: "Waiting for payment"},
+    {value:"Canceled", name: "Canceled"},
+    {value:"Done", name: "Done"},
+  ]
+
+  let updateStatus: string = '';
 </script>
 
 <div class="flex justify-center items-center p-5 mx-auto w-full">
@@ -145,6 +160,16 @@
                     class="min-w-full"
                   >
                     <div class="flex items-center space-x-4">
+                      <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                        <div>
+                          <Label>Current status: "{item.order_status}"
+                            <Select class="mt-2" items={status} bind:value={updateStatus} />
+                          </Label>
+                        </div>
+                        <div>
+                          <Label for='price' class='mb-2'>Price</Label>
+                          <Input type='text' id='price' placeholder={item.total_price} />
+                        </div>
                       <Button
                         type="submit"
                         class="w-fit"

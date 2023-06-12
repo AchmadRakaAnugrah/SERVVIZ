@@ -185,12 +185,10 @@
     <form class="space-y-100">
       <Contact>
         <svelte:fragment slot="h2">Order</svelte:fragment>
-        <svelte:fragment slot="paragraph">
-          Got issues on your computer? Sit back, relax. Let us do the hard part.
-        </svelte:fragment>
+
       </Contact>
 
-      <div class="grid gap-6 md:grid-cols-3">
+      <div class="grid gap-6 mt-10 md:grid-cols-3">
         <div class="mb-6">
           <Label
             >Select a service type
@@ -307,9 +305,7 @@
       </div> -->
     </form>
     <div class="flex justify-center items-center">
-      <Button class="w-fit mr-80" href="https://wa.me/+6282329044553"
-        >Consult</Button
-      >
+      <Button class="w-fit mr-80" href='https://web.whatsapp.com/send/?phone=%2B6282329044553&text&type=phone_number&app_absent=0'>Consult</Button>
       <Button
         type="submit"
         class="w-fit ml-80"
