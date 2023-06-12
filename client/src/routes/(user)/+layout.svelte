@@ -18,8 +18,8 @@
   }
 </script>
 
-<Navbar let:hidden let:toggle>
-  <NavBrand href="/home">
+<Navbar class="navbar" let:hidden let:toggle>
+  <NavBrand class="navbar" href="/home">
     <span
       class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
     >
@@ -44,7 +44,7 @@
 
 <slot />
 
-<Footer>
+<Footer class="footer">
 
   <FooterCopyright href="/home" by="Flowbite™" year={2022} />
   <FooterLinkGroup ulClass="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
