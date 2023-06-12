@@ -194,11 +194,9 @@ export const getAllOrdersUserHandler = async (req: Request, res: Response) => {
                 },
             },
             select: {
-                unique_code: true,
-                problem_type: true,
+                id: true,
                 datetime: true,
                 order_status: true,
-                total_price: true,
             },
         });
         return res.status(200).json(ordersList);

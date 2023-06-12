@@ -113,14 +113,6 @@ export const getAllOrdersAdminHandler = async (req: Request, res: Response) => {
                 id: true,
                 user_username: true,
                 service_type: true,
-                pickup_address: true,
-                dropoff_address_id: true,
-                device: true,
-                device_brand: true,
-                problem_type: true,
-                problem_desc: true,
-                datetime: true,
-                total_price: true,
                 order_status: true,
                 admin_username: true
             }
