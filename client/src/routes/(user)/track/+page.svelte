@@ -84,18 +84,18 @@
           <Input
             type="text"
             name="username"
-            placeholder="Enter your order code"
+            placeholder="Enter your username"
             required
-            bind:value={idInput}
+            bind:value={username}
           />
         </Label>
         <Label class="space-y-2 mb-3">
           <Input
             type="text"
             name="username"
-            placeholder="Enter your username"
+            placeholder="Enter your order code"
             required
-            bind:value={username}
+            bind:value={idInput}
           />
         </Label>
         <Button
