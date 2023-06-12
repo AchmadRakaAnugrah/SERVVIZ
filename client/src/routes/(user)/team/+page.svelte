@@ -12,35 +12,35 @@
     let members = [
       {
         href: '/',
-        src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png',
+        src: 'https://i.pinimg.com/236x/ab/35/4d/ab354dadcf2cea17ed6e589fd5fb65fe.jpg',
         alt: 'Raka',
         name: 'Raka',
-        jobTitle: 'CEO & Web Developer',
-        description: 'Bonnie drives the technical strategy of the flowbite platform and brand.'
+        jobTitle: 'Front-end',
+        description: 'responsible for creating an attractive and easy-to-use interface, and ensuring that the app runs well on a variety of different devices and browsers.'
       },
       {
         href: '/',
-        src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png',
+        src: 'https://i.pinimg.com/236x/f9/9b/91/f99b910443c7c4c15a4024d1709c2b6a.jpg',
         alt: 'Raffi',
         name: 'Raffi',
-        jobTitle: 'CTO',
-        description: 'Jese drives the technical strategy of the flowbite platform and brand.'
+        jobTitle: 'DATABASE',
+        description: 'Responsible for designing, building, and maintaining an efficient and accessible database structure. Database concepts such as relational models, SQL queries, and database normalization.'
       },
       {
         href: '/',
-        src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png',
+        src: 'https://i.pinimg.com/236x/a6/bd/0b/a6bd0bb143610f3b574a29dba7933590.jpg',
         alt: 'Dylan',
         name: 'Dylan',
-        jobTitle: 'Senior Front-end Developer',
-        description: 'Michael drives the technical strategy of the flowbite platform and brand'
+        jobTitle: 'Backend',
+        description: 'I am responsible for developing applications or websites that focus on managing servers, databases and APIs and everything'
       },
       {
         href: '/',
         src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/sofia-mcguire.png',
         alt: 'Raihan',
         name: 'Raihan',
-        jobTitle: 'Marketing & Sale',
-        description: 'Lana drives the technical strategy of the flowbite platform and brand.'
+        jobTitle: 'Backend',
+        description: 'I am responsible for developing applications or websites that focus on managing servers, databases and APIs and everything.'
       }
     ];
   </script>
@@ -49,8 +49,7 @@
     <TeamHeader>
       <svelte:fragment slot="label">Our Team</svelte:fragment>
       <p class="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
-        Explore the whole collection of open-source web components and elements built with the utility
-        classes from Tailwind
+       Jobd Desk
       </p>
     </TeamHeader>
     <TeamBody>
