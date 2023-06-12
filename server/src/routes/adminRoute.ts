@@ -378,6 +378,24 @@ export const createStoreAdminHandler = async (req: Request, res: Response) => {
     };
 }
 
+export const getAllStoreAdminHandler = async (req: Request, res: Response) => {
+    const { name, address, phone } = req.body;
+    try {
+        const storeData = await prisma.store.findMany({
+            select: {
+                name,
+                address,
+                phone
+            }
+        })
+
+        return res.status(200).json(storeData);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
+}
+
 export const updateStoreAdminHandler = async (req: Request, res: Response) => {
     const { store_id } = req.params;
     const { name, address, phone } = req.body;
