@@ -32,6 +32,7 @@
     { value: "Hardware", name: "Hardware" },
     { value: "Software", name: "Software" },
     { value: "Maintainence", name: "Maintainence" },
+    { value: "Other", name: "Other" },
   ];
   let methods = [
     { value: "Pick up", name: "Pick up" },
@@ -45,8 +46,9 @@
   ];
   let device_types = [
     { value: "Laptop", name: "Laptop" },
-    { value: "Personal Compputer", name: "Personal Compputer" },
+    { value: "Personal Computer (PC)", name: "Personal Computer (PC)" },
     { value: "Smartphone", name: "Smartphone" },
+    { value: "Other", name: "Other" },
   ];
   let problem_types = [
     { value: "Screen", name: "Screen" },
@@ -65,6 +67,7 @@
     { value: "Optimization", name: "Optimization" },
     { value: "Hardware Cleaning", name: "Hardware Cleaning" },
     { value: "PC Build", name: "PC Build" },
+    { value: "Other", name: "Other" },
   ];
   let device_brands = [
     { value: "Lenovo", name: "Lenovo" },
