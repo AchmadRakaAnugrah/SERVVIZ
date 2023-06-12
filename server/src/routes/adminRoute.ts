@@ -355,6 +355,53 @@ export const createOrderHistoryAdminHandler = async (req: Request, res: Response
     };
 }
 
+export const getOrderHistoryAdminHandler = async (req: Request, res: Response) => {
+    const { username, order_id } = req.params;
+
+    try {
+        const parsedOrderId = parseInt(order_id);
+        if (isNaN(parsedOrderId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const orderDetails = await prisma.orders.findUnique({
+            where: { id: parsedOrderId },
+            select: {
+                id: true,
+                user_username: true,
+            }
+        });
+
+        if (!orderDetails?.id) {
+            return res.status(404).json({ message: 'Not found' });
+        }
+        if (orderDetails?.user_username != username) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const orderHistoryData = await prisma.orders_History.findUnique({
+            where: { id: parsedOrderId },
+            select: {
+                id: true,
+                order_id: true,
+                technician_id: true,
+                datetime: true,
+                status: true,
+                description: true,
+            }
+        })
+
+        if (!orderHistoryData) {
+            return res.status(404).json({ message: 'Not found' });
+        }
+
+        return res.status(200).json(orderHistoryData);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
 export const createStoreAdminHandler = async (req: Request, res: Response) => {
     const { name, address, phone } = req.body;
     try {
