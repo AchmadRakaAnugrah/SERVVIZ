@@ -231,7 +231,8 @@ export const getOrderDetailUserHandler = async (req: Request, res: Response) => 
                 problem_desc: true,
                 datetime: true,
                 order_status: true,
-                admin_username: true
+                admin_username: true,
+                total_price: true,
             }
         });
 
@@ -239,7 +240,7 @@ export const getOrderDetailUserHandler = async (req: Request, res: Response) => 
             return res.status(404).json({ message: 'Not found' });
         }
         if (orderDetails?.user_username != username) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(404).json({ message: 'Not found' });
         }
 
         const name = await prisma.user.findUnique({
