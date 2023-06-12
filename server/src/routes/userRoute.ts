@@ -134,13 +134,13 @@ export const createOrderUserHandler = async (req: Request, res: Response) => {
     const order_status = "Submitted";
 
     try {
-        // Get the total number of records in the table
-        const count = await prisma.admin.count();
-        // Generate a random index within the total number of records
-        const randomIndex = Math.floor(Math.random() * count);
-        // Select a single record at the random index
-        const randomAdmin = await prisma.admin.findFirst({ skip: randomIndex });
-        const chosenAdmin = randomAdmin!.username;
+        const fields = await prisma.admin.findMany({
+            select: {
+                username: true,
+            },
+        });
+
+        const randomField = fields[Math.floor(Math.random() * fields.length)];
 
         const newOrder = await prisma.$transaction(async (prisma) => {
             // Create the new order
@@ -155,7 +155,7 @@ export const createOrderUserHandler = async (req: Request, res: Response) => {
                     problem_type,
                     problem_desc,
                     order_status,
-                    admin_username: chosenAdmin,
+                    admin_username: randomField.username,
                 },
             });
 
@@ -252,7 +252,7 @@ export const getOrderDetailUserHandler = async (req: Request, res: Response) => 
         const orderDetailsWithName = {
             ...orderDetails,
             name: name?.name || null,
-        };        
+        };
 
         return res.status(200).json(orderDetailsWithName);
     } catch (e) {
