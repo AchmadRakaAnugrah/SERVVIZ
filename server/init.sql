@@ -17,7 +17,7 @@ CREATE TABLE "orders" (
   "unique_code" text,
   "service_type" text NOT NULL,
   "pickup_address" text,
-  "dropoff_address_id" integer,
+  "dropoff_address" text,
   "device" text,
   "device_brand" text,
   "problem_type" text,
@@ -58,8 +58,6 @@ CREATE TABLE "blobs" (
 ALTER TABLE "orders" ADD FOREIGN KEY ("user_username") REFERENCES "user" ("username");
 
 ALTER TABLE "blobs" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id");
-
-ALTER TABLE "orders" ADD FOREIGN KEY ("dropoff_address_id") REFERENCES "store" ("id");
 
 ALTER TABLE "orders_history" ADD FOREIGN KEY ("order_id") REFERENCES "orders" ("id");
 

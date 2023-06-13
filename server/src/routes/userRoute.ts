@@ -120,47 +120,62 @@ export const changePasswordUserHandler = async (req: Request, res: Response) => 
     }
 };
 
-// Create new order
 export const createOrderUserHandler = async (req: Request, res: Response) => {
     const { username } = req.params;
     const {
         service_type,
         pickup_address,
-        dropoff_address_id,
+        dropoff_address,
         device,
         device_brand,
         problem_type,
         problem_desc
     } = _.mapValues(req.body, (value) => (value === '' ? null : value));
     const order_status = "Submitted";
-    // Get the total number of records in the table
-    const count = await prisma.admin.count()
-    // Generate a random index within the total number of records
-    const randomIndex = Math.floor(Math.random() * count)
-    // Select a single record at the random index
-    const randomAdmin = await prisma.admin.findMany({ take: 1, skip: randomIndex })
-    const choosedAdmin = randomAdmin[0].username;
 
     try {
-        const newOrders = await prisma.orders.create({
-            data: {
-                user_username: username,
-                service_type,
-                pickup_address,
-                dropoff_address_id,
-                device,
-                device_brand,
-                problem_type,
-                problem_desc,
-                order_status,
-                admin_username: choosedAdmin
+        const fields = await prisma.admin.findMany({
+            select: {
+                username: true,
             },
         });
-        return res.status(201).json({ message: 'New order created succesfully' });
+
+        const randomField = fields[Math.floor(Math.random() * fields.length)];
+
+        const newOrder = await prisma.$transaction(async (prisma) => {
+            // Create the new order
+            const createdOrder = await prisma.orders.create({
+                data: {
+                    user_username: username,
+                    service_type,
+                    pickup_address,
+                    dropoff_address,
+                    device,
+                    device_brand,
+                    problem_type,
+                    problem_desc,
+                    order_status,
+                    admin_username: randomField.username,
+                },
+            });
+
+            // Fetch the last created order
+            const lastCreatedOrder = await prisma.orders.findFirst({
+                orderBy: { id: "desc" },
+            });
+
+            return lastCreatedOrder;
+        });
+
+        return res
+            .status(201)
+            .json({ message: 'New order created successfully', order: newOrder!.id });
     } catch (e) {
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
-    };
+    } finally {
+        await prisma.$disconnect();
+    }
 };
 
 export const getAllOrdersUserHandler = async (req: Request, res: Response) => {
@@ -209,14 +224,15 @@ export const getOrderDetailUserHandler = async (req: Request, res: Response) => 
                 unique_code: true,
                 service_type: true,
                 pickup_address: true,
-                dropoff_address_id: true,
+                dropoff_address: true,
                 device: true,
                 device_brand: true,
                 problem_type: true,
                 problem_desc: true,
                 datetime: true,
                 order_status: true,
-                admin_username: true
+                admin_username: true,
+                total_price: true,
             }
         });
 
@@ -224,10 +240,20 @@ export const getOrderDetailUserHandler = async (req: Request, res: Response) => 
             return res.status(404).json({ message: 'Not found' });
         }
         if (orderDetails?.user_username != username) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(404).json({ message: 'Not found' });
         }
 
-        return res.status(200).json(orderDetails);
+        const name = await prisma.user.findUnique({
+            where: { username },
+            select: { name: true },
+        })
+
+        const orderDetailsWithName = {
+            ...orderDetails,
+            name: name?.name || null,
+        };
+
+        return res.status(200).json(orderDetailsWithName);
     } catch (e) {
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
@@ -240,7 +266,7 @@ export const updateOrderDetailUserHandler = async (req: Request, res: Response) 
         const {
             service_type,
             pickup_address,
-            dropoff_address_id,
+            dropoff_address,
             device,
             device_brand,
             problem_type,
@@ -280,7 +306,7 @@ export const updateOrderDetailUserHandler = async (req: Request, res: Response) 
             data: {
                 service_type,
                 pickup_address,
-                dropoff_address_id,
+                dropoff_address,
                 device,
                 device_brand,
                 problem_type,
@@ -343,7 +369,7 @@ export const deleteOrderDetailUserHandler = async (req: Request, res: Response) 
                 message: 'Cannot delete orders that are more than 30 minutes old'
             });
         }
-        
+
         return res.status(204).json({ message: 'Success', order_id: parsedId });
     } catch (e) {
         console.error(e);

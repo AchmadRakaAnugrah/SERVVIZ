@@ -9,7 +9,7 @@ import handleParsingError from "./middlewares/handleParsingError";
 
 // Import user route
 import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler, createBlobsUserHandler, getBlobsListUserHandler, deleteBlobsUserHandler, getBlobsUserHandeler, changePasswordUserHandler } from "./routes/userRoute";
-import { changePasswordAdminHandler, createOrderHistoryAdminHandler, createStoreAdminHandler, getAllOrdersAdminHandler, getAllTechnicianDetails, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateStoreAdminHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
+import { changePasswordAdminHandler, createOrderHistoryAdminHandler, filterOrderStatusAdminHandler, getAllOrdersAdminHandler, getAllTechnicianDetails, getOrderHistoryAdminHandler, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateTechnicianAdminHandler, updateTotalPriceHandler } from "./routes/adminRoute";
 import { rejectEmptyStringBody, rejectEmptyStringParams } from "./middlewares/rejectEmptyString";
 import { usernameValidator } from "./middlewares/usernameValidator";
 import { uploadBlobs } from "./middlewares/uploadBlobs";
@@ -26,7 +26,7 @@ async function main() {
     app.use(handleParsingError);
 
     // NORMAL USER
-    app.post('/api/register', rejectEmptyStringBody, usernameValidator, registerUserHandler);
+    app.post('/api/register',rejectEmptyStringBody, usernameValidator, registerUserHandler);
     app.post('/api/login', rejectEmptyStringParams, rejectEmptyStringBody, loginUserHandler);
     app.put('/api/change', rejectEmptyStringBody, rejectEmptyStringBody, changePasswordUserHandler);
     // ORDER ROUTE
@@ -35,7 +35,7 @@ async function main() {
     // Get all order of specific username
     app.get('/api/orders/:username', authenticateToken, rejectEmptyStringParams, getAllOrdersUserHandler);
     // Get order detail
-    app.get('/api/orders/:username/:order_id', authenticateToken, rejectEmptyStringParams, getOrderDetailUserHandler);
+    app.get('/api/orders/:username/:order_id', rejectEmptyStringParams, getOrderDetailUserHandler);
     // Update user order
     app.put('/api/orders/:username/:order_id', authenticateToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailUserHandler);
     // Delete order
@@ -56,12 +56,20 @@ async function main() {
     // Login admin
     app.post('/api/admin/login', rejectEmptyStringBody, loginAdminHandler);
     app.put('/api/admin/change', rejectEmptyStringBody, rejectEmptyStringBody, changePasswordAdminHandler);
+    
     // ORDER ROUTE
     // Get all order list
     app.get('/api/admin/orders', authenticateAdminToken, getAllOrdersAdminHandler);
     // Update order details
     app.put('/api/admin/orders/:username/:order_id', authenticateAdminToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailsAdminHandler);
+    // Filter based on order status
+    app.get('/api/admin/orders/filter', authenticateAdminToken, rejectEmptyStringBody, filterOrderStatusAdminHandler)
+    //
+    app.put('/api/orders/:username/:order_id/price', authenticateToken, rejectEmptyStringParams, rejectEmptyStringBody, updateTotalPriceHandler);
+
     // ORDER HISTORY ROUTE
+    // Get order history
+    app.get('/api/admin/orders/:username/:order_id/history', authenticateAdminToken, getOrderHistoryAdminHandler);
     // Create order history
     app.post('/api/admin/orders/:username/:order_id/history', authenticateAdminToken, createOrderHistoryAdminHandler)
     // TECHNICIAN ROUTE
@@ -75,9 +83,11 @@ async function main() {
     app.put('/api/admin/technician/:technician_id', authenticateAdminToken, rejectEmptyStringParams, rejectEmptyStringBody, updateTechnicianAdminHandler);
     // STORE ROUTE
     // Create store
-    app.post('/api/admin/store', authenticateAdminToken, rejectEmptyStringBody, createStoreAdminHandler);
+    // app.post('/api/admin/store', authenticateAdminToken, rejectEmptyStringBody, createStoreAdminHandler);
     // Update Store
-    app.put('/api/admin/store/:store_id', authenticateAdminToken, rejectEmptyStringBody, updateStoreAdminHandler);
+    // app.put('/api/admin/store/:store_id', authenticateAdminToken, rejectEmptyStringBody, updateStoreAdminHandler);
+    // GET all store
+    // app.get('/api/admin/store', authenticateAdminToken, getAllStoreAdminHandler);
     // OTW
     // app.delete('/api/admin/technician/:id')
     // app.delete('/api/admin/orders/:username/:orders_id')
