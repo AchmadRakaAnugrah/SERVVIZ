@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { parseInt } from "lodash";
 
 const prisma = new PrismaClient();
 
@@ -297,17 +298,18 @@ export const updateOrderDetailsAdminHandler = async (req: Request, res: Response
 
 export const createOrderHistoryAdminHandler = async (req: Request, res: Response) => {
     const { username, order_id } = req.params;
-    const { technician_id, status, description } = req.body
+    const { status, description } = req.body
     try {
         // Check that orders_id and technician_id is a valid integer
         const parsedOrderId = parseInt(order_id);
         if (isNaN(parsedOrderId)) {
             return res.status(400).json({ message: 'Bad request' });
         }
-        const parsedTechnicianId = parseInt(technician_id);
-        if (isNaN(parsedTechnicianId)) {
-            return res.status(400).json({ message: 'Bad request' });
-        }
+        // let parsedTechnicianId: number | null = parseInt(technician_id);
+        // let parsedTechnicianId: number | null = parseInt(technician_id);
+        // if (isNaN(parsedTechnicianId)) {
+        //     parsedTechnicianId = null;
+        // }
 
         const checkOrderId = await prisma.orders.findUnique({
             where: { id: parsedOrderId },
@@ -320,18 +322,17 @@ export const createOrderHistoryAdminHandler = async (req: Request, res: Response
         if (checkOrderId.user_username !== username) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        const checkTechnicianId = await prisma.technician.findUnique({
-            where: { id: parsedTechnicianId },
-            select: {
-                id: true,
-            }
-        });
-        if (!checkTechnicianId) { return res.status(404).json({ message: 'Technician not found' }); }
+        // const checkTechnicianId = await prisma.technician.findUnique({
+        //     where: { id: technician_id },
+        //     select: {
+        //         id: true,
+        //     }
+        // });
+        // if (!checkTechnicianId) { return res.status(404).json({ message: 'Technician not found' }); }
 
         const newOrderHistory = await prisma.orders_History.create({
             data: {
                 order_id: parsedOrderId,
-                technician_id: parsedTechnicianId,
                 status,
                 description
             }
@@ -352,7 +353,7 @@ export const getOrderHistoryAdminHandler = async (req: Request, res: Response) =
 
     try {
         const parsedOrderId = parseInt(order_id);
-        if (isNaN(parsedOrderId)) {
+        if (!isNaN(parsedOrderId)) {
             return res.status(400).json({ message: 'Bad request' });
         }
 
@@ -426,6 +427,49 @@ export const filterOrderStatusAdminHandler = async (req: Request, res: Response)
         console.error(e);
         return res.status(500).json({ message: 'Internal server error' });
     }
+}
+
+export const updateTotalPriceHandler = async (req: Request, res: Response) => {
+    const { username, order_id } = req.params;
+    const {
+        total_price,
+    } = req.body;
+
+    try {
+        // Check that orders_id is a valid integer
+        const parsedId = parseInt(order_id);
+        const parsedTotalPrice = parseInt(total_price);
+        if (isNaN(parsedId)) {
+            return res.status(400).json({ message: 'Bad request' });
+        }
+
+        const orderDetails = await prisma.orders.findUnique({
+            where: { id: parsedId },
+            select: {
+                id: true,
+                user_username: true
+            }
+        });
+
+        if (!orderDetails?.id) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+        if (orderDetails?.user_username !== username) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const updatedOrderDetail = await prisma.orders.update({
+            where: { id: parsedId },
+            data: {
+                total_price: parsedTotalPrice,
+            },
+        });
+
+        return res.status(200).json({ message: 'Success', order_id: parsedId });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Internal server error' });
+    };
 }
 
 // export const createStoreAdminHandler = async (req: Request, res: Response) => {

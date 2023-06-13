@@ -9,7 +9,7 @@ import handleParsingError from "./middlewares/handleParsingError";
 
 // Import user route
 import { registerUserHandler, loginUserHandler, createOrderUserHandler, getAllOrdersUserHandler, getOrderDetailUserHandler, updateOrderDetailUserHandler, deleteOrderDetailUserHandler, createBlobsUserHandler, getBlobsListUserHandler, deleteBlobsUserHandler, getBlobsUserHandeler, changePasswordUserHandler } from "./routes/userRoute";
-import { changePasswordAdminHandler, createOrderHistoryAdminHandler, filterOrderStatusAdminHandler, getAllOrdersAdminHandler, getAllTechnicianDetails, getOrderHistoryAdminHandler, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateTechnicianAdminHandler } from "./routes/adminRoute";
+import { changePasswordAdminHandler, createOrderHistoryAdminHandler, filterOrderStatusAdminHandler, getAllOrdersAdminHandler, getAllTechnicianDetails, getOrderHistoryAdminHandler, loginAdminHandler, registerAdminHandler, registerTechnicianAdminHandler, searchListUsernameHandler, updateOrderDetailsAdminHandler, updateTechnicianAdminHandler, updateTotalPriceHandler } from "./routes/adminRoute";
 import { rejectEmptyStringBody, rejectEmptyStringParams } from "./middlewares/rejectEmptyString";
 import { usernameValidator } from "./middlewares/usernameValidator";
 import { uploadBlobs } from "./middlewares/uploadBlobs";
@@ -64,6 +64,8 @@ async function main() {
     app.put('/api/admin/orders/:username/:order_id', authenticateAdminToken, rejectEmptyStringParams, rejectEmptyStringBody, updateOrderDetailsAdminHandler);
     // Filter based on order status
     app.get('/api/admin/orders/filter', authenticateAdminToken, rejectEmptyStringBody, filterOrderStatusAdminHandler)
+    //
+    app.put('/api/orders/:username/:order_id/price', authenticateToken, rejectEmptyStringParams, rejectEmptyStringBody, updateTotalPriceHandler);
 
     // ORDER HISTORY ROUTE
     // Get order history
