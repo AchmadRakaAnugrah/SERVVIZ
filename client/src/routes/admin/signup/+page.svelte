@@ -42,7 +42,7 @@
 
         if (response.status === 201) {
           alert("Berhasil register, silahkan login");
-          goto("/signin");
+          goto("/admin/signin");
         } else if (response.status === 409) {
           alert("Username sudah terdaftar, gunakan yang lain");
         } else {
