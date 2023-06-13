@@ -36,11 +36,11 @@
       },
       {
         href: '/',
-        src: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/sofia-mcguire.png',
+        src: 'https://www.gentlemansgazette.com/wp-content/uploads/2022/03/Tommy-Uniform-screen-Peaky.Blinders.S01E0612-11-1-450x450.jpg',
         alt: 'Raihan',
         name: 'Raihan',
          jobTitle: 'Backend Engineer',
-        description: 'responsible for developing applications or websites that focus on managing servers, databases and APIs and everything.'
+        description: 'He codes everything, even frontend. so he cant even take a photo for himself. Therefore, we added photos of Thomas Shelby.'
       }
     ];
   </script>
