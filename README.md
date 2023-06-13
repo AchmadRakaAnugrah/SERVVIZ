@@ -30,6 +30,12 @@ Init the docker compose
 docker compose up -d
 ```
 
+Make .env file for Prisma
+
+```sh
+echo 'DATABASE_URL="postgresql://postgres:postgres@localhost:5432/mydatabase?schema=public"' > .env
+```
+
 Install `node_modules`
 
 ```sh
