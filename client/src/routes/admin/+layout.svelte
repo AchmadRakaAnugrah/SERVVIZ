@@ -41,7 +41,7 @@
 
 <Footer>
 
-  <FooterCopyright href="/home" by="Flowbite™" year={2023} />
+  <FooterCopyright href="/home" by="Build with Svelte, Express, and PostgreSQL." year={2023} />
   <FooterLinkGroup ulClass="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
     <span
     class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
